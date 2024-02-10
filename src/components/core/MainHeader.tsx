@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar.tsx";
 const MainHeader: React.FC = () => {
     return (
         <>
-            <div className="z-50 bg-white fixed inset-x-0 top-0 pt-2">
+            <div className="z-50 bg-white sticky inset-x-0 top-0 pt-2">
                 <div className="bg-sky-900 top-1.5 mx-1.5 rounded-lg text-white p-3">
                     <nav className="nav-bar flex items-center justify-between space-x-2">
                         <div className="font-bold cursor-pointer">
