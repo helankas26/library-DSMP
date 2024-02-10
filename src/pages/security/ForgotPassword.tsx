@@ -10,7 +10,7 @@ const ForgotPassword: React.FC = () => {
                 </h2>
                 <p className="mt-2 text-sm text-gray-600">
                     Just enter your email address below and we'll send you a
-                    link to reset your password!
+                    OTP to reset your password!
                 </p>
             </div>
             <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
