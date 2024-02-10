@@ -14,7 +14,7 @@ const ForgotPassword: React.FC = () => {
                 </p>
             </div>
             <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
-                <div className="mb-4">
+                <div className="mb-6">
                     <label className="block mb-2 text-sm font-bold text-gray-700 tracking-wide" htmlFor="email">
                         Email
                     </label>
@@ -27,10 +27,10 @@ const ForgotPassword: React.FC = () => {
                 </div>
                 <div className="mb-6 text-center">
                     <button
-                        className="w-full px-4 py-2 font-bold text-white bg-red-500 rounded-full hover:bg-red-700 focus:outline-none focus:shadow-outline"
+                        className="w-full px-4 py-2 font-bold text-white bg-green-500 rounded-full hover:bg-green-700 focus:outline-none focus:shadow-outline"
                         type="button"
                     >
-                        Reset Password
+                        Send OTP
                     </button>
                 </div>
                 <hr className="mt-10 border"/>
