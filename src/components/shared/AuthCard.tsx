@@ -1,6 +1,7 @@
 import React from "react";
+import AuthCardProps from "../../model/AuthCardProps.tsx";
 
-const AuthCard: React.FC = (props) => {
+const AuthCard: React.FC<AuthCardProps> = (props) => {
     return (
         <div className="container mx-auto">
             <div className="flex justify-center px-6 my-12">
