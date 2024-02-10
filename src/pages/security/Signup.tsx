@@ -3,68 +3,85 @@ import AuthCard from "../../components/shared/AuthCard.tsx";
 
 const Signup: React.FC = () => {
     return (
-        <AuthCard>
+        <AuthCard imageUrl='assets/signup.jpg'>
             <div className="text-center">
-                <h2 className="mt-6 text-3xl font-bold text-gray-900">
+                <h2 className="mt-4 text-3xl font-bold text-gray-900">
                     Create an Account
                 </h2>
                 <p className="mt-2 text-sm text-gray-600">Please sign up to your account</p>
             </div>
-
-            <form className="mt-8 space-y-6" action="#" method="POST">
-                <div className="relative">
-                    <div className="absolute right-0 mt-4">
+            <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+                <div className="relative mb-4">
+                    <div className="absolute right-0 mt-7">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              className="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <label className="text-sm font-bold text-gray-700 tracking-wide">Registration No</label>
-                    <input
-                        className=" w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
-                        type="" placeholder="Enter your registration No"/>
-                </div>
-            </form>
-
-            <hr className="-m-10 border-2 border-blue-500"/>
-
-            <form className="mt-8 space-y-6" action="#" method="POST">
-                <div className="relative">
-                    <label className="text-sm font-bold text-gray-700 tracking-wide">Username</label>
-                    <input
-                        className="w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
-                        type="text" placeholder="Enter your username"/>
-                </div>
-                <div className="mt-8 content-center">
-                    <label className="text-sm font-bold text-gray-700 tracking-wide">
-                        Password
+                    <label className="block mb-1 text-sm font-bold text-gray-700 tracking-wide" htmlFor="regNo">
+                        Registration No
                     </label>
                     <input
-                        className="w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
-                        type="password" placeholder="Enter your password"/>
+                        className="w-full py-2 text-sm leading-tight text-gray-700 border-b border-gray-300 appearance-none focus:outline-none focus:border-indigo-500"
+                        id="regNo"
+                        type="text"
+                        placeholder="Enter your registration No"/>
                 </div>
-                <div className="mt-8 content-center">
-                    <label className="text-sm font-bold text-gray-700 tracking-wide">
-                        Confirm Password
+                <div className="mb-4">
+                    <label className="block mb-2 text-sm font-bold text-gray-700 tracking-wide" htmlFor="username">
+                        Username
                     </label>
                     <input
-                        className="w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
-                        type="password" placeholder="Confirm your password"/>
+                        className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        id="username"
+                        type="text"
+                        placeholder="Enter your username"
+                    />
                 </div>
-                <div>
-                    <button type="submit" className="w-full flex justify-center bg-indigo-500 text-gray-100 p-4  rounded-full tracking-wide
-                                font-semibold  focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg cursor-pointer transition ease-in duration-300">
-                        Sign up
+                <div className="mb-4 md:flex md:justify-between">
+                    <div className="mb-4 md:mr-2 md:mb-0">
+                        <label className="block mb-2 text-sm font-bold text-gray-700 tracking-wide" htmlFor="password">
+                            Password
+                        </label>
+                        <input
+                            className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                            id="password"
+                            type="password"
+                            placeholder="Enter your password"
+                        />
+                    </div>
+                    <div className="md:ml-2">
+                        <label className="block mb-2 text-sm font-bold text-gray-700 tracking-wide"
+                               htmlFor="confirmPassword">
+                            Confirm Password
+                        </label>
+                        <input
+                            className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                            id="confirmPassword"
+                            type="password"
+                            placeholder="Confirm your password"
+                        />
+                    </div>
+                </div>
+                <div className="mb-6 text-center">
+                    <button
+                        className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                        type="button"
+                    >
+                        Register Account
                     </button>
                 </div>
-                <p className="flex flex-col items-center justify-center mt-10 text-center text-md text-gray-500">
-                    <span>Already have an account?</span>
+                <hr className="mt-10 border"/>
+                <div className="text-center flex flex-col items-center justify-center">
+                    <p className="mt-10 text-md text-gray-500">
+                        Already have an account?
+                    </p>
                     <a href="#"
-                       className="text-indigo-500 hover:text-indigo-500no-underline hover:underline cursor-pointer transition ease-in duration-300">
+                       className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800">
                         Log in
                     </a>
-                </p>
+                </div>
             </form>
         </AuthCard>
     );

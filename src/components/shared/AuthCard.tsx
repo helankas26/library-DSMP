@@ -2,10 +2,16 @@ import React from "react";
 
 const AuthCard: React.FC = (props) => {
     return (
-        <div
-            className="relative min-h-screen flex items-center justify-center bg-white py-20 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-2xl drop-shadow-2xl z-10">
-                {props.children}
+        <div className="container mx-auto">
+            <div className="flex justify-center px-6 my-12">
+                <div className="w-full xl:w-3/4 lg:w-11/12 flex rounded-lg shadow-2xl drop-shadow-2xl">
+                    <div
+                        className={`w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg bg-[url('${props.imageUrl}')]`}>
+                    </div>
+                    <div className="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
+                        {props.children}
+                    </div>
+                </div>
             </div>
         </div>
     );

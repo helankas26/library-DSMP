@@ -3,48 +3,62 @@ import AuthCard from "../../components/shared/AuthCard.tsx";
 
 const Login: React.FC = () => {
     return (
-        <AuthCard>
+        <AuthCard imageUrl='assets/login.jpg'>
             <div className="text-center">
-                <h2 className="mt-6 text-3xl font-bold text-gray-900">
+                <h2 className="mt-4 text-3xl font-bold text-gray-900">
                     Welcome Back!
                 </h2>
                 <p className="mt-2 text-sm text-gray-600">Please sign in to your account</p>
             </div>
-            <form className="mt-8 space-y-6" action="#" method="POST">
-                <div className="relative">
-                    <label className="text-sm font-bold text-gray-700 tracking-wide">Username</label>
+            <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+                <div className="mb-4">
+                    <label className="block mb-2 text-sm font-bold text-gray-700 tracking-wide" htmlFor="username">
+                        Username
+                    </label>
                     <input
-                        className="w-full text-base py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
-                        type="text" placeholder="Enter your username"/>
+                        className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        id="username"
+                        type="text"
+                        placeholder="Enter your username"
+                    />
                 </div>
-                <div className="mt-8 content-center">
-                    <label className="text-sm font-bold text-gray-700 tracking-wide">
+                <div className="mb-4">
+                    <label className="block mb-2 text-sm font-bold text-gray-700 tracking-wide" htmlFor="password">
                         Password
                     </label>
                     <input
-                        className="w-full content-center text-base py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
-                        type="password" placeholder="Enter your password"/>
+                        className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        id="password"
+                        type="password"
+                        placeholder="Enter your password"
+                    />
                 </div>
-                <div className="relative py-3 flex items-center justify-between">
+                <div className="relative py-3 mb-4 flex items-center justify-between">
                     <div className="absolute right-0 text-sm">
-                        <a href="#" className="font-medium text-indigo-500 hover:text-indigo-500">
+                        <a href="#"
+                           className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800">
                             Forgot your password?
                         </a>
                     </div>
                 </div>
-                <div>
-                    <button type="submit" className="w-full flex justify-center bg-indigo-500 text-gray-100 p-4  rounded-full tracking-wide
-                                font-semibold  focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg cursor-pointer transition ease-in duration-300">
-                        Log in
+                <div className="mb-6 text-center">
+                    <button
+                        className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                        type="button"
+                    >
+                        Sign In
                     </button>
                 </div>
-                <p className="flex flex-col items-center justify-center mt-10 text-center text-md text-gray-500">
-                    <span>Don't have an account?</span>
+                <hr className="mt-10 border"/>
+                <div className="text-center flex flex-col items-center justify-center">
+                    <p className="mt-10 text-md text-gray-500">
+                        Don't have an account?
+                    </p>
                     <a href="#"
-                       className="text-indigo-500 hover:text-indigo-500no-underline hover:underline cursor-pointer transition ease-in duration-300">
+                       className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800">
                         Sign up
                     </a>
-                </p>
+                </div>
             </form>
         </AuthCard>
     );
