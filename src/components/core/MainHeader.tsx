@@ -22,7 +22,7 @@ const MainHeader: React.FC = () => {
                         <div className="flex items-center space-x-4">
                             <button type="button"
                                     className="text-white bg-lime-500 hover:bg-lime-600 font-medium rounded-lg shadow-lg text-sm px-4 py-2 text-center">
-                                Login
+                                Log in
                             </button>
 
                             <LoggedMenu></LoggedMenu>
