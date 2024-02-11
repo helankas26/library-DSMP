@@ -1,5 +1,6 @@
 import React from "react";
 import AuthCard from "../../components/shared/AuthCard.tsx";
+import {Link} from "react-router-dom";
 
 const Signup: React.FC = () => {
     return (
@@ -77,10 +78,10 @@ const Signup: React.FC = () => {
                     <p className="mt-10 text-md text-gray-500">
                         Already have an account?
                     </p>
-                    <a href="#"
+                    <Link to="/login"
                        className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800">
                         Log in
-                    </a>
+                    </Link>
                 </div>
             </form>
         </AuthCard>

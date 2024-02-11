@@ -1,5 +1,6 @@
 import React from "react";
 import AuthCard from "../../components/shared/AuthCard.tsx";
+import {Link} from "react-router-dom";
 
 const Login: React.FC = () => {
     return (
@@ -35,10 +36,10 @@ const Login: React.FC = () => {
                 </div>
                 <div className="relative py-3 mb-4 flex items-center justify-between">
                     <div className="absolute right-0 text-sm">
-                        <a href="#"
+                        <Link to="/forgot-password"
                            className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800">
                             Forgot your password?
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div className="mb-6 text-center">
@@ -54,10 +55,10 @@ const Login: React.FC = () => {
                     <p className="mt-10 text-md text-gray-500">
                         Don't have an account?
                     </p>
-                    <a href="#"
+                    <Link to="/signup"
                        className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800">
                         Sign up
-                    </a>
+                    </Link>
                 </div>
             </form>
         </AuthCard>

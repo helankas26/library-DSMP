@@ -1,5 +1,6 @@
 import React from "react";
 import AuthCard from "../../components/shared/AuthCard.tsx";
+import {Link} from "react-router-dom";
 
 const ForgotPassword: React.FC = () => {
     return (
@@ -38,17 +39,17 @@ const ForgotPassword: React.FC = () => {
                     <p className="mt-10 text-md text-gray-500">
                         Don't have an account?
                     </p>
-                    <a href="#"
+                    <Link to="/signup"
                        className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800">
                         Sign up
-                    </a>
+                    </Link>
                     <p className="mt-5 text-md text-gray-500">
                         Already have an account?
                     </p>
-                    <a href="#"
+                    <Link to="/login"
                        className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800">
                         Log in
-                    </a>
+                    </Link>
                 </div>
             </form>
         </AuthCard>
