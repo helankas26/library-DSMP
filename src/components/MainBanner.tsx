@@ -10,7 +10,7 @@ const MainBanner: React.FC = () => {
                         <div
                             className="flex h-full w-full items-center justify-center bg-[#455055]/80 transition-all group-hover:bg-[#31383b]/80">
                             <div
-                                className="text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-teal-300 transition-all group-hover:text-6xl">
+                                className="text-6xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-teal-300 transition-all group-hover:text-7xl">
                                 Library
                             </div>
                         </div>
