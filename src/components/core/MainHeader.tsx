@@ -10,7 +10,7 @@ const MainHeader: React.FC = () => {
                     <nav className="nav-bar flex items-center justify-between space-x-2">
                         <div className="font-bold cursor-pointer">
                             <div
-                                className="text-3xl text-center bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-teal-300">
+                                className="p-[1px] text-3xl text-center bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-teal-300">
                                 Library
                             </div>
                         </div>
