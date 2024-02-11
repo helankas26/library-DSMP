@@ -5,7 +5,7 @@ import BookShowcase from "../components/book/BookShowcase.tsx";
 
 const Home: React.FC = () => {
     return (
-        <div className="my-6 container mx-auto flex flex-1">
+        <div className="py-6 container mx-auto flex flex-1">
             <div className="hidden sm:block">
                 <div className="sm:sticky sm:top-[95px]">
                     <CategoryFilter/>

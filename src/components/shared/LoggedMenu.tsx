@@ -1,7 +1,7 @@
 import React from "react";
 import {Menu} from '@headlessui/react'
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
