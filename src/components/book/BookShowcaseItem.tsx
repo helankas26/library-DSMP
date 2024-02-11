@@ -10,10 +10,10 @@ const BookShowcaseItem: React.FC = () => {
                      src="https://m.media-amazon.com/images/I/81wAshyxQyL._AC_UF1000,1000_QL80_.jpg"
                      alt=""/>
                 <div
-                    className="absolute inset-0 w-full h-full to-black/10 bg-gradient-to-t from-black/50 via-black/40"></div>
+                    className="absolute inset-0 w-full h-full to-black/10 bg-gradient-to-t from-black/95 via-black/35"></div>
             </div>
             <div className="relative py-6 px-3">
-                <h2 className="block font-sans text-4xl font-medium tracking-normal text-white antialiased">
+                <h2 className="block font-sans text-4xl font-medium tracking-normal text-white antialiased bg-gray-700 bg-opacity-75 rounded-xl px-2">
                     Head First Java
                 </h2>
             </div>

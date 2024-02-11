@@ -3,7 +3,7 @@ import BookShowcaseItem from "./BookShowcaseItem.tsx";
 
 const BookShowcase: React.FC = () => {
     return (
-        <div className="flex gap-x-10 gap-y-6 flex-wrap">
+        <div className="flex justify-center lg:justify-normal gap-x-12 gap-y-6 flex-wrap">
             <BookShowcaseItem/>
             <BookShowcaseItem/>
             <BookShowcaseItem/>

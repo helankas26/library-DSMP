@@ -3,7 +3,7 @@ import React from "react";
 const MainBanner: React.FC = () => {
     return (
         <div className="flex w-full items-center justify-center">
-            <div className="group relative flex h-64 w-11/12 overflow-hidden rounded-2xl">
+            <div className="group relative flex h-52 w-full overflow-hidden rounded-2xl">
                 <div
                     className="w-full overflow-hidden rounded-2xl transition-all group-hover:mx-[1%]">
                     <div className="h-full w-full bg-cover bg-center bg-[url('assets/book-banner.jpg')]">
