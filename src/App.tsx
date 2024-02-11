@@ -2,6 +2,7 @@ import './App.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import HomeLayout from "./layouts/Home.tsx";
 import homeRoutes from "./routes/Home.tsx";
+import NotFoundError from "./pages/NotFoundError.tsx";
 
 function App() {
 
@@ -9,6 +10,7 @@ function App() {
         {
             path: '/',
             element: <HomeLayout/>,
+            errorElement: <NotFoundError/>,
             children: homeRoutes
         }
     ]);
