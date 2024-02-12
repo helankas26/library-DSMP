@@ -15,11 +15,11 @@ const DashboardNavBar: React.FC = () => {
     return (
         <div
             className="mx-1.5 w-60 py-4 px-2 text-gray-700 bg-white rounded-lg text-left capitalize font-medium shadow-lg">
-            <button
+            <div
                 className="cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center">
                 <HomeRoundedIcon className="mx-1"/>
                 <span className="mx-5">Home</span>
-            </button>
+            </div>
             <div
                 className="cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center">
                 <ViewComfyAltRoundedIcon className="mx-1"/>

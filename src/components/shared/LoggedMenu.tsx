@@ -8,8 +8,8 @@ function classNames(...classes: string[]) {
 const LoggedMenu: React.FC = () => {
     return (
         <>
-            <Menu as="div" className="relative inline-block text-left">
-                <div>
+            <Menu as="div" className="relative inline-block text-left mt-1">
+                <div className="-mb-1">
                     <Menu.Button
                         className="text-sm bg-gray-600 hover:bg-slate-700 rounded-full">
                         <img className="w-8 h-8 rounded-full" src="" alt="user photo"/>
