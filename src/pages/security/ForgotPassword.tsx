@@ -39,14 +39,14 @@ const ForgotPassword: React.FC = () => {
                     <p className="mt-10 text-md text-gray-500">
                         Don't have an account?
                     </p>
-                    <Link to="/signup"
+                    <Link to="/auth/signup"
                        className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800">
                         Sign up
                     </Link>
                     <p className="mt-5 text-md text-gray-500">
                         Already have an account?
                     </p>
-                    <Link to="/login"
+                    <Link to="/auth/login"
                        className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800">
                         Log in
                     </Link>

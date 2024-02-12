@@ -20,7 +20,7 @@ const MainHeader: React.FC = () => {
                     </div>
 
                     <div className="flex items-center space-x-4">
-                        <Link to="/login"
+                        <Link to="auth/login"
                                 className="text-white bg-lime-500 hover:bg-lime-600 font-medium rounded-lg shadow-lg text-sm px-4 py-2 text-center">
                             Log in
                         </Link>
