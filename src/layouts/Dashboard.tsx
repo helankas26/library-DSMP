@@ -17,12 +17,15 @@ const DashboardLayout: React.FC = () => {
                     <div className="z-50 sm:sticky sm:top-0">
                         <DashboardHeader/>
                     </div>
-                    <Outlet/>
+                    <div className="m-1.5 rounded-md overflow-auto no-scrollbar">
+                        <Outlet/>
+                    </div>
                 </div>
             </div>
-            <DashboardFooter/>
+            <div className="hidden sm:block">
+                <DashboardFooter/>
+            </div>
         </div>
-
     );
 }
 
