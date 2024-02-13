@@ -14,7 +14,7 @@ import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRound
 const DashboardNavBar: React.FC = () => {
     return (
         <div
-            className="mx-1.5 w-60 py-4 px-2 text-gray-700 bg-white rounded-lg text-left capitalize font-medium shadow-lg">
+            className="mx-1.5 w-52 py-4 px-2 text-gray-700 bg-white rounded-lg text-left capitalize font-medium shadow-lg">
             <div
                 className="cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center">
                 <HomeRoundedIcon className="mx-1"/>
