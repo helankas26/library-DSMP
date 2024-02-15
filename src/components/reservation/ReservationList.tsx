@@ -7,7 +7,7 @@ const ReservationList: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6">
                 <div className="w-full">
                     <h2 className="text-gray-600 font-semibold">Reservations</h2>
-                    <span className="text-xs">All Reservations</span>
+                    <span className="text-xs">All Reservation</span>
                 </div>
                 <div className="w-full flex bg-gray-50 items-center p-2 rounded-md">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400"
