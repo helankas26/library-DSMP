@@ -2,6 +2,8 @@ import React from "react";
 import ViewButton from "../shared/ViewButton.tsx";
 import UpdateButton from "../shared/UpdateButton.tsx";
 import DeleteButton from "../shared/DeleteButton.tsx";
+import CategoryCreateForm from "./CategoryCreateForm.tsx";
+import CategoryUpdateForm from "./CategoryUpdateForm.tsx";
 
 const CategoryList: React.FC = () => {
     return (
@@ -23,6 +25,10 @@ const CategoryList: React.FC = () => {
                            placeholder="search..."/>
                 </div>
             </div>
+
+            <CategoryCreateForm/>
+            <CategoryUpdateForm/>
+
             <div
                 className="-mx-4 sm:-mx-8 px-4 sm:px-8 pb-1 sm:py-4 overflow-x-auto">
                 <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
