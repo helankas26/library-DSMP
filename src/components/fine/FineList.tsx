@@ -1,4 +1,7 @@
 import React from "react";
+import ViewButton from "../shared/ViewButton.tsx";
+import UpdateButton from "../shared/UpdateButton.tsx";
+import DeleteButton from "../shared/DeleteButton.tsx";
 
 const FineList: React.FC = () => {
     return (
@@ -87,22 +90,13 @@ const FineList: React.FC = () => {
                                     <p className="text-gray-900 whitespace-nowrap">Helanka</p>
                                 </td>
                                 <td className="px-5 py-1">
-                                    <button
-                                        className="px-4 py-2 font-semibold text-green-900 transition duration-150 bg-green-100 hover:bg-green-200 active:bg-green-300 active:bg-opacity-75 leading-tight rounded shadow">
-                                        View
-                                    </button>
+                                    <ViewButton/>
                                 </td>
                                 <td className="px-5 py-1">
-                                    <button
-                                        className="px-4 py-2 font-semibold text-orange-900 transition duration-150 bg-orange-100 hover:bg-orange-200 active:bg-orange-300 active:bg-opacity-75 leading-tight rounded shadow">
-                                        Update
-                                    </button>
+                                    <UpdateButton/>
                                 </td>
                                 <td className="px-5 py-1">
-                                    <button
-                                        className="px-4 py-2 font-semibold text-red-900 transition duration-150 bg-red-100 hover:bg-red-200 active:bg-red-300 active:bg-opacity-75 leading-tight rounded shadow">
-                                        Delete
-                                    </button>
+                                    <DeleteButton/>
                                 </td>
                             </tr>
                         </tbody>

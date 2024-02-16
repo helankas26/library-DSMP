@@ -1,5 +1,6 @@
 import React from "react";
 import StatusLabel from "../shared/StatusLabel.tsx";
+import UpdateButton from "../shared/UpdateButton.tsx";
 
 const ReservationList: React.FC = () => {
     return (
@@ -72,12 +73,7 @@ const ReservationList: React.FC = () => {
                                 <td className="px-5 py-1">
                                     <p className="text-gray-900 whitespace-nowrap">2024-02-25</p>
                                 </td>
-                                <td className="px-5 py-1">
-                                    <button
-                                        className="px-4 py-2 font-semibold text-orange-900 transition duration-150 bg-orange-100 hover:bg-orange-200 active:bg-orange-300 active:bg-opacity-75 leading-tight rounded shadow">
-                                        Update
-                                    </button>
-                                </td>
+                                <UpdateButton/>
                             </tr>
                         </tbody>
                     </table>
