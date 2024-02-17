@@ -1,7 +1,8 @@
 import React from "react";
-import SaveRecordButton from "../shared/SaveRecordButton.tsx";
+import UpdateRecordButton from "../shared/UpdateRecordButton.tsx";
+import CancelButton from "../shared/CancelButton.tsx";
 
-const ProfileNew: React.FC = () => {
+const ProfileUpdate: React.FC = () => {
     return (
         <div className="min-w-full border rounded mb-6">
             <div className="mx-auto max-w-screen-xl p-4 flex flex-col gap-5">
@@ -75,14 +76,13 @@ const ProfileNew: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="flex justify-center">
-                    <div className="w-full sm:w-1/2 md:w-4/5 lg:w-full flex gap-5">
-                        <SaveRecordButton model={'Profile'}/>
-                    </div>
+                <div className="w-full flex gap-5">
+                    <UpdateRecordButton/>
+                    <CancelButton/>
                 </div>
             </div>
         </div>
     );
 }
 
-export default ProfileNew;
+export default ProfileUpdate;
