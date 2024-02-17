@@ -1,6 +1,7 @@
 import React from "react";
 import StatusLabel from "../shared/StatusLabel.tsx";
 import UpdateButton from "../shared/UpdateButton.tsx";
+import ReservationUpdateForm from "./ReservationUpdateForm.tsx";
 
 const ReservationList: React.FC = () => {
     return (
@@ -22,6 +23,9 @@ const ReservationList: React.FC = () => {
                            placeholder="search..."/>
                 </div>
             </div>
+
+            <ReservationUpdateForm/>
+
             <div
                 className="-mx-4 sm:-mx-8 px-4 sm:px-8 pb-1 sm:py-4 overflow-x-auto">
                 <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
