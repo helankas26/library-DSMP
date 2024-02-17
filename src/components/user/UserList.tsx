@@ -2,6 +2,7 @@ import React from "react";
 import ViewButton from "../shared/ViewButton.tsx";
 import UpdateButton from "../shared/UpdateButton.tsx";
 import DeleteButton from "../shared/DeleteButton.tsx";
+import UserUpdateForm from "./UserUpdateForm.tsx";
 
 const UserList: React.FC = () => {
     return (
@@ -23,6 +24,9 @@ const UserList: React.FC = () => {
                            placeholder="search..."/>
                 </div>
             </div>
+
+            <UserUpdateForm/>
+
             <div
                 className="-mx-4 sm:-mx-8 px-4 sm:px-8 pb-1 sm:py-4 overflow-x-auto">
                 <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
