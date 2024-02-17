@@ -1,10 +1,11 @@
 import React from "react";
 import SaveRecordButton from "../shared/SaveRecordButton.tsx";
+import ComboboxSingleSelect from "../shared/ComboboxSingleSelect.tsx";
+import ComboboxMultipleSelect from "../shared/ComboboxMultipleSelect.tsx";
 
 
 const BookNew: React.FC = () => {
     return (
-
         <div className="min-w-full border rounded mb-6">
             <div className="mx-auto max-w-screen-xl p-4 flex flex-col gap-5">
                 <div className="flex justify-center">
@@ -32,17 +33,29 @@ const BookNew: React.FC = () => {
                     <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                         <label htmlFor="edition"
                                className="block text-gray-600 text-sm font-semibold mb-2">Edition</label>
-                        <input type="text" id="edition" placeholder="Enter author name"
+                        <input type="text" id="edition" placeholder="Enter edition"
                                className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"/>
                     </div>
                     <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
                         <label htmlFor="noOfCopies"
                                className="block text-gray-600 text-sm font-semibold mb-2">No of Copies</label>
-                        <input type="number" id="noOfCopies" placeholder="Enter author name"
+                        <input type="number" id="noOfCopies" placeholder="Enter no of copies"
                                className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"/>
                     </div>
                 </div>
 
+                <div className="flex flex-col md:flex-row gap-5 items-center md:justify-evenly">
+                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-full">
+                        <label htmlFor="category"
+                               className="block text-gray-600 text-sm font-semibold mb-2">Category</label>
+                        <ComboboxSingleSelect objects={[]} displayField={"categoryName"}/>
+                    </div>
+                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-full">
+                        <label htmlFor="authors"
+                               className="block text-gray-600 text-sm font-semibold mb-2">Authors</label>
+                        <ComboboxMultipleSelect objects={[]} displayField={"name"}/>
+                    </div>
+                </div>
 
                 <div className="flex justify-center">
                     <div className="w-full sm:w-1/2 md:w-4/5 lg:w-full">
@@ -50,8 +63,7 @@ const BookNew: React.FC = () => {
                                className="block text-gray-600 text-sm font-semibold mb-2">Description</label>
                         <textarea id="message"
                                   className="appearance-none border border-gray-300 rounded w-full py-2.5 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
-                                  placeholder="Write description here..."></textarea>
-
+                                  placeholder="Write description here..."/>
                     </div>
                 </div>
 
