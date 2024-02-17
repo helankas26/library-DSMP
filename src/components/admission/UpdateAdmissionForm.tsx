@@ -19,9 +19,9 @@ const UpdateAdmissionForm: React.FC = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row sm:items-end gap-5 sm:gap-10">
                     <div className="w-full">
-                        <label htmlFor="name"
-                               className="block text-gray-600 text-sm font-semibold mb-2">Name</label>
-                        <input type="text" id="name" placeholder="Enter author name"
+                        <label htmlFor="fee"
+                               className="block text-gray-600 text-sm font-semibold mb-2">Fee</label>
+                        <input type="number" id="fee" placeholder="Enter fee"
                                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"/>
                     </div>
                     <div className="w-full flex gap-5">
