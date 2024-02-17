@@ -1,6 +1,6 @@
 import React from "react";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-import UpdateButton from "./UpdateButton.tsx";
+import UpdateButton from "../shared/UpdateButton.tsx";
 
 const ConfigCard: React.FC<{ title: string }> = (props) => {
     return (
