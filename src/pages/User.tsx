@@ -6,7 +6,7 @@ import UserList from "../components/user/UserList.tsx";
 const User: React.FC = () => {
     return (
         <>
-            <div className="sticky top-0">
+            <div className="sticky top-0 z-50">
                 <TitleBar title={"User"}/>
             </div>
             <DashboardContext>

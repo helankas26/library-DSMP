@@ -6,7 +6,7 @@ import ProfileList from "../components/profile/ProfileList.tsx";
 const Profile: React.FC = () => {
     return (
         <>
-            <div className="sticky top-0">
+            <div className="sticky top-0 z-50">
                 <TitleBar title={"Profiles"}/>
             </div>
             <DashboardContext>

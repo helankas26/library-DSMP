@@ -6,7 +6,7 @@ import ConfigView from "../components/config/ConfigView.tsx";
 const Config: React.FC = () => {
     return (
         <>
-            <div className="sticky top-0">
+            <div className="sticky top-0 z-50">
                 <TitleBar title={"Configuration"}/>
             </div>
             <DashboardContext>

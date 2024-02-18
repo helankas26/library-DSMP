@@ -6,7 +6,7 @@ import AuthorList from "../components/author/AuthorList.tsx";
 const Author: React.FC = () => {
     return (
         <>
-            <div className="sticky top-0">
+            <div className="sticky top-0 z-50">
                 <TitleBar title={"Authors"}/>
             </div>
             <DashboardContext>

@@ -6,7 +6,7 @@ import CategoryList from "../components/category/CategoryList.tsx";
 const Category: React.FC = () => {
     return (
         <>
-            <div className="sticky top-0">
+            <div className="sticky top-0 z-50">
                 <TitleBar title={"Categories"}/>
             </div>
             <DashboardContext>

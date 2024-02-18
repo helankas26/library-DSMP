@@ -6,7 +6,7 @@ import AdmissionList from "../components/admission/AdmissionList.tsx";
 const Admission: React.FC = () => {
     return (
         <>
-            <div className="sticky top-0">
+            <div className="sticky top-0 z-50">
                 <TitleBar title={"Admissions"}/>
             </div>
             <DashboardContext>

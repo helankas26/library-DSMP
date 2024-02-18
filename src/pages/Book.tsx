@@ -6,7 +6,7 @@ import DashboardContext from "../components/shared/DashboardContext.tsx";
 const Book: React.FC = () => {
     return (
         <>
-            <div className="sticky top-0">
+            <div className="sticky top-0 z-50">
                 <TitleBar title={"Books"}/>
             </div>
             <DashboardContext>

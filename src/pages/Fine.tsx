@@ -6,7 +6,7 @@ import FineList from "../components/fine/FineList.tsx";
 const Fine: React.FC = () => {
     return (
         <>
-            <div className="sticky top-0">
+            <div className="sticky top-0 z-50">
                 <TitleBar title={"Fines"}/>
             </div>
             <DashboardContext>

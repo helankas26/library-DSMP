@@ -6,7 +6,7 @@ import TransactionList from "../components/transaction/TransactionList.tsx";
 const Transaction: React.FC = () => {
     return (
         <>
-            <div className="sticky top-0">
+            <div className="sticky top-0 z-50">
                 <TitleBar title={"Transaction"}/>
             </div>
             <DashboardContext>

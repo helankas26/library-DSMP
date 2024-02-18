@@ -6,7 +6,7 @@ import SubscriptionList from "../components/Subscription/SubscriptionList.tsx";
 const Subscription: React.FC = () => {
     return (
         <>
-            <div className="sticky top-0">
+            <div className="sticky top-0 z-50">
                 <TitleBar title={"Subscription"}/>
             </div>
             <DashboardContext>
