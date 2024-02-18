@@ -20,7 +20,7 @@ const ComboboxMultipleSelect: React.FC<{ objects: any[]; displayField: string; }
                 <div
                     className="relative w-full cursor-default overflow-hidden rounded bg-white text-left focus:outline-none sm:text-sm">
                     <Combobox.Input
-                        className="appearance-none border border-gray-300 rounded w-full py-2.5 px-3 text-sm text-gray-700 leading-5 focus:outline-none focus:shadow-outline"
+                        className="appearance-none border rounded w-full py-2.5 px-3 text-sm text-gray-700 leading-5 focus:outline-none focus:shadow-outline"
                         displayValue={(objects) =>
                             (objects as any).map((object: {
                                 [x: string]: any;
