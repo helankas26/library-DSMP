@@ -4,11 +4,11 @@ import OverdueDatesLabel from "../../shared/OverdueDatesLabel.tsx";
 const TransactionCard: React.FC = () => {
     return (
         <div className="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md">
-            <div className="mb-4">
-                <div className="font-medium">Transaction Overdue</div>
+            <div className="mb-4 border-b border-gray-200">
+                <p className="font-medium">Transaction Overdue</p>
             </div>
-            <div className="overflow-x-auto">
-                <table className="w-full min-w-[460px]">
+            <div className="overflow-x-auto h-[300px]">
+                <table className="w-full min-w-[660px]">
                     <thead>
                         <tr>
                             <th className="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tl-md rounded-bl-md">Profile</th>

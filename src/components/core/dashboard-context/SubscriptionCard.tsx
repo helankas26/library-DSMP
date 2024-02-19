@@ -4,10 +4,10 @@ import PaymentStatusLabel from "../../shared/PaymentStatusLabel.tsx";
 const SubscriptionCard: React.FC = () => {
     return (
         <div className="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md">
-            <div className="mb-4">
-                <div className="font-medium">Subscription Arrears</div>
+            <div className="mb-4 border-b border-gray-200">
+                <p className="font-medium">Subscription Arrears</p>
             </div>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto h-[300px]">
                 <table className="w-full min-w-[460px]">
                     <thead>
                         <tr>
