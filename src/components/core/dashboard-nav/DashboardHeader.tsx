@@ -5,7 +5,7 @@ const DashboardHeader: React.FC = () => {
     return (
         <div className="bg-[#E2E8F0] pt-2">
             <div
-                className="mx-1.5 py-2 px-2 bg-white rounded-lg shadow-lg flex items-center justify-between">
+                className="mx-1.5 py-2 px-2 bg-white rounded-lg flex items-center justify-between">
                 <div className="px-2 mr-2 border-r border-gray-800">
                     <div
                         className="font-bold text-xl text-center bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-teal-300">

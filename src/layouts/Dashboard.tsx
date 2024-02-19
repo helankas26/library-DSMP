@@ -14,10 +14,10 @@ const DashboardLayout: React.FC = () => {
                     </div>
                 </div>
                 <div className="w-full h-full flex flex-col flex-1">
-                    <div className="sm:sticky sm:top-0">
+                    <div className="sm:sticky sm:top-0 z-50">
                         <DashboardHeader/>
                     </div>
-                    <div className="m-1.5 h-full rounded-md overflow-auto no-scrollbar">
+                    <div className="m-1.5 h-full rounded-md overflow-auto no-scrollbar z-40">
                         <Outlet/>
                     </div>
                 </div>

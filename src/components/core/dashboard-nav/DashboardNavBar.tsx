@@ -15,7 +15,7 @@ import {NavLink} from "react-router-dom";
 const DashboardNavBar: React.FC = () => {
     return (
         <div
-            className="mx-1.5 w-52 py-4 px-2 text-gray-700 bg-white rounded-lg text-left capitalize font-medium shadow-lg">
+            className="mx-1.5 w-52 py-4 px-2 text-gray-700 bg-white rounded-lg text-left capitalize font-medium shadow">
             <NavLink
                 to="/dashboard"
                 className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}
