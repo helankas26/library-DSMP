@@ -34,12 +34,12 @@ const ReservationUpdateForm: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-end gap-5 sm:gap-10">
-                    <div className="w-full sm:w-1/2 md:w-1/3 lg:w-full">
+                <div className="flex flex-col md:flex-row md:items-end gap-5 sm:gap-10">
+                    <div className="w-full">
                         <label htmlFor="status"
                                className="block text-gray-600 text-sm font-semibold mb-2">Status</label>
                         <div
-                            className="flex justify-center gap-2 border border-gray-300 rounded w-full py-1 px-2 bg-gray-200 text-gray-600">
+                            className="flex justify-center gap-0 sm:gap-2 border border-gray-300 rounded w-full py-1 px-2 bg-gray-200 text-gray-600">
                             <div className="w-full">
                                 <input type="radio" name="type" id="reserved" value="RESERVED"
                                        className="peer hidden"/>

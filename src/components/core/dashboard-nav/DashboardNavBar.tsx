@@ -15,83 +15,83 @@ import {NavLink} from "react-router-dom";
 const DashboardNavBar: React.FC = () => {
     return (
         <div
-            className="mx-1.5 w-52 py-4 px-2 text-gray-700 bg-white rounded-lg text-left capitalize font-medium shadow">
+            className="mx-1.5 py-4 px-2 text-gray-700 bg-white rounded-lg text-left capitalize font-medium shadow">
             <NavLink
                 to="/dashboard"
                 className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}
                 end>
                 <HomeRoundedIcon className="mx-1"/>
-                <span className="mx-5">Home</span>
+                <span className="mx-5 hidden lg:block">Home</span>
             </NavLink>
 
             <NavLink
                 to="/"
                 className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
                 <ViewComfyAltRoundedIcon className="mx-1"/>
-                <span className="mx-5">Main Page</span>
+                <span className="mx-5  hidden lg:block">Main Page</span>
             </NavLink>
 
             <NavLink
                 to="profiles"
                 className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
                 <GroupAddRoundedIcon className="mx-1"/>
-                <span className="mx-5">Registration</span>
+                <span className="mx-5  hidden lg:block">Registration</span>
             </NavLink>
 
             <NavLink
                 to="transactions"
                 className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
                 <ShoppingCartRoundedIcon className="mx-1"/>
-                <span className="mx-5">Book Lending</span>
+                <span className="mx-5  hidden lg:block">Book Lending</span>
             </NavLink>
 
             <NavLink
                 to="books"
                 className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
                 <AutoStoriesRoundedIcon className="mx-1"/>
-                <span className="mx-5">Books</span>
+                <span className="mx-5  hidden lg:block">Books</span>
             </NavLink>
 
             <NavLink
                 to="reservations"
                 className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
                 <StyleRoundedIcon className="mx-1"/>
-                <span className="mx-5">Reservation</span>
+                <span className="mx-5  hidden lg:block">Reservation</span>
             </NavLink>
 
             <NavLink
                 to="subscriptions"
                 className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
                 <PaidRoundedIcon className="mx-1"/>
-                <span className="mx-5">Payment</span>
+                <span className="mx-5  hidden lg:block">Payment</span>
             </NavLink>
 
             <NavLink
                 to="fines"
                 className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
                 <PaymentsRoundedIcon className="mx-1"/>
-                <span className="mx-5">Fine</span>
+                <span className="mx-5  hidden lg:block">Fine</span>
             </NavLink>
 
             <NavLink
                 to="admissions"
                 className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
                 <CardMembershipRoundedIcon className="mx-1"/>
-                <span className="mx-5">Admission</span>
+                <span className="mx-5  hidden lg:block">Admission</span>
             </NavLink>
 
             <NavLink
                 to="users"
                 className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
                 <AdminPanelSettingsRoundedIcon className="mx-1"/>
-                <span className="mx-5">Users</span>
+                <span className="mx-5  hidden lg:block">Users</span>
             </NavLink>
 
             <NavLink
                 to="configurations"
                 className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
                 <SettingsSuggestRoundedIcon className="mx-1"/>
-                <span className="mx-5">Configuration</span>
+                <span className="mx-5  hidden lg:block">Configuration</span>
             </NavLink>
         </div>
     );

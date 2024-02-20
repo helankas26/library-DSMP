@@ -86,8 +86,8 @@ const ProfileList: React.FC = () => {
                                 <td className="pl-5 pr-2 py-1">
                                     <p className="text-gray-900 whitespace-nowrap">0778596940</p>
                                 </td>
-                                <td className="pl-5 pr-2 py-1 max-w-xs overflow-hidden">
-                                    <p className="text-gray-900">
+                                <td className="pl-5 pr-2 py-1 max-w-[280px] overflow-hidden">
+                                    <p className="text-gray-900 truncate">
                                         3rd Lane, Sethsiri Uyana, Mathugama RD, Nagoda, Dondangoda, Kalutara.
                                     </p>
                                 </td>

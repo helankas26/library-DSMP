@@ -13,7 +13,7 @@ const DashboardLayout: React.FC = () => {
                         <DashboardNavBar/>
                     </div>
                 </div>
-                <div className="w-full h-full flex flex-col flex-1">
+                <div className="w-9/12 h-full flex flex-col flex-1">
                     <div className="sm:sticky sm:top-0 z-50">
                         <DashboardHeader/>
                     </div>

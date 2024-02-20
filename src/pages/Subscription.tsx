@@ -1,7 +1,7 @@
 import React from "react";
 import TitleBar from "../components/shared/TitleBar.tsx";
 import DashboardContext from "../components/shared/DashboardContext.tsx";
-import SubscriptionList from "../components/Subscription/SubscriptionList.tsx";
+import SubscriptionList from "../components/subscription/SubscriptionList.tsx";
 
 const Subscription: React.FC = () => {
     return (

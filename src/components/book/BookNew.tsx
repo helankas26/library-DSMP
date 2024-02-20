@@ -61,7 +61,7 @@ const BookNew: React.FC = () => {
                     <div className="w-full sm:w-1/2 md:w-4/5 lg:w-full">
                         <label htmlFor="description"
                                className="block text-gray-600 text-sm font-semibold mb-2">Description</label>
-                        <textarea id="message"
+                        <textarea id="description"
                                   className="appearance-none border border-gray-300 rounded w-full py-2.5 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                                   placeholder="Write description here..."/>
                     </div>
