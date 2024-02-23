@@ -1,7 +1,6 @@
 import AxiosInstance from "../../config/AxiosInstance.ts";
 import HttpResponse from "../../utils/HttpResponse.ts";
 import Author from "../../model/Author.tsx";
-import Admission from "../../model/Admission.tsx";
 
 
 const AUTHORS: string = '/authors';
@@ -15,11 +14,11 @@ const createAuthor = async (author: Author) => {
 }
 
 const findAuthorById = async (id: string) => {
-    return await AxiosInstance.get<HttpResponse<Admission>>(`${AUTHORS}/${id}`);
+    return await AxiosInstance.get<HttpResponse<Author>>(`${AUTHORS}/${id}`);
 }
 
 const updateAuthor = async (id: string, author: Author) => {
-    return await AxiosInstance.patch<HttpResponse<Admission>>(`${AUTHORS}/${id}`, {author});
+    return await AxiosInstance.patch<HttpResponse<Author>>(`${AUTHORS}/${id}`, {author});
 }
 
 const deleteAuthor = async (id: string) => {
