@@ -1,5 +1,5 @@
 import React from "react";
-import CategoryFilterListProps from "../../model/CategoryFilterListProps.tsx";
+import CategoryFilterListProps from "../../model/CategoryFilterListProps.ts";
 
 const CategoryFilterList: React.FC<{ categories: CategoryFilterListProps[] }> = (props) => {
     if (props.categories.length === 0) {
