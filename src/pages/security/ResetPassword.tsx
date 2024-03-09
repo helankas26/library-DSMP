@@ -65,7 +65,7 @@ const ResetPassword: React.FC = () => {
                         Reset Your Password?
                     </h2>
                     <p className="mt-2 text-sm text-gray-600">
-                        Reset your account password using OTP, check your email spam folder for OTP.
+                        Reset your account password using OTP, check your email inbox or spam folder for OTP.
                     </p>
                 </div>
                 <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded" onSubmit={resetPasswordHandler}>
