@@ -1,4 +1,4 @@
-import Book from "./Book.tsx";
+import Book from "./Book.ts";
 
 interface AuthCardProps {
     id: string;

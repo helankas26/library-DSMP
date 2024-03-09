@@ -1,6 +1,6 @@
-import AxiosInstance from "../../config/AxiosInstance.ts";
-import HttpResponse from "../../utils/HttpResponse.ts";
-import Reservation from "../../model/Reservation.tsx";
+import AxiosInstance from "../../config/axios-instance.ts";
+import HttpResponse from "../../utils/http-response.ts";
+import Reservation from "../../model/Reservation.ts";
 
 const RESERVATIONS: string = '/reservations';
 

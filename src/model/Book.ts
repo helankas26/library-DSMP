@@ -1,5 +1,5 @@
-import Author from "./Author.tsx";
-import Category from "./Category.tsx";
+import Author from "./Author.ts";
+import Category from "./Category.ts";
 
 interface Book {
     id: string;

@@ -1,5 +1,5 @@
-import Book from "./Book.tsx";
-import Profile from "./Profile.tsx";
+import Book from "./Book.ts";
+import Profile from "./Profile.ts";
 
 interface Transaction {
     id: string;

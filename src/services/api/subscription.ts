@@ -1,6 +1,6 @@
-import AxiosInstance from "../../config/AxiosInstance.ts";
-import HttpResponse from "../../utils/HttpResponse.ts";
-import Subscription from "../../model/Subscription.tsx";
+import AxiosInstance from "../../config/axios-instance.ts";
+import HttpResponse from "../../utils/http-response.ts";
+import Subscription from "../../model/Subscription.ts";
 
 const SUBSCRIPTIONS: string = '/subscriptions';
 

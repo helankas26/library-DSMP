@@ -1,6 +1,6 @@
-import AxiosInstance from "../../config/AxiosInstance.ts";
-import HttpResponse from "../../utils/HttpResponse.ts";
-import Fine from "../../model/Fine.tsx";
+import AxiosInstance from "../../config/axios-instance.ts";
+import HttpResponse from "../../utils/http-response.ts";
+import Fine from "../../model/Fine.ts";
 
 
 const FINES: string = '/fines';

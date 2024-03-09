@@ -1,4 +1,4 @@
-import User from "../model/User.tsx";
+import User from "../model/User.ts";
 
 interface HttpResponseWithToken {
     status: string;

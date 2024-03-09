@@ -1,6 +1,6 @@
-import AxiosInstance from "../../config/AxiosInstance.ts";
-import HttpResponse from "../../utils/HttpResponse.ts";
-import Admission from "../../model/Admission.tsx";
+import AxiosInstance from "../../config/axios-instance.ts";
+import HttpResponse from "../../utils/http-response.ts";
+import Admission from "../../model/Admission.ts";
 
 
 const ADMISSIONS: string = '/admissions';

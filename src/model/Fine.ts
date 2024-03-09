@@ -1,5 +1,5 @@
-import Profile from "./Profile.tsx";
-import Book from "./Book.tsx";
+import Profile from "./Profile.ts";
+import Book from "./Book.ts";
 
 interface Fine {
     id: string;

@@ -1,6 +1,6 @@
-import AxiosInstance from "../../config/AxiosInstance.ts";
-import HttpResponse from "../../utils/HttpResponse.ts";
-import Book from "../../model/Book.tsx";
+import AxiosInstance from "../../config/axios-instance.ts";
+import HttpResponse from "../../utils/http-response.ts";
+import Book from "../../model/Book.ts";
 
 
 const BOOKS: string = '/books';

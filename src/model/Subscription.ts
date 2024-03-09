@@ -1,4 +1,4 @@
-import Profile from "./Profile.tsx";
+import Profile from "./Profile.ts";
 
 interface Subscription {
     id: string;

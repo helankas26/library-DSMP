@@ -1,6 +1,6 @@
-import AxiosInstance from "../../config/AxiosInstance.ts";
-import HttpResponse from "../../utils/HttpResponse.ts";
-import Transaction from "../../model/Transaction.tsx";
+import AxiosInstance from "../../config/axios-instance.ts";
+import HttpResponse from "../../utils/http-response.ts";
+import Transaction from "../../model/Transaction.ts";
 
 
 const TRANSACTIONS: string = '/transactions';
