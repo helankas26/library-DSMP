@@ -1,15 +1,34 @@
 import React, {FormEvent, useState} from "react";
-import AuthCard from "../../components/shared/AuthCard.tsx";
 import {Link} from "react-router-dom";
+import AuthCard from "../../components/shared/AuthCard.tsx";
 import forgetPasswordImage from "../../assets/forget-password.jpg";
+import authService from "../../services/api/auth.ts";
+import useSnackbar from "../../hooks/use-snackbar.ts";
+
 
 const ForgotPassword: React.FC = () => {
     const [email, setEmail] = useState<string>('');
+    const [isSendOtpDisabled, setIsSendOtpDisabled] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const {showError, showAlert} = useSnackbar();
 
-    const forgetPasswordHandler = (event: FormEvent) => {
+    const forgetPasswordHandler = async (event: FormEvent) => {
         event.preventDefault();
 
-        setEmail('');
+        setLoading(true);
+        setIsSendOtpDisabled(true);
+        try {
+            const response = await authService.forgetPassword(email);
+            if (response.data.send) {
+                showAlert("Password rest OTP has been sent", 'info');
+                setEmail('');
+            }
+        } catch (error: any) {
+            showError(error);
+        } finally {
+            setLoading(false);
+            setIsSendOtpDisabled(false);
+        }
     };
 
     return (
@@ -36,14 +55,17 @@ const ForgotPassword: React.FC = () => {
                         onChange={(e) => {
                             setEmail(e.target.value);
                         }}
+                        required={true}
                         placeholder="Enter Email Address..."
                     />
                 </div>
                 <div className="mb-6 text-center">
                     <button
-                        className="w-full px-4 py-2 font-bold text-white bg-green-500 rounded-full hover:bg-green-700 focus:outline-none focus:shadow-outline"
+                        className="w-full px-4 py-2 font-bold text-white bg-green-500 rounded-full hover:bg-green-700 focus:outline-none focus:shadow-outline disabled:cursor-not-allowed disabled:bg-gray-500"
+                        disabled={isSendOtpDisabled}
                         type="submit">
-                        Send OTP
+                        {!loading && 'Send OTP'}
+                        {loading && 'Sending email . . .'}
                     </button>
                 </div>
                 <hr className="mt-10 border"/>

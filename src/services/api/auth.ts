@@ -27,7 +27,7 @@ const logout = async () => {
 }
 
 const forgetPassword = async (email: string) => {
-    return await AxiosInstance.post<HttpResponse<string>>(`${AUTH}/forgetPassword`, {email});
+    return await AxiosInstance.post<HttpResponse<boolean>>(`${AUTH}/forgetPassword`, {email});
 }
 
 const checkOtpValid = async (otp: string) => {
