@@ -1,12 +1,16 @@
+import React from "react";
 import './App.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import SnackbarService from "./components/shared/SnackbarService.tsx";
+import useException from "./hooks/use-exception.ts";
 import HomeLayout from "./layouts/Home.tsx";
 import homeRoutes from "./routes/Home.tsx";
 import NotFoundError from "./pages/NotFoundError.tsx";
 import DashboardLayout from "./layouts/Dashboard.tsx";
 import dashboardRoutes from "./routes/Dashboard.tsx";
 
-function App() {
+const App: React.FC = () => {
+    const {error} = useException(true);
 
     const router = createBrowserRouter([
         {
@@ -24,6 +28,7 @@ function App() {
 
     return (
         <>
+            {error && <SnackbarService options={error}/>}
             <RouterProvider router={router}/>
         </>
     )
