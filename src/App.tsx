@@ -2,7 +2,7 @@ import React from "react";
 import './App.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import SnackbarService from "./components/shared/SnackbarService.tsx";
-import useException from "./hooks/use-exception.ts";
+import useSnackbar from "./hooks/use-snackbar.ts";
 import HomeLayout from "./layouts/Home.tsx";
 import homeRoutes from "./routes/Home.tsx";
 import NotFoundError from "./pages/NotFoundError.tsx";
@@ -10,7 +10,7 @@ import DashboardLayout from "./layouts/Dashboard.tsx";
 import dashboardRoutes from "./routes/Dashboard.tsx";
 
 const App: React.FC = () => {
-    const {error} = useException(true);
+    const {snackbarState} = useSnackbar(true);
 
     const router = createBrowserRouter([
         {
@@ -28,7 +28,7 @@ const App: React.FC = () => {
 
     return (
         <>
-            {error && <SnackbarService options={error}/>}
+            {snackbarState && <SnackbarService options={snackbarState}/>}
             <RouterProvider router={router}/>
         </>
     )

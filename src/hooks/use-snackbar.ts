@@ -1,12 +1,13 @@
 import {useEffect, useState} from "react";
 import SnackbarServiceProps from "../model/SnackbarServiceProps.ts";
+import {AlertColor} from "@mui/material/Alert/Alert";
 
 let listener: any;
 
-const useException = (shouldListen = false) => {
-    const [error, setError] = useState<SnackbarServiceProps>();
+const useSnackbar = (shouldListen = false) => {
+    const [snackbarState, setSnackbarState] = useState<SnackbarServiceProps>();
 
-    const handleException = (err: any) => {
+    const showError = (err: any) => {
         let message: string;
 
         if (err.response) {
@@ -27,9 +28,20 @@ const useException = (shouldListen = false) => {
         });
     };
 
+    const showAlert = (message: string, severity: AlertColor) => {
+        listener({
+            message: message,
+            isOpen: true,
+            severity: severity,
+            onClear: () => {
+                listener(undefined);
+            }
+        });
+    };
+
     useEffect(() => {
         if (shouldListen) {
-            listener = setError;
+            listener = setSnackbarState;
         }
 
         return () => {
@@ -38,10 +50,10 @@ const useException = (shouldListen = false) => {
             }
         };
 
-    }, [setError, shouldListen]);
+    }, [shouldListen]);
 
 
-    return {error, handleException};
+    return {snackbarState, showError, showAlert};
 }
 
-export default useException;
+export default useSnackbar;
