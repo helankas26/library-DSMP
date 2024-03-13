@@ -13,7 +13,7 @@ const useSnackbar = (shouldListen = false) => {
         if (err.response) {
             message = err.response.data.message;
         } else if (err.request) {
-            message = err.request.message;
+            message = err.message;
         } else {
             message = err.message;
         }
