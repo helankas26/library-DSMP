@@ -9,7 +9,7 @@ const DashboardMember: React.FC = () => {
         <DashboardContext>
             <div className="flex items-center justify-center">
                 <div
-                    className="w-full sm:w-2/3 lg:w-1/3 bg-white p-3 rounded-xl shadow-xl border sm:mb-6">
+                    className="w-full sm:w-2/3 lg:w-1/3 bg-white p-3 rounded-xl shadow-xl border mb-4 sm:mb-6">
                     <div className="flex space-x-6 items-center">
                         <img src="https://avatars.githubusercontent.com/u/61771292?v=4"
                              className="w-auto h-24 rounded-lg"/>
@@ -24,7 +24,7 @@ const DashboardMember: React.FC = () => {
             <div className="flex flex-col gap-4">
                 <div className="bg-slate-200 rounded-lg w-full">
                     <div className="m-4 mb-0 xl:mb-4">
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             <TransactionCard/>
                             <SubscriptionCard/>
                             <ReservationCard/>

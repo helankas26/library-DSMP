@@ -20,7 +20,7 @@ const DashboardLibrarian: React.FC = () => {
 
                 <div className="bg-slate-200 rounded-lg w-full">
                     <div className="m-4 mb-0 xl:mb-4">
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             <TransactionCard/>
                             <SubscriptionCard/>
                             <ReservationCard/>
