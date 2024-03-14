@@ -14,15 +14,15 @@ const createAdmission = async (admission: Admission) => {
 }
 
 const findAdmissionById = async (id: string) => {
-    return await AxiosInstance.get<HttpResponse<Admission>>(`ADMISSIONS/${id}`);
+    return await AxiosInstance.get<HttpResponse<Admission>>(`${ADMISSIONS}/${id}`);
 }
 
 const updateAdmission = async (id: string, admission: Admission) => {
-    return await AxiosInstance.patch<HttpResponse<Admission>>(`ADMISSIONS/${id}`, {admission});
+    return await AxiosInstance.patch<HttpResponse<Admission>>(`${ADMISSIONS}/${id}`, {admission});
 }
 
 const deleteAdmission = async (id: string) => {
-    return await AxiosInstance.delete<{ id: string }>(`ADMISSIONS/${id}`);
+    return await AxiosInstance.delete<{ id: string }>(`${ADMISSIONS}/${id}`);
 }
 
 export default {
