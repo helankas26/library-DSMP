@@ -77,7 +77,9 @@ const ReservationList: React.FC = () => {
                                 <td className="px-5 py-1">
                                     <p className="text-gray-900 whitespace-nowrap">2024-02-25</p>
                                 </td>
-                                <UpdateButton/>
+                                <td className="px-5 py-1">
+                                    <UpdateButton/>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
