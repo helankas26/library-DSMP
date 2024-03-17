@@ -1,5 +1,5 @@
 import React, {FormEvent, useState} from "react";
-import {Link} from "react-router-dom";
+import {Form, Link, useNavigate} from "react-router-dom";
 import AuthCard from "../../components/shared/AuthCard.tsx";
 import forgetPasswordImage from "../../assets/forget-password.jpg";
 import authService from "../../services/api/auth.ts";
@@ -7,27 +7,27 @@ import useSnackbar from "../../hooks/use-snackbar.ts";
 
 
 const ForgotPassword: React.FC = () => {
-    const [email, setEmail] = useState<string>('');
-    const [isSendOtpDisabled, setIsSendOtpDisabled] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
+    const navigate = useNavigate();
     const {showError, showAlert} = useSnackbar();
+
+    const [email, setEmail] = useState<string>('');
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
     const forgetPasswordHandler = async (event: FormEvent) => {
         event.preventDefault();
 
-        setLoading(true);
-        setIsSendOtpDisabled(true);
+        setIsSubmitting(true);
         try {
             const response = await authService.forgetPassword(email);
             if (response.data.send) {
                 showAlert("Password rest OTP has been sent", 'info');
                 setEmail('');
+                navigate("/auth/reset-password");
             }
         } catch (error: any) {
             showError(error);
         } finally {
-            setLoading(false);
-            setIsSendOtpDisabled(false);
+            setIsSubmitting(false);
         }
     };
 
@@ -39,10 +39,10 @@ const ForgotPassword: React.FC = () => {
                 </h2>
                 <p className="mt-2 text-sm text-gray-600">
                     Just enter your email address below and we'll send you a
-                    OTP to reset your password!
+                    OTP to reset your password.
                 </p>
             </div>
-            <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded" onSubmit={forgetPasswordHandler}>
+            <Form className="px-8 pt-6 pb-8 mb-4 bg-white rounded" onSubmit={forgetPasswordHandler}>
                 <div className="mb-6">
                     <label className="block mb-2 text-sm font-bold text-gray-700 tracking-wide" htmlFor="email">
                         Email
@@ -62,10 +62,10 @@ const ForgotPassword: React.FC = () => {
                 <div className="mb-6 text-center">
                     <button
                         className="w-full px-4 py-2 font-bold text-white bg-green-500 rounded-full hover:bg-green-700 focus:outline-none focus:shadow-outline disabled:cursor-not-allowed disabled:bg-gray-500"
-                        disabled={isSendOtpDisabled}
+                        disabled={isSubmitting}
                         type="submit">
-                        {!loading && 'Send OTP'}
-                        {loading && 'Sending email . . .'}
+                        {!isSubmitting && 'Send OTP'}
+                        {isSubmitting && 'Sending email . . .'}
                     </button>
                 </div>
                 <hr className="mt-10 border"/>
@@ -85,7 +85,7 @@ const ForgotPassword: React.FC = () => {
                         Log in
                     </Link>
                 </div>
-            </form>
+            </Form>
         </AuthCard>
     );
 }
