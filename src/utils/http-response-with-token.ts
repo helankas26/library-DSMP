@@ -2,7 +2,7 @@ import User from "../model/User.ts";
 
 interface HttpResponseWithToken {
     status: string;
-    token: string,
+    accessToken: string,
     user: User;
 }
 

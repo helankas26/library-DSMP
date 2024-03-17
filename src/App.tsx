@@ -8,8 +8,10 @@ import homeRoutes from "./routes/Home.tsx";
 import NotFoundError from "./pages/NotFoundError.tsx";
 import DashboardLayout from "./layouts/Dashboard.tsx";
 import dashboardRoutes from "./routes/Dashboard.tsx";
+import useAxiosInstance from "./hooks/use-axios-instance.ts";
 
 const App: React.FC = () => {
+    useAxiosInstance();
     const {snackbarState} = useSnackbar(true);
 
     const router = createBrowserRouter([
