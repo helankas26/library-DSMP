@@ -10,10 +10,12 @@ import DashboardLayout from "./layouts/Dashboard.tsx";
 import dashboardRoutes from "./routes/Dashboard.tsx";
 import useAxiosInstance from "./hooks/use-axios-instance.ts";
 import useUserRole from "./hooks/use-user-role.ts";
+import useProfile from "./hooks/use-profile.ts";
 
 const App: React.FC = () => {
     useAxiosInstance();
     useUserRole();
+    useProfile();
     const {snackbarState} = useSnackbar(true);
 
     const router = createBrowserRouter([

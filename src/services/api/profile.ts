@@ -18,6 +18,11 @@ const findProfileById = async (id: string) => {
 
 }
 
+const findProfileByAuthUser = async () => {
+    return await AxiosInstance.get<HttpResponse<Profile>>(`${PROFILES}/auth`);
+
+}
+
 const updateProfile = async (id: string, profile: Profile) => {
     return await AxiosInstance.patch<HttpResponse<Profile>>(`${PROFILES}/${id}`, {profile});
 
@@ -31,6 +36,7 @@ export default {
     findAllProfiles,
     createProfile,
     findProfileById,
+    findProfileByAuthUser,
     updateProfile,
     deleteProfile
 };
