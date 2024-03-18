@@ -3,11 +3,11 @@ import useSnackbar from "./use-snackbar.ts";
 import authService from "../services/api/auth.ts";
 
 const useLogout = () => {
-    const {setAuth} = useAuth()!;
+    const {dispatchAuth} = useAuth()!;
     const {showError} = useSnackbar();
 
     const logout = async () => {
-        setAuth({accessToken: undefined, profile: null});
+        dispatchAuth({type: '', auth: {accessToken: undefined, profile: undefined}});
 
         try {
             await authService.logout();
