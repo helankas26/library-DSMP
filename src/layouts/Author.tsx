@@ -1,19 +1,20 @@
 import React from "react";
+import {Outlet} from "react-router-dom";
+
 import TitleBar from "../components/shared/TitleBar.tsx";
 import DashboardContext from "../components/shared/DashboardContext.tsx";
-import TransactionList from "../components/transaction/TransactionList.tsx";
 
-const Transaction: React.FC = () => {
+const AuthorLayout: React.FC = () => {
     return (
         <>
             <div className="sticky top-0 z-50">
-                <TitleBar title={"Transaction"}/>
+                <TitleBar title={"Authors"}/>
             </div>
             <DashboardContext>
-                <TransactionList/>
+                <Outlet/>
             </DashboardContext>
         </>
     );
 }
 
-export default Transaction;
+export default AuthorLayout;

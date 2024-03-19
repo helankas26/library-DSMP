@@ -1,19 +1,20 @@
 import React from "react";
+import {Outlet} from "react-router-dom";
+
 import TitleBar from "../components/shared/TitleBar.tsx";
 import DashboardContext from "../components/shared/DashboardContext.tsx";
-import UserList from "../components/user/UserList.tsx";
 
-const User: React.FC = () => {
+const ProfileLayout: React.FC = () => {
     return (
         <>
             <div className="sticky top-0 z-50">
-                <TitleBar title={"User"}/>
+                <TitleBar title={"Profiles"}/>
             </div>
             <DashboardContext>
-                <UserList/>
+                <Outlet/>
             </DashboardContext>
         </>
     );
 }
 
-export default User;
+export default ProfileLayout;

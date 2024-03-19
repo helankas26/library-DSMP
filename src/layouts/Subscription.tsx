@@ -1,19 +1,20 @@
 import React from "react";
+import {Outlet} from "react-router-dom";
+
 import TitleBar from "../components/shared/TitleBar.tsx";
 import DashboardContext from "../components/shared/DashboardContext.tsx";
-import FineList from "../components/fine/FineList.tsx";
 
-const Fine: React.FC = () => {
+const SubscriptionLayout: React.FC = () => {
     return (
         <>
             <div className="sticky top-0 z-50">
-                <TitleBar title={"Fines"}/>
+                <TitleBar title={"Subscription"}/>
             </div>
             <DashboardContext>
-                <FineList/>
+                <Outlet/>
             </DashboardContext>
         </>
     );
 }
 
-export default Fine;
+export default SubscriptionLayout;

@@ -1,19 +1,20 @@
 import React from "react";
+import {Outlet} from "react-router-dom";
+
 import TitleBar from "../components/shared/TitleBar.tsx";
 import DashboardContext from "../components/shared/DashboardContext.tsx";
-import ReservationList from "../components/reservation/ReservationList.tsx";
 
-const Reservation: React.FC = () => {
+const TransactionLayout: React.FC = () => {
     return (
         <>
             <div className="sticky top-0 z-50">
-                <TitleBar title={"Reservations"}/>
+                <TitleBar title={"Transaction"}/>
             </div>
             <DashboardContext>
-                <ReservationList/>
+                <Outlet/>
             </DashboardContext>
         </>
     );
 }
 
-export default Reservation;
+export default TransactionLayout;
