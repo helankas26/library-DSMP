@@ -1,18 +1,37 @@
 import React, {FormEvent, useState} from "react";
+import {Link, useNavigate, useLocation, Form} from "react-router-dom";
 import AuthCard from "../../components/shared/AuthCard.tsx";
-import {Link} from "react-router-dom";
 import loginImage from "../../assets/login.jpg";
-
+import authService from "../../services/api/auth.ts";
+import useSnackbar from "../../hooks/use-snackbar.ts";
+import useAuth from "../../hooks/use-auth.ts";
 
 const Login: React.FC = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const {dispatchAuth} = useAuth()!;
+    const {showError} = useSnackbar();
+
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    let from = location.state?.from?.pathname;
 
-    const loginHandler = (event: FormEvent) => {
+    const loginHandler = async (event: FormEvent) => {
         event.preventDefault();
 
-        setUsername('');
-        setPassword('');
+        try {
+            const response = await authService.login(username, password);
+            const accessToken = response?.data?.accessToken;
+            dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
+
+            setUsername('');
+            from = from ?? (response.data.user.role === 'ADMIN' ? '/dashboard' : response.data.user.role === 'USER' ? '/' : '/');
+            navigate(from, {replace: true});
+        } catch (error: any) {
+            showError(error);
+        } finally {
+            setPassword('');
+        }
     };
 
     return (
@@ -23,7 +42,7 @@ const Login: React.FC = () => {
                 </h2>
                 <p className="mt-2 text-sm text-gray-600">Please sign in to your account</p>
             </div>
-            <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded" onSubmit={loginHandler}>
+            <Form className="px-8 pt-6 pb-8 mb-4 bg-white rounded" onSubmit={loginHandler}>
                 <div className="mb-4">
                     <label className="block mb-2 text-sm font-bold text-gray-700 tracking-wide" htmlFor="username">
                         Username
@@ -79,7 +98,7 @@ const Login: React.FC = () => {
                         Sign up
                     </Link>
                 </div>
-            </form>
+            </Form>
         </AuthCard>
     );
 }
