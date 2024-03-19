@@ -1,8 +1,9 @@
 import {RouteObject} from "react-router/dist/lib/context";
-import Reservation from "../pages/Reservation.tsx";
+
+import ReservationList from "../components/reservation/ReservationList.tsx";
 
 const reservationRoutes: RouteObject[] = [
-    {index: true, element: <Reservation/>},
+    {index: true, element: <ReservationList/>}
 ];
 
 export default reservationRoutes;

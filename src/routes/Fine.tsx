@@ -1,8 +1,9 @@
 import {RouteObject} from "react-router/dist/lib/context";
-import Fine from "../pages/Fine.tsx";
+
+import FineList from "../components/fine/FineList.tsx";
 
 const fineRoutes: RouteObject[] = [
-    {index: true, element: <Fine/>},
+    {index: true, element: <FineList/>}
 ];
 
 export default fineRoutes;

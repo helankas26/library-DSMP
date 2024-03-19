@@ -1,8 +1,9 @@
 import {RouteObject} from "react-router/dist/lib/context";
-import Config from "../pages/Config.tsx";
+
+import ConfigView from "../components/config/ConfigView.tsx";
 
 const configRoutes: RouteObject[] = [
-    {index: true, element: <Config/>},
+    {index: true, element: <ConfigView/>}
 ];
 
 export default configRoutes;

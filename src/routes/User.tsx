@@ -1,8 +1,9 @@
 import {RouteObject} from "react-router/dist/lib/context";
-import User from "../pages/User.tsx";
+
+import UserList from "../components/user/UserList.tsx";
 
 const userRoutes: RouteObject[] = [
-    {index: true, element: <User/>},
+    {index: true, element: <UserList/>}
 ];
 
 export default userRoutes;

@@ -1,8 +1,11 @@
 import {RouteObject} from "react-router/dist/lib/context";
-import Transaction from "../pages/Transaction.tsx";
+
+import TransactionList from "../components/transaction/TransactionList.tsx";
+import LendBook from "../components/transaction/LendBook.tsx";
 
 const transactionRoutes: RouteObject[] = [
-    {index: true, element: <Transaction/>},
+    {index: true, element: <TransactionList/>},
+    {path: 'new', element: <LendBook/>}
 ];
 
 export default transactionRoutes;

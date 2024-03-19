@@ -1,8 +1,9 @@
 import {RouteObject} from "react-router/dist/lib/context";
-import Admission from "../pages/Admission.tsx";
+
+import AdmissionList from "../components/admission/AdmissionList.tsx";
 
 const admissionRoutes: RouteObject[] = [
-    {index: true, element: <Admission/>},
+    {index: true, element: <AdmissionList/>}
 ];
 
 export default admissionRoutes;
