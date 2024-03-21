@@ -1,9 +1,13 @@
 import React from "react";
-import LoggedMenu from "../shared/LoggedMenu.tsx";
-import SearchBar from "./SearchBar.tsx";
 import {Link} from "react-router-dom";
 
+import LoggedMenu from "../shared/LoggedMenu.tsx";
+import SearchBar from "./SearchBar.tsx";
+import useAuth from "../../hooks/use-auth.ts";
+
 const MainHeader: React.FC = () => {
+    const {auth} = useAuth();
+
     return (
         <div className="z-50 bg-white sticky inset-x-0 top-0 pt-2">
             <div className="bg-sky-900 top-1.5 mx-1.5 rounded-lg text-white p-3">
@@ -20,12 +24,14 @@ const MainHeader: React.FC = () => {
                     </div>
 
                     <div className="flex items-center space-x-4">
-                        <Link to="auth/login"
-                              className="text-white bg-lime-500 hover:bg-lime-600 font-medium rounded-lg shadow-lg text-sm px-4 py-2 text-center">
-                            Log in
-                        </Link>
+                        {!auth.profile &&
+                            <Link to="auth/login"
+                                  className="text-white bg-lime-500 hover:bg-lime-600 font-medium rounded-lg shadow-lg text-sm px-4 py-2 text-center">
+                                Log in
+                            </Link>
+                        }
 
-                        <LoggedMenu/>
+                        {auth.profile && <LoggedMenu/>}
                     </div>
                 </nav>
             </div>
