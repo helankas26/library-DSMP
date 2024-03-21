@@ -1,17 +1,18 @@
 import {useEffect} from "react";
+
 import AxiosInstance from "../config/axios-instance.ts";
 import useRefreshToken from "./use-refresh-token.ts";
 import useAuth from "./use-auth.ts";
 
 const useAxiosInstance = () => {
     const refresh = useRefreshToken();
-    const {auth} = useAuth()!;
+    const {auth} = useAuth();
 
     useEffect(() => {
         const requestInterceptor = AxiosInstance.interceptors.request.use(
             config => {
                 if (!config.headers.Authorization) {
-                    config.headers.Authorization = `Bearer ${auth?.accessToken}`;
+                    config.headers.Authorization = `Bearer ${auth.accessToken}`;
                 }
 
                 return config;

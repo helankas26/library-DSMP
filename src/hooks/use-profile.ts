@@ -1,10 +1,11 @@
 import {useEffect} from "react";
+
 import useAuth from "./use-auth.ts";
 import useSnackbar from "./use-snackbar.ts";
 import profileService from "../services/api/profile.ts";
 
 const useProfile = () => {
-    const {auth, dispatchAuth} = useAuth()!;
+    const {auth, dispatchAuth} = useAuth();
     const {showError} = useSnackbar();
 
     useEffect(() => {

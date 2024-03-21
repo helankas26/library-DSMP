@@ -1,5 +1,6 @@
 import React, {FormEvent, useState} from "react";
 import {Link, useNavigate, useLocation, Form} from "react-router-dom";
+
 import AuthCard from "../../components/shared/AuthCard.tsx";
 import loginImage from "../../assets/login.jpg";
 import authService from "../../services/api/auth.ts";
@@ -9,7 +10,7 @@ import useAuth from "../../hooks/use-auth.ts";
 const Login: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const {dispatchAuth} = useAuth()!;
+    const {dispatchAuth} = useAuth();
     const {showError} = useSnackbar();
 
     const [username, setUsername] = useState<string>('');

@@ -13,7 +13,7 @@ function classNames(...classes: string[]) {
 
 const LoggedMenu: React.FC = () => {
     const navigate = useNavigate();
-    const {auth} = useAuth()!;
+    const {auth} = useAuth();
     const logout = useLogout();
 
     const signOutHandler = async () => {

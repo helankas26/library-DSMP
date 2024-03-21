@@ -3,7 +3,7 @@ import useSnackbar from "./use-snackbar.ts";
 import authService from "../services/api/auth.ts";
 
 const useRefreshToken = () => {
-    const {dispatchAuth} = useAuth()!;
+    const {dispatchAuth} = useAuth();
     const {showError} = useSnackbar();
 
     const refresh = async () => {
