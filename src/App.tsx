@@ -1,6 +1,7 @@
 import React from "react";
-import './App.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
+
+import './App.css'
 import SnackbarService from "./components/shared/SnackbarService.tsx";
 import useSnackbar from "./hooks/use-snackbar.ts";
 import HomeLayout from "./layouts/Home.tsx";
