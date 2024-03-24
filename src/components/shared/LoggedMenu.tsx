@@ -1,6 +1,6 @@
 import React from "react";
 import {Menu} from '@headlessui/react'
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import profileAvatarImage from "../../assets/profile-avatar.jpg";
 import useLogout from "../../hooks/use-logout.ts";
@@ -12,12 +12,11 @@ function classNames(...classes: string[]) {
 }
 
 const LoggedMenu: React.FC = () => {
-    const navigate = useNavigate();
+
     const {auth} = useAuth();
     const logout = useLogout();
 
     const signOutHandler = async () => {
-        navigate("/");
         await logout();
     }
 
