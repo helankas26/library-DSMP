@@ -28,8 +28,11 @@ const useAxiosInstance = () => {
                 if (error?.response?.status === 403 && !prevRequest?.sent) {
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
-                    prevRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-                    return AxiosInstance(prevRequest);
+
+                    if (newAccessToken) {
+                        prevRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+                        return AxiosInstance(prevRequest);
+                    }
                 }
                 return Promise.reject(error);
             }
