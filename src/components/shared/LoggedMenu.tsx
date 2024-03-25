@@ -1,10 +1,11 @@
 import React from "react";
 import {Menu} from '@headlessui/react'
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 
 import profileAvatarImage from "../../assets/profile-avatar.jpg";
-import useLogout from "../../hooks/use-logout.ts";
 import useAuth from "../../hooks/use-auth.ts";
+import useSnackbar from "../../hooks/use-snackbar.ts";
+import authService from "../../services/api/auth.ts";
 
 
 function classNames(...classes: string[]) {
@@ -12,12 +13,19 @@ function classNames(...classes: string[]) {
 }
 
 const LoggedMenu: React.FC = () => {
-
-    const {auth} = useAuth();
-    const logout = useLogout();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const {auth, dispatchAuth} = useAuth();
+    const {showError} = useSnackbar();
 
     const signOutHandler = async () => {
-        await logout();
+        try {
+            await authService.logout();
+            dispatchAuth({type: 'LOGOUT', auth: {accessToken: undefined, profile: undefined}});
+            navigate("/", {state: {from: location}});
+        } catch (error: any) {
+            showError(error);
+        }
     }
 
     return (
