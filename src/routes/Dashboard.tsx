@@ -1,6 +1,6 @@
 import {RouteObject} from "react-router/dist/lib/context";
 
-import DashboardLibrarian from "../pages/DashboardLibrarian.tsx";
+import DashboardUser from "../pages/DashboardUser.tsx";
 import ProfileLayout from "../layouts/Profile.tsx";
 import TransactionLayout from "../layouts/Transaction.tsx";
 import BookLayout from "../layouts/Book.tsx";
@@ -25,7 +25,7 @@ import userRoutes from "./User.tsx";
 import configRoutes from "./Config.tsx";
 
 const dashboardRoutes: RouteObject[] = [
-    {index: true, element: <DashboardLibrarian/>},
+    {index: true, element: <DashboardUser/>},
     {
         path: 'profiles',
         element: <ProfileLayout/>,
