@@ -6,6 +6,7 @@ import loginImage from "../../assets/login.jpg";
 import authService from "../../services/api/auth.ts";
 import useSnackbar from "../../hooks/use-snackbar.ts";
 import useAuth from "../../hooks/use-auth.ts";
+import {setRefreshTokenExpirationDate} from "../../utils/local-storage.ts";
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ const Login: React.FC = () => {
             const response = await authService.login(username, password);
             const accessToken = response?.data?.accessToken;
             dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
+            setRefreshTokenExpirationDate(response?.data?.refreshTokenExpires);
 
             setUsername('');
             from = from ?? (response.data.user.role === 'ADMIN' ? '/dashboard' : response.data.user.role === 'USER' ? '/' : '/');

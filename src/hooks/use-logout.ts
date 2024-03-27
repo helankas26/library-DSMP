@@ -1,23 +1,17 @@
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 import useAuth from "./use-auth.ts";
-import useSnackbar from "./use-snackbar.ts";
-import authService from "../services/api/auth.ts";
+import {removeRefreshTokenExpirationDate} from "../utils/local-storage.ts";
 
 const useLogout = () => {
-    const {dispatchAuth} = useAuth();
     const navigate = useNavigate();
-    const {showError} = useSnackbar();
+    const location = useLocation();
+    const {dispatchAuth} = useAuth();
 
     const logout = async () => {
         dispatchAuth({type: 'LOGOUT', auth: {accessToken: undefined, profile: undefined}});
-        navigate("/");
-
-        try {
-            await authService.logout();
-        } catch (error: any) {
-            showError(error);
-        }
+        removeRefreshTokenExpirationDate();
+        if (location.pathname.startsWith("/dashboard") || location.pathname.startsWith("/books")) navigate("/auth/login", {state: {from: location}})
     }
 
     return logout;

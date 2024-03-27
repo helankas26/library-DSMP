@@ -6,6 +6,7 @@ import profileAvatarImage from "../../assets/profile-avatar.jpg";
 import useAuth from "../../hooks/use-auth.ts";
 import useSnackbar from "../../hooks/use-snackbar.ts";
 import authService from "../../services/api/auth.ts";
+import {removeRefreshTokenExpirationDate} from "../../utils/local-storage.ts";
 
 
 function classNames(...classes: string[]) {
@@ -22,6 +23,7 @@ const LoggedMenu: React.FC = () => {
         try {
             await authService.logout();
             dispatchAuth({type: 'LOGOUT', auth: {accessToken: undefined, profile: undefined}});
+            removeRefreshTokenExpirationDate();
             navigate("/", {state: {from: location}});
         } catch (error: any) {
             showError(error);

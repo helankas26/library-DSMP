@@ -6,10 +6,13 @@ import DashboardHeader from "../components/core/dashboard-nav/DashboardHeader.ts
 import DashboardFooter from "../components/core/dashboard-nav/DashboardFooter.tsx";
 import useAuth from "../hooks/use-auth.ts";
 import usePersist from "../hooks/use-persist.ts";
+import useLogout from "../hooks/use-logout.ts";
+import {getTokenDuration} from "../utils/local-storage.ts";
 
 const DashboardLayout: React.FC = () => {
     const {auth} = useAuth();
     const persist = usePersist();
+    const logout = useLogout();
 
     useEffect(() => {
         const verifyRefreshToken = async () => {
@@ -20,6 +23,15 @@ const DashboardLayout: React.FC = () => {
 
         verifyRefreshToken();
     }, []);
+
+    useEffect(() => {
+        if (auth.accessToken) {
+            const tokenDuration = getTokenDuration();
+            setTimeout(async () => {
+                await logout();
+            }, tokenDuration);
+        }
+    }, [auth.accessToken, logout]);
 
     return (
         <div className="flex flex-col bg-[#E2E8F0] h-screen">
