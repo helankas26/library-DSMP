@@ -7,7 +7,7 @@ import ProfileUpdate from "../components/profile/ProfileUpdate.tsx";
 const profileRoutes: RouteObject[] = [
     {index: true, element: <ProfileList/>},
     {path: 'new', element: <ProfileNew/>},
-    {path: 'update', element: <ProfileUpdate/>}
+    {path: 'edit', element: <ProfileUpdate/>}
 ];
 
 export default profileRoutes;
