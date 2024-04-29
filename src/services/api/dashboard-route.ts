@@ -10,7 +10,7 @@ const findAllDashboardRoutes = async () => {
 }
 
 const findAllDashboardRoutesByAuthUser = async () => {
-    return await AxiosInstance.get<HttpResponse<DashboardRoute>>(`${DASHBOARD_ROUTES}/auth`);
+    return await AxiosInstance.get<HttpResponse<DashboardRoute[]>>(`${DASHBOARD_ROUTES}/auth`);
 }
 
 const createDashboardRoute = async (dashboardRoute: DashboardRoute) => {
