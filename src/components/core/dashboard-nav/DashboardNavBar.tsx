@@ -1,4 +1,6 @@
 import React from "react";
+import {NavLink, useLocation} from "react-router-dom";
+
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ViewComfyAltRoundedIcon from '@mui/icons-material/ViewComfyAltRounded';
 import GroupAddRoundedIcon from '@mui/icons-material/GroupAddRounded';
@@ -10,16 +12,45 @@ import PaymentsRoundedIcon from '@mui/icons-material/PaymentsRounded';
 import CardMembershipRoundedIcon from '@mui/icons-material/CardMembershipRounded';
 import AdminPanelSettingsRoundedIcon from '@mui/icons-material/AdminPanelSettingsRounded';
 import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
-import {NavLink} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../../hooks/use-store.ts";
+import {setSubRoutes, clearSubRoutes} from "../../../store/dashboard-route/sub-route-slice.ts";
 
 const DashboardNavBar: React.FC = () => {
+    const dashboardRoutes = useAppSelector((state) => state.dashboardRoutes);
+    const subRoutes = useAppSelector((state) => state.subRoutes);
+    const dispatch = useAppDispatch();
+    const location = useLocation();
+
+    const loadNavLinkIcon = (iconName: string) => {
+        switch (iconName) {
+            case 'GroupAddRoundedIcon':
+                return (<GroupAddRoundedIcon className="mx-1"/>);
+            case 'ShoppingCartRoundedIcon':
+                return (<ShoppingCartRoundedIcon className="mx-1"/>);
+            case 'AutoStoriesRoundedIcon':
+                return (<AutoStoriesRoundedIcon className="mx-1"/>);
+            case 'StyleRoundedIcon':
+                return (<StyleRoundedIcon className="mx-1"/>);
+            case 'PaidRoundedIcon':
+                return (<PaidRoundedIcon className="mx-1"/>);
+            case 'PaymentsRoundedIcon':
+                return (<PaymentsRoundedIcon className="mx-1"/>);
+            case 'CardMembershipRoundedIcon':
+                return (<CardMembershipRoundedIcon className="mx-1"/>);
+            case 'AdminPanelSettingsRoundedIcon':
+                return (<AdminPanelSettingsRoundedIcon className="mx-1"/>);
+            case 'SettingsSuggestRoundedIcon':
+                return (<SettingsSuggestRoundedIcon className="mx-1"/>);
+        }
+    }
+
     return (
         <div
             className="mx-1.5 py-4 px-2 text-gray-700 bg-white rounded-lg text-left capitalize font-medium shadow">
             <NavLink
-                to="/dashboard"
-                className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}
-                end>
+                to="home"
+                onClick={() => dispatch(clearSubRoutes())}
+                className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
                 <HomeRoundedIcon className="mx-1"/>
                 <span className="mx-5 hidden lg:block">Home</span>
             </NavLink>
@@ -31,68 +62,24 @@ const DashboardNavBar: React.FC = () => {
                 <span className="mx-5  hidden lg:block">Main Page</span>
             </NavLink>
 
-            <NavLink
-                to="profiles"
-                className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
-                <GroupAddRoundedIcon className="mx-1"/>
-                <span className="mx-5  hidden lg:block">Registration</span>
-            </NavLink>
+            {dashboardRoutes.map((dashboardRoute) => (
+                <NavLink
+                    key={dashboardRoute._id}
+                    to={dashboardRoute.path}
+                    onClick={() => dispatch(setSubRoutes(dashboardRoute.subRoutes))}
+                    className={({isActive}) => {
+                        return (
+                            `${isActive || subRoutes.length && (dashboardRoute.path === subRoutes[0].path && location.pathname.split("/").includes(location.pathname.split("/")[location.pathname.split("/").length - 1])) ?
+                                `text-purple-500` :
+                                undefined
+                            } cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`
+                        )
+                    }}>
 
-            <NavLink
-                to="transactions"
-                className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
-                <ShoppingCartRoundedIcon className="mx-1"/>
-                <span className="mx-5  hidden lg:block">Book Lending</span>
-            </NavLink>
-
-            <NavLink
-                to="books"
-                className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
-                <AutoStoriesRoundedIcon className="mx-1"/>
-                <span className="mx-5  hidden lg:block">Books</span>
-            </NavLink>
-
-            <NavLink
-                to="reservations"
-                className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
-                <StyleRoundedIcon className="mx-1"/>
-                <span className="mx-5  hidden lg:block">Reservation</span>
-            </NavLink>
-
-            <NavLink
-                to="subscriptions"
-                className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
-                <PaidRoundedIcon className="mx-1"/>
-                <span className="mx-5  hidden lg:block">Payment</span>
-            </NavLink>
-
-            <NavLink
-                to="fines"
-                className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
-                <PaymentsRoundedIcon className="mx-1"/>
-                <span className="mx-5  hidden lg:block">Fine</span>
-            </NavLink>
-
-            <NavLink
-                to="admissions"
-                className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
-                <CardMembershipRoundedIcon className="mx-1"/>
-                <span className="mx-5  hidden lg:block">Admission</span>
-            </NavLink>
-
-            <NavLink
-                to="users"
-                className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
-                <AdminPanelSettingsRoundedIcon className="mx-1"/>
-                <span className="mx-5  hidden lg:block">Users</span>
-            </NavLink>
-
-            <NavLink
-                to="configurations"
-                className={({isActive}) => `${isActive ? `text-purple-500` : undefined} cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`}>
-                <SettingsSuggestRoundedIcon className="mx-1"/>
-                <span className="mx-5  hidden lg:block">Configuration</span>
-            </NavLink>
+                    {loadNavLinkIcon(dashboardRoute.icon)}
+                    <span className="mx-5 hidden lg:block">{dashboardRoute.route}</span>
+                </NavLink>
+            ))}
         </div>
     );
 }
