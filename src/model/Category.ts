@@ -1,7 +1,7 @@
 import Book from "./Book.ts";
 
 interface AuthCardProps {
-    id: string;
+    _id: string;
     categoryName: string;
     description: string;
     books: Book[];

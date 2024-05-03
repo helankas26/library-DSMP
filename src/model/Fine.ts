@@ -2,7 +2,7 @@ import Profile from "./Profile.ts";
 import Book from "./Book.ts";
 
 interface Fine {
-    id: string;
+    _id: string;
     fee: number;
     member: Profile;
     book: Book;

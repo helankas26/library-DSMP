@@ -1,7 +1,7 @@
 import Profile from "./Profile.ts";
 
 interface Subscription {
-    id: string;
+    _id: string;
     fee: number;
     paidFor: string;
     member: Profile;

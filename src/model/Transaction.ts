@@ -2,7 +2,7 @@ import Book from "./Book.ts";
 import Profile from "./Profile.ts";
 
 interface Transaction {
-    id: string;
+    _id: string;
     books: Book[];
     member: Profile;
     status: 'BORROWED' | 'RETURNED' | 'OVERDUE';

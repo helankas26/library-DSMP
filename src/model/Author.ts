@@ -1,7 +1,7 @@
 import Book from "./Book.ts";
 
 interface Author {
-    id: string;
+    _id: string;
     name: string;
     books: Book[];
 }

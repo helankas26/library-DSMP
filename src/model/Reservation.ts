@@ -2,7 +2,7 @@ import Book from "./Book.ts";
 import Profile from "./Profile.ts";
 
 interface Reservation {
-    id: string;
+    _id: string;
     book: Book;
     member: Profile;
     status: 'RESERVED' | 'CANCELLED' | 'BORROWED' | 'EXPIRED';

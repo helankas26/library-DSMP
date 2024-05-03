@@ -1,11 +1,12 @@
 import SubRoute from "./SubRoute.ts";
 
 interface DashboardRoute {
-    id: string;
+    _id: string;
     route: string;
     path: string;
     icon: string;
     position: number;
+    roles: string[];
     role: string;
     subRoutes: SubRoute[];
     createdAt: Date;

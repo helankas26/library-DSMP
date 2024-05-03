@@ -1,7 +1,7 @@
 import Profile from "./Profile.ts";
 
 interface Config {
-    id: string;
+    _id: string;
     admission: {
         fee: number;
         librarian: Profile;

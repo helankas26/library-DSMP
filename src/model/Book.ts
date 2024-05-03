@@ -2,7 +2,7 @@ import Author from "./Author.ts";
 import Category from "./Category.ts";
 
 interface Book {
-    id: string;
+    _id: string;
     title: string;
     edition: string;
     cover: string;

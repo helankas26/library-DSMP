@@ -1,7 +1,7 @@
 import Profile from "./Profile.ts";
 
 interface User {
-    id: string;
+    _id: string;
     username: string;
     profile: Profile;
     role: 'USER' | 'ADMIN';
