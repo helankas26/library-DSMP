@@ -6,7 +6,7 @@ import Admission from "../../model/Admission.ts";
 const ADMISSIONS: string = '/admissions';
 
 const findAllAdmissions = async () => {
-    return await AxiosInstance.get<HttpResponse<Admission>>(ADMISSIONS);
+    return await AxiosInstance.get<HttpResponse<Admission[]>>(ADMISSIONS);
 }
 
 const createAdmission = async (admission: Admission) => {

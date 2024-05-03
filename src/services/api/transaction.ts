@@ -6,7 +6,7 @@ import Transaction from "../../model/Transaction.ts";
 const TRANSACTIONS: string = '/transactions';
 
 const findAllTransactions = async () => {
-    return await AxiosInstance.get<HttpResponse<Transaction>>(TRANSACTIONS);
+    return await AxiosInstance.get<HttpResponse<Transaction[]>>(TRANSACTIONS);
 }
 
 const createTransaction = async (transaction: Transaction) => {

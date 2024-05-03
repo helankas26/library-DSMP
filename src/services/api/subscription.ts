@@ -6,7 +6,7 @@ const SUBSCRIPTIONS: string = '/subscriptions';
 
 
 const findAllSubscriptions = async () => {
-    return await AxiosInstance.get<HttpResponse<Subscription>>(SUBSCRIPTIONS);
+    return await AxiosInstance.get<HttpResponse<Subscription[]>>(SUBSCRIPTIONS);
 }
 
 const createSubscription = async (subscription: Subscription) => {

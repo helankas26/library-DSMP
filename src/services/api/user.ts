@@ -5,7 +5,7 @@ import User from "../../model/User.ts";
 const USERS: string = '/users';
 
 const findAllUsers = async () => {
-    return await AxiosInstance.get<HttpResponse<User>>(USERS);
+    return await AxiosInstance.get<HttpResponse<User[]>>(USERS);
 }
 
 const findUserById = async (id: string) => {

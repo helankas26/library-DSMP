@@ -6,7 +6,7 @@ import Fine from "../../model/Fine.ts";
 const FINES: string = '/fines';
 
 const findAllFines = async () => {
-    return await AxiosInstance.get<HttpResponse<Fine>>(FINES);
+    return await AxiosInstance.get<HttpResponse<Fine[]>>(FINES);
 }
 
 const createFine = async (fine: Fine) => {

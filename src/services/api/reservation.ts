@@ -5,7 +5,7 @@ import Reservation from "../../model/Reservation.ts";
 const RESERVATIONS: string = '/reservations';
 
 const findAllReservations = async () => {
-    return await AxiosInstance.get<HttpResponse<Reservation>>(RESERVATIONS);
+    return await AxiosInstance.get<HttpResponse<Reservation[]>>(RESERVATIONS);
 }
 
 const createReservation = async (reservation: Reservation) => {

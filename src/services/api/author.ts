@@ -6,7 +6,7 @@ import Author from "../../model/Author.ts";
 const AUTHORS: string = '/authors';
 
 const findAllAuthors = async () => {
-    return await AxiosInstance.get<HttpResponse<Author>>(AUTHORS);
+    return await AxiosInstance.get<HttpResponse<Author[]>>(AUTHORS);
 }
 
 const createAuthor = async (author: Author) => {

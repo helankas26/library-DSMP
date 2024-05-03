@@ -6,7 +6,7 @@ import Book from "../../model/Book.ts";
 const BOOKS: string = '/books';
 
 const findAllBooks = async () => {
-    return await AxiosInstance.get<HttpResponse<Book>>(BOOKS);
+    return await AxiosInstance.get<HttpResponse<Book[]>>(BOOKS);
 }
 
 const createBook = async (book: Book) => {

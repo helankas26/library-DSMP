@@ -6,7 +6,7 @@ import Config from "../../model/Config.ts";
 const CONFIGS: string = '/configs';
 
 const findAllConfigs = async () => {
-    return await AxiosInstance.get<HttpResponse<Config>>(CONFIGS);
+    return await AxiosInstance.get<HttpResponse<Config[]>>(CONFIGS);
 }
 
 const createConfig = async (config: Config) => {

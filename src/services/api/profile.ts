@@ -6,7 +6,7 @@ const PROFILES: string = '/profiles';
 
 
 const findAllProfiles = async () => {
-    return await AxiosInstance.get<HttpResponse<Profile>>(PROFILES);
+    return await AxiosInstance.get<HttpResponse<Profile[]>>(PROFILES);
 }
 
 const createProfile = async (profile: Profile) => {

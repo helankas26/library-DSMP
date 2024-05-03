@@ -6,7 +6,7 @@ import DashboardRoute from "../../model/DashboardRoute.ts";
 const DASHBOARD_ROUTES: string = '/dashboard-routes';
 
 const findAllDashboardRoutes = async () => {
-    return await AxiosInstance.get<HttpResponse<DashboardRoute>>(DASHBOARD_ROUTES);
+    return await AxiosInstance.get<HttpResponse<DashboardRoute[]>>(DASHBOARD_ROUTES);
 }
 
 const findAllDashboardRoutesByAuthUser = async () => {

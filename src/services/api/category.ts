@@ -6,7 +6,7 @@ import Category from "../../model/Category.ts";
 const CATEGORIES: string = '/categories';
 
 const findAllCategories = async () => {
-    return await AxiosInstance.get<HttpResponse<Category>>(CATEGORIES);
+    return await AxiosInstance.get<HttpResponse<Category[]>>(CATEGORIES);
 }
 
 const createCategory = async (category: Category) => {
