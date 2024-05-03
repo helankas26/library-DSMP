@@ -1,19 +1,25 @@
 import React, {FormEvent, useCallback, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+
 import AuthCard from "../../components/shared/AuthCard.tsx";
 import resetPasswordImage from "../../assets/reset-password.jpg";
 import authService from "../../services/api/auth.ts";
 import ValidationIcon from "../../components/shared/ValidationIcon.tsx";
 import useSnackbar from "../../hooks/use-snackbar.ts";
+import {setRefreshTokenExpirationDate} from "../../utils/local-storage.ts";
+import useAuth from "../../hooks/use-auth.ts";
 
 const ResetPassword: React.FC = () => {
+    const navigate = useNavigate();
+    const {dispatchAuth} = useAuth();
+    const {showError, showAlert} = useSnackbar();
+
     const [otp, setOtp] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [isOtpValid, setIsOtpValid] = useState<boolean>();
     const [loading, setLoading] = useState<boolean>(false);
     const [isSignUpDisabled, setIsSignUpDisabled] = useState<boolean>(true);
-    const {showError} = useSnackbar();
 
     const checkOtpValidHandler = useCallback(async () => {
         if (otp.length === 16) {
@@ -37,15 +43,28 @@ const ResetPassword: React.FC = () => {
         checkOtpValidHandler();
     }, [checkOtpValidHandler]);
 
-    const resetPasswordHandler = (event: FormEvent) => {
+    const resetPasswordHandler = async (event: FormEvent) => {
         event.preventDefault();
 
+        try {
+            const response = await authService.resetPassword(otp, password, confirmPassword);
+            const accessToken = response?.data?.accessToken;
+            dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
+            setRefreshTokenExpirationDate(response?.data?.refreshTokenExpires);
 
-        setOtp('');
-        setPassword('');
-        setConfirmPassword('');
-        setIsOtpValid(undefined);
-        setIsSignUpDisabled(true);
+            showAlert("Password reset successfully!", "success");
+            setOtp('');
+            const to: string = response.data.user.role === 'ADMIN' ? '/dashboard' : response.data.user.role === 'USER' ? '/' : '/';
+            navigate(to, {replace: true});
+        } catch (error: any) {
+            showError(error);
+        } finally {
+            setOtp('');
+            setPassword('');
+            setConfirmPassword('');
+            setIsOtpValid(undefined);
+            setIsSignUpDisabled(true);
+        }
     };
 
     return (
