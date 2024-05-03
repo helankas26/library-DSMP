@@ -35,7 +35,7 @@ const checkOtpValid = async (otp: string) => {
 }
 
 const resetPassword = async (otp: string, password: string, confirmPassword: string) => {
-    return await AxiosInstance.post<HttpResponse<User>>(`${AUTH}/resetPassword`, {otp, password, confirmPassword});
+    return await AxiosInstance.post<HttpResponseWithToken>(`${AUTH}/resetPassword`, {otp, password, confirmPassword});
 }
 
 export default {
