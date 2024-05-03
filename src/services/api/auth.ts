@@ -15,7 +15,7 @@ const checkRegistrationValid = async (regNo: string) => {
 }
 
 const signup = async (user: User) => {
-    return await AxiosInstance.post<HttpResponseWithToken>(`${AUTH}/signup`, {user});
+    return await AxiosInstance.post<HttpResponseWithToken>(`${AUTH}/signup`, {...user});
 }
 
 const login = async (username: string, password: string) => {

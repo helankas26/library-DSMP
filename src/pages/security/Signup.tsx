@@ -1,12 +1,20 @@
 import React, {FormEvent, useCallback, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+
 import AuthCard from "../../components/shared/AuthCard.tsx";
 import signupImage from "../../assets/signup.jpg";
 import authService from "../../services/api/auth.ts";
 import ValidationIcon from "../../components/shared/ValidationIcon.tsx";
 import useSnackbar from "../../hooks/use-snackbar.ts";
+import useAuth from "../../hooks/use-auth.ts";
+import {setRefreshTokenExpirationDate} from "../../utils/local-storage.ts";
+import User from "../../model/User.ts";
 
 const Signup: React.FC = () => {
+    const navigate = useNavigate();
+    const {dispatchAuth} = useAuth();
+    const {showError, showAlert} = useSnackbar();
+
     const [registrationNo, setRegistrationNo] = useState<string>('');
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -14,7 +22,6 @@ const Signup: React.FC = () => {
     const [isRegistrationValid, setIsRegistrationValid] = useState<boolean>();
     const [loading, setLoading] = useState<boolean>(false);
     const [isSignUpDisabled, setIsSignUpDisabled] = useState<boolean>(true);
-    const {showError} = useSnackbar();
 
     const checkRegistrationValidHandler = useCallback(async () => {
         if (registrationNo.length === 10) {
@@ -38,15 +45,35 @@ const Signup: React.FC = () => {
         checkRegistrationValidHandler();
     }, [checkRegistrationValidHandler]);
 
-    const signupHandler = (event: FormEvent) => {
+    const signupHandler = async (event: FormEvent) => {
         event.preventDefault();
 
-        setRegistrationNo('');
-        setUsername('');
-        setPassword('');
-        setConfirmPassword('');
-        setIsRegistrationValid(undefined);
-        setIsSignUpDisabled(true);
+        const user = {
+            username: username,
+            profile: registrationNo,
+            password: password,
+            confirmPassword: confirmPassword
+        } as unknown as User;
+
+        try {
+            const response = await authService.signup(user);
+            const accessToken = response?.data?.accessToken;
+            dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
+            setRefreshTokenExpirationDate(response?.data?.refreshTokenExpires);
+
+            showAlert("Account create successfully!", "success");
+            const to: string = response.data.user.role === 'ADMIN' ? '/dashboard' : response.data.user.role === 'USER' ? '/' : '/';
+            navigate(to, {replace: true});
+        } catch (error: any) {
+            showError(error);
+        } finally {
+            setRegistrationNo('');
+            setUsername('');
+            setPassword('');
+            setConfirmPassword('');
+            setIsRegistrationValid(undefined);
+            setIsSignUpDisabled(true);
+        }
     };
 
     return (
