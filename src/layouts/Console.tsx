@@ -1,11 +1,32 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Outlet} from "react-router-dom";
 
+import useAuth from "../hooks/use-auth.ts";
+import {getTokenDuration} from "../utils/local-storage.ts";
+import useLogout from "../hooks/use-logout.ts";
 import DashboardNavBar from "../components/core/dashboard-nav/DashboardNavBar.tsx";
 import DashboardHeader from "../components/core/dashboard-nav/DashboardHeader.tsx";
 import DashboardFooter from "../components/core/dashboard-nav/DashboardFooter.tsx";
 
 const ConsoleLayout: React.FC = () => {
+    const {auth} = useAuth();
+    const logout = useLogout();
+
+    useEffect(() => {
+        let timer: NodeJS.Timeout;
+
+        if (auth.accessToken) {
+            const tokenDuration = getTokenDuration();
+
+            timer = setTimeout(async () => {
+                await logout();
+            }, tokenDuration);
+        }
+
+        return () => {
+            clearTimeout(timer);
+        }
+    }, []);
 
     return (
         <div className="flex flex-col bg-[#E2E8F0] h-screen">
