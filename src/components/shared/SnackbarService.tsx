@@ -21,7 +21,7 @@ const SnackbarService: React.FC<{ options: SnackbarServiceProps }> = (props) => 
                 <Snackbar
                     open={open}
                     anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
-                    autoHideDuration={2000}
+                    autoHideDuration={2500}
                     onClose={handleClose}>
                     <Alert
                         onClose={handleClose}
