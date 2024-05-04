@@ -1,7 +1,9 @@
 import React from "react";
+
 import CategoryFilterListProps from "../../model/CategoryFilterListProps.ts";
 
 const CategoryFilterList: React.FC<{ categories: CategoryFilterListProps[] }> = (props) => {
+
     if (props.categories.length === 0) {
         return (
             <>
@@ -34,7 +36,9 @@ const CategoryFilterList: React.FC<{ categories: CategoryFilterListProps[] }> = 
 
                 return (
                     <button type="button"
-                            className={buttonClass}>
+                            key={category._id}
+                            className={buttonClass}
+                    >
                         {category.categoryName}
                     </button>
                 );

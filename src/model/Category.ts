@@ -1,10 +1,10 @@
 import Book from "./Book.ts";
 
-interface AuthCardProps {
+interface Category {
     _id: string;
     categoryName: string;
     description: string;
     books: Book[];
 }
 
-export default AuthCardProps;
+export default Category;

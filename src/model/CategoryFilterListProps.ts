@@ -1,5 +1,5 @@
 interface CategoryFilterListProps {
-    id: string;
+    _id: string;
     categoryName: string;
 }
 
