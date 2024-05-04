@@ -10,7 +10,7 @@ const CategoryFilter: React.FC = () => {
 
     const [categories, setCategories] = useState<CategoryFilterListProps[]>([]);
 
-    const loadCategoryFilter = useCallback(async () => {
+    const loadCategoryFilters = useCallback(async () => {
         try {
             const response = await categoryService.findAllCategories();
             setCategories(response.data.categories as unknown as CategoryFilterListProps[])
@@ -20,8 +20,8 @@ const CategoryFilter: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        loadCategoryFilter();
-    }, [loadCategoryFilter]);
+        loadCategoryFilters();
+    }, [loadCategoryFilters]);
 
     return (
         <div
