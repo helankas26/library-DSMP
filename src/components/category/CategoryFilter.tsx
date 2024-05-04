@@ -13,7 +13,7 @@ const CategoryFilter: React.FC = () => {
     const loadCategoryFilters = useCallback(async () => {
         try {
             const response = await categoryService.findAllCategories();
-            setCategories(response.data.categories as unknown as CategoryFilterListProps[])
+            setCategories(response.data.categories as unknown as CategoryFilterListProps[]);
         } catch (error: any) {
             showError(error);
         }
