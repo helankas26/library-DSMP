@@ -1,12 +1,17 @@
 import AxiosInstance from "../../config/axios-instance.ts";
 import HttpResponse from "../../utils/http-response.ts";
 import Book from "../../model/Book.ts";
+import HttpResponseWithPagination from "../../utils/http-response-with-pagination.ts";
 
 
 const BOOKS: string = '/books';
 
 const findAllBooks = async () => {
     return await AxiosInstance.get<HttpResponse<Book[]>>(BOOKS);
+}
+
+const findAllBooksWithPagination = async (page: number, size: number) => {
+    return await AxiosInstance.get<HttpResponseWithPagination<Book[]>>(`${BOOKS}/find-all?page=${page}&size=${size}`);
 }
 
 const createBook = async (book: Book) => {
@@ -27,6 +32,7 @@ const deleteBook = async (id: string) => {
 
 export default {
     findAllBooks,
+    findAllBooksWithPagination,
     createBook,
     findBookById,
     updateBook,
