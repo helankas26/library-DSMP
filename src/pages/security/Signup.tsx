@@ -1,5 +1,5 @@
 import React, {FormEvent, useCallback, useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Form, Link, useNavigate} from "react-router-dom";
 
 import AuthCard from "../../components/shared/AuthCard.tsx";
 import signupImage from "../../assets/signup.jpg";
@@ -48,7 +48,7 @@ const Signup: React.FC = () => {
     const signupHandler = async (event: FormEvent) => {
         event.preventDefault();
 
-        const user = {
+        const user: User = {
             username: username,
             profile: registrationNo,
             password: password,
@@ -84,7 +84,7 @@ const Signup: React.FC = () => {
                 </h2>
                 <p className="mt-2 text-sm text-gray-600">Please sign up to your account</p>
             </div>
-            <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded" onSubmit={signupHandler}>
+            <Form className="px-8 pt-6 pb-8 mb-4 bg-white rounded" onSubmit={signupHandler}>
                 <div className="relative mb-4">
                     <div className="absolute right-0 mt-7">
                         <ValidationIcon isValid={isRegistrationValid} loading={loading}/>
@@ -169,7 +169,7 @@ const Signup: React.FC = () => {
                         Log in
                     </Link>
                 </div>
-            </form>
+            </Form>
         </AuthCard>
     );
 }

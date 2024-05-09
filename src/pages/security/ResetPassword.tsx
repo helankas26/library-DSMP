@@ -1,5 +1,5 @@
 import React, {FormEvent, useCallback, useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Form, Link, useNavigate} from "react-router-dom";
 
 import AuthCard from "../../components/shared/AuthCard.tsx";
 import resetPasswordImage from "../../assets/reset-password.jpg";
@@ -77,7 +77,7 @@ const ResetPassword: React.FC = () => {
                     Reset your account password using OTP, check your email inbox or spam folder for OTP.
                 </p>
             </div>
-            <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded" onSubmit={resetPasswordHandler}>
+            <Form className="px-8 pt-6 pb-8 mb-4 bg-white rounded" onSubmit={resetPasswordHandler}>
                 <div className="relative mb-6">
                     <div className="absolute right-0 mt-7">
                         <ValidationIcon isValid={isOtpValid} loading={loading}/>
@@ -147,7 +147,7 @@ const ResetPassword: React.FC = () => {
                         Log in
                     </Link>
                 </div>
-            </form>
+            </Form>
         </AuthCard>
     );
 }
