@@ -5,8 +5,9 @@ import useSnackbar from "../../hooks/use-snackbar.ts";
 import useScrollToTop from "../../hooks/use-scroll-to-top.ts";
 import Book from "../../model/Book.ts";
 import bookService from "../../services/api/book.ts";
+import categoryService from "../../services/api/category.ts";
 
-const BookShowcase: React.FC = () => {
+const BookShowcase: React.FC<{ category: string }> = (props) => {
     const size: number = 12;
     const scrollToTop = useScrollToTop();
     const {showError} = useSnackbar();
@@ -20,7 +21,14 @@ const BookShowcase: React.FC = () => {
 
     const loadShowcaseBooks = useCallback(async () => {
         try {
-            const response = await bookService.findAllBooksWithPagination(page, size);
+            let response;
+
+            if (!props.category) {
+                response = await bookService.findAllBooksWithPagination(page, size);
+            } else {
+                response = await categoryService.findAllBooksWithPaginationById(props.category, page, size);
+            }
+
             setBooks(response.data.books);
             setTotalCount(response.data.totalCount);
             setTotalPages(response.data.totalPages);
@@ -31,7 +39,7 @@ const BookShowcase: React.FC = () => {
         }
 
         scrollToTop();
-    }, [page]);
+    }, [page, props.category, scrollToTop]);
 
     const onLoadShowcaseBooks = useCallback(async () => {
         await loadShowcaseBooks();

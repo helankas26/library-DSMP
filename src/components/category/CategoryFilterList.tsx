@@ -1,13 +1,17 @@
-import React from "react";
+import React, {Dispatch, SetStateAction} from "react";
 
 import CategoryFilterListProps from "../../model/CategoryFilterListProps.ts";
 
-const CategoryFilterList: React.FC<{ categories: CategoryFilterListProps[] }> = (props) => {
+const CategoryFilterList: React.FC<{
+    categories: CategoryFilterListProps[];
+    onCategoryChange: Dispatch<SetStateAction<string>>;
+}> = (props) => {
 
     if (props.categories.length === 0) {
         return (
             <>
                 <button aria-current="true" type="button"
+                        onClick={() => {props.onCategoryChange('')}}
                         className="w-full px-4 py-2 font-medium text-left border-b border-gray-200 rounded-t-lg cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:text-blue-700">
                     All category
                 </button>
@@ -23,6 +27,7 @@ const CategoryFilterList: React.FC<{ categories: CategoryFilterListProps[] }> = 
     return (
         <>
             <button aria-current="true" type="button"
+                    onClick={() => {props.onCategoryChange('')}}
                     className="w-full px-4 py-2 font-medium text-left border-b border-gray-200 rounded-t-lg cursor-pointer hover:bg-gray-100 hover:text-blue-700 focus:outline-none focus:text-blue-700">
                 All category
             </button>
@@ -36,6 +41,7 @@ const CategoryFilterList: React.FC<{ categories: CategoryFilterListProps[] }> = 
 
                 return (
                     <button type="button"
+                            onClick={() => {props.onCategoryChange(category._id)}}
                             key={category._id}
                             className={buttonClass}
                     >
