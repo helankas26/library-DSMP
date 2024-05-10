@@ -10,7 +10,7 @@ const findAllProfiles = async () => {
 }
 
 const createProfile = async (profile: Profile) => {
-    return await AxiosInstance.post<HttpResponse<Profile>>(PROFILES, {profile});
+    return await AxiosInstance.post<HttpResponse<Profile>>(PROFILES, {...profile});
 }
 
 const findProfileById = async (id: string) => {
