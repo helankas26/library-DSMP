@@ -138,6 +138,7 @@ const ProfileNew: React.FC = () => {
                                 onChange={(e) => {
                                     setFullName(e.target.value);
                                 }}
+                                required={true}
                                 placeholder="Enter full name"/>
                         </div>
                         <div className="w-full sm:w-1/2 md:w-1/4 lg:w-1/3">
@@ -151,6 +152,7 @@ const ProfileNew: React.FC = () => {
                                 onChange={(e) => {
                                     setTelNo(e.target.value);
                                 }}
+                                required={true}
                                 placeholder="Enter telephone no"/>
                         </div>
                     </div>
@@ -167,6 +169,7 @@ const ProfileNew: React.FC = () => {
                                 onChange={(e) => {
                                     setEmail(e.target.value);
                                 }}
+                                required={true}
                                 placeholder="Enter email"/>
                         </div>
 
@@ -218,6 +221,7 @@ const ProfileNew: React.FC = () => {
                                 onChange={(e) => {
                                     setAddress(e.target.value);
                                 }}
+                                required={true}
                                 placeholder="Address here..."/>
                         </div>
                     </div>
