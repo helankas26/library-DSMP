@@ -6,6 +6,7 @@ import useScrollToTop from "../../hooks/use-scroll-to-top.ts";
 import Book from "../../model/Book.ts";
 import bookService from "../../services/api/book.ts";
 import categoryService from "../../services/api/category.ts";
+import GradientCircularProgress from "../shared/GradientCircularProgress.tsx";
 
 const BookShowcase: React.FC<{ category: string }> = (props) => {
     const size: number = 12;
@@ -18,8 +19,11 @@ const BookShowcase: React.FC<{ category: string }> = (props) => {
     const [totalPages, setTotalPages] = useState(0);
     const [from, setFrom] = useState(0);
     const [to, setTo] = useState(0);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const loadShowcaseBooks = useCallback(async () => {
+        setIsLoading(true);
+
         try {
             let response;
 
@@ -36,42 +40,45 @@ const BookShowcase: React.FC<{ category: string }> = (props) => {
             setTo(response.data.to);
         } catch (error: any) {
             showError(error);
+        } finally {
+            setIsLoading(false);
         }
 
         scrollToTop();
-    }, [page, props.category, scrollToTop]);
-
-    const onLoadShowcaseBooks = useCallback(async () => {
-        await loadShowcaseBooks();
-    }, [loadShowcaseBooks]);
+    }, [page, props.category]);
 
     const nextShowcaseBooks = async () => {
         if (page < totalPages) {
             setPage(prevState => prevState + 1);
-            await loadShowcaseBooks();
         }
     };
 
     const prevShowcaseBooks = async () => {
         if (page > 1) {
             setPage(prevState => prevState - 1);
-            await loadShowcaseBooks();
         }
     };
 
     useEffect(() => {
-        onLoadShowcaseBooks();
-    }, [onLoadShowcaseBooks]);
+        loadShowcaseBooks();
+    }, [loadShowcaseBooks]);
 
     return (
         <div className="flex justify-center lg:justify-normal gap-x-12 gap-y-6 flex-wrap">
-            {books.length === 0 &&
+
+            {isLoading &&
+                <div className="w-full h-[55vh] flex justify-center items-center">
+                    <GradientCircularProgress/>
+                </div>
+            }
+
+            {!isLoading && books.length === 0 &&
                 <div className="w-full h-[55vh] flex justify-center items-center">
                     <p className="text-2xl font-medium text-blue-600">No books were found.</p>
                 </div>
             }
 
-            {books.length > 0 &&
+            {!isLoading && books.length > 0 &&
                 <>
                     {books.map((book) => (
                         <BookShowcaseItem key={book._id} book={book}/>
