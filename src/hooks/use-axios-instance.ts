@@ -42,7 +42,7 @@ const useAxiosInstance = () => {
             AxiosInstance.interceptors.request.eject(requestInterceptor);
             AxiosInstance.interceptors.response.eject(responseInterceptor);
         }
-    }, [auth, refresh])
+    }, [auth.accessToken, refresh])
 
     return AxiosInstance;
 }

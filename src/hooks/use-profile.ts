@@ -22,7 +22,7 @@ const useProfile = () => {
         if (auth.accessToken && auth.profile === undefined) {
             findProfileByAuthUser();
         }
-    }, [auth]);
+    }, [auth.accessToken]);
 }
 
 export default useProfile;

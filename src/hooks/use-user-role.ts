@@ -18,7 +18,7 @@ const useUserRole = () => {
         const decodeToken = auth.accessToken ? jwtDecode<{ id: string, role: string }>(auth.accessToken) : undefined;
         const role = decodeToken?.role || undefined;
         dispatchUserRole({type: 'SET_ROLE', role: role});
-    }, [auth]);
+    }, [auth.accessToken]);
 
     return userRole;
 }
