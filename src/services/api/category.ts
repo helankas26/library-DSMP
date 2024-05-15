@@ -12,7 +12,7 @@ const findAllCategories = async () => {
 }
 
 const findAllBooksWithPaginationById = async (id: string, page: number, size: number) => {
-    return await AxiosInstance.get<HttpResponseWithPagination<Book[]>>(`${CATEGORIES}/find-all/${id}?page=${page}&size=${size}`);
+    return await AxiosInstance.get<HttpResponseWithPagination<Book[]>>(`${CATEGORIES}/${id}/books?page=${page}&size=${size}`);
 }
 
 const createCategory = async (category: Category) => {

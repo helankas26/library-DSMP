@@ -11,7 +11,11 @@ const findAllBooks = async () => {
 }
 
 const findAllBooksWithPagination = async (page: number, size: number) => {
-    return await AxiosInstance.get<HttpResponseWithPagination<Book[]>>(`${BOOKS}/find-all?page=${page}&size=${size}`);
+    return await AxiosInstance.get<HttpResponseWithPagination<Book[]>>(`${BOOKS}/list?page=${page}&size=${size}`);
+}
+
+const findAllBooksBySearchWithPagination = async (searchText: string, page: number, size: number) => {
+    return await AxiosInstance.get<HttpResponseWithPagination<Book[]>>(`${BOOKS}/query?searchText=${searchText}&page=${page}&size=${size}`);
 }
 
 const createBook = async (book: Book) => {
@@ -33,6 +37,7 @@ const deleteBook = async (id: string) => {
 export default {
     findAllBooks,
     findAllBooksWithPagination,
+    findAllBooksBySearchWithPagination,
     createBook,
     findBookById,
     updateBook,

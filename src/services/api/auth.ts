@@ -7,7 +7,7 @@ import User from "../../model/User.ts";
 const AUTH: string = '/auth';
 
 const refreshToken = async () => {
-    return await AxiosInstance.get<HttpResponseWithToken>(`${AUTH}/refresh`);
+    return await AxiosInstance.post<HttpResponseWithToken>(`${AUTH}/refresh`);
 }
 
 const checkRegistrationValid = async (regNo: string) => {
