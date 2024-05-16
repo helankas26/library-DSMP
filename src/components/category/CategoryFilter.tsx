@@ -29,7 +29,7 @@ const CategoryFilter: React.FC<{
 
     return (
         <div
-            className="mx-1.5 w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow drop-shadow">
+            className="mx-1.5 w-48 max-h-[65vh] overflow-y-auto no-scrollbar text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow drop-shadow">
             <CategoryFilterList
                 categories={categories}
                 selectedCategory={props.selectedCategory}

@@ -14,7 +14,7 @@ const Home: React.FC = () => {
     };
 
     return (
-        <div className="py-6 container mx-auto flex flex-1">
+        <div className="my-6 container mx-auto flex flex-1">
             <div className="hidden sm:block">
                 <div className="sm:sticky sm:top-[80px]">
                     <CategoryFilter selectedCategory={selectedCategory} onChangeSelectedCategory={changeSelectedCategoryHandler}/>
