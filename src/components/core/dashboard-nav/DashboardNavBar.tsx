@@ -46,7 +46,7 @@ const DashboardNavBar: React.FC = () => {
 
     return (
         <div
-            className="mx-1.5 py-4 px-2 text-gray-700 bg-white rounded-lg text-left capitalize font-medium shadow">
+            className="py-4 px-2 text-gray-700 bg-white rounded-lg text-left capitalize font-medium shadow">
             <NavLink
                 to="home"
                 onClick={() => dispatch(clearSubRoutes())}

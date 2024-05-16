@@ -31,8 +31,8 @@ const ConsoleLayout: React.FC = () => {
     return (
         <div className="flex flex-col bg-[#E2E8F0] h-screen">
             <div className="flex flex-1 overflow-auto">
-                <div className="hidden sm:block sm:sticky sm:top-2 mt-2 overflow-auto no-scrollbar">
-                    <div className="pb-6">
+                <div className="hidden sm:block sm:sticky sm:top-2 mt-2 mb-6 mx-1.5 rounded-lg overflow-auto no-scrollbar">
+                    <div className="mb-0">
                         <DashboardNavBar/>
                     </div>
                 </div>
