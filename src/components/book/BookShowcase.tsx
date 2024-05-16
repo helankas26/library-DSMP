@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
 
 import BookShowcaseItem from "./BookShowcaseItem.tsx";
 import useSnackbar from "../../hooks/use-snackbar.ts";
@@ -8,13 +8,16 @@ import bookService from "../../services/api/book.ts";
 import categoryService from "../../services/api/category.ts";
 import GradientCircularProgress from "../shared/GradientCircularProgress.tsx";
 
-const BookShowcase: React.FC<{ category: string }> = (props) => {
+const BookShowcase: React.FC<{
+    page: number;
+    setPage: Dispatch<SetStateAction<number>>;
+    selectedCategory: string
+}> = (props) => {
     const size: number = 12;
     const scrollToTop = useScrollToTop();
     const {showError} = useSnackbar();
 
     const [books, setBooks] = useState<Book[]>([]);
-    const [page, setPage] = useState<number>(1);
     const [totalCount, setTotalCount] = useState<number>(0);
     const [totalPages, setTotalPages] = useState(0);
     const [from, setFrom] = useState(0);
@@ -27,10 +30,10 @@ const BookShowcase: React.FC<{ category: string }> = (props) => {
         try {
             let response;
 
-            if (!props.category) {
-                response = await bookService.findAllBooksWithPagination(page, size);
+            if (!props.selectedCategory) {
+                response = await bookService.findAllBooksWithPagination(props.page, size);
             } else {
-                response = await categoryService.findAllBooksWithPaginationById(props.category, page, size);
+                response = await categoryService.findAllBooksWithPaginationById(props.selectedCategory, props.page, size);
             }
 
             setBooks(response.data.books);
@@ -38,24 +41,24 @@ const BookShowcase: React.FC<{ category: string }> = (props) => {
             setTotalPages(response.data.totalPages);
             setFrom(response.data.from);
             setTo(response.data.to);
+
+            scrollToTop();
         } catch (error: any) {
             showError(error);
         } finally {
             setIsLoading(false);
         }
-
-        scrollToTop();
-    }, [page, props.category]);
+    }, [props.page, props.selectedCategory]);
 
     const nextShowcaseBooks = async () => {
-        if (page < totalPages) {
-            setPage(prevState => prevState + 1);
+        if (props.page < totalPages) {
+            props.setPage((prevState) => prevState + 1);
         }
     };
 
     const prevShowcaseBooks = async () => {
-        if (page > 1) {
-            setPage(prevState => prevState - 1);
+        if (props.page > 1) {
+            props.setPage((prevState) => prevState - 1);
         }
     };
 
@@ -73,7 +76,7 @@ const BookShowcase: React.FC<{ category: string }> = (props) => {
             }
 
             {!isLoading && books.length === 0 &&
-                <div className="w-full h-[55vh] flex justify-center items-center">
+                <div className="w-full h-[55vh] flex justify-center items-center  border border-amber-950">
                     <p className="text-2xl font-medium text-blue-600">No books were found.</p>
                 </div>
             }
@@ -91,13 +94,13 @@ const BookShowcase: React.FC<{ category: string }> = (props) => {
                             </span>
                             <div className="inline-flex mt-2 gap-3">
                                 <button
-                                    disabled={page <= 1}
+                                    disabled={props.page <= 1}
                                     onClick={prevShowcaseBooks}
                                     className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 active:bg-indigo-600 font-semibold py-2 px-4 rounded-l disabled:bg-gray-500">
                                     Prev
                                 </button>
                                 <button
-                                    disabled={page >= totalPages}
+                                    disabled={props.page >= totalPages}
                                     onClick={nextShowcaseBooks}
                                     className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 active:bg-indigo-600 font-semibold py-2 px-4 rounded-r disabled:bg-gray-500">
                                     Next

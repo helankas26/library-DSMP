@@ -5,7 +5,7 @@ import Book from "../../model/Book.ts";
 const BookShowcaseItem: React.FC<{ book: Book }> = (props) => {
     return (
         <div
-            className="relative grid h-[24rem] w-full max-w-[18rem] flex-col items-end justify-center overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-2xl drop-shadow-2xl">
+            className="relative grid h-[24rem] w-full max-w-[18rem] flex-col items-end justify-center overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
             <div
                 className="absolute inset-0 m-0 h-full w-full overflow-hidden rounded-none bg-transparent bg-cover bg-clip-border bg-center text-gray-700 shadow-none">
                 <img className="rounded-t-xl h-full w-full"

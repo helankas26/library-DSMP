@@ -1,11 +1,14 @@
-import React, {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 import CategoryFilterList from "./CategoryFilterList.tsx";
 import CategoryFilterListProps from "../../model/CategoryFilterListProps.ts";
 import categoryService from "../../services/api/category.ts"
 import useSnackbar from "../../hooks/use-snackbar.ts";
 
-const CategoryFilter: React.FC<{ onSetCategory: Dispatch<SetStateAction<string>>; }> = (props) => {
+const CategoryFilter: React.FC<{
+    onChangeSelectedCategory: (category: string) => void;
+    selectedCategory: string
+}> = (props) => {
     const {showError} = useSnackbar();
 
     const [categories, setCategories] = useState<CategoryFilterListProps[]>([]);
@@ -27,7 +30,11 @@ const CategoryFilter: React.FC<{ onSetCategory: Dispatch<SetStateAction<string>>
     return (
         <div
             className="mx-1.5 w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow drop-shadow">
-            <CategoryFilterList categories={categories} onCategoryChange={props.onSetCategory}/>
+            <CategoryFilterList
+                categories={categories}
+                selectedCategory={props.selectedCategory}
+                onChangeCategoryFilter={props.onChangeSelectedCategory}
+            />
         </div>
     );
 }
