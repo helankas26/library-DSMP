@@ -1,28 +1,30 @@
-import React, {useState} from "react";
+import React from "react";
 
 import CategoryFilter from "../components/category/CategoryFilter.tsx";
 import MainBanner from "../components/MainBanner.tsx";
 import BookShowcase from "../components/book/BookShowcase.tsx";
+import useHomeState from "../hooks/use-home-state.ts";
 
 const Home: React.FC = () => {
-    const [page, setPage] = useState<number>(1);
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const {setPage, setSelectedCategoryId, setSearchText, setSearching} = useHomeState();
 
     const changeSelectedCategoryHandler = (category: string) => {
+        setSearching('');
+        setSearchText('');
         setPage(1);
-        setSelectedCategory(category);
+        setSelectedCategoryId(category);
     };
 
     return (
         <div className="my-6 container mx-auto flex flex-1">
             <div className="hidden sm:block">
                 <div className="sm:sticky sm:top-[80px]">
-                    <CategoryFilter selectedCategory={selectedCategory} onChangeSelectedCategory={changeSelectedCategoryHandler}/>
+                    <CategoryFilter onChangeSelectedCategory={changeSelectedCategoryHandler}/>
                 </div>
             </div>
             <div className="flex flex-1 flex-col gap-y-6 mx-1.5">
                 <MainBanner/>
-                <BookShowcase page={page} setPage={setPage} selectedCategory={selectedCategory}/>
+                <BookShowcase/>
             </div>
         </div>
     );

@@ -1,21 +1,34 @@
-import React from "react";
+import React, {Dispatch, SetStateAction} from "react";
 import {MagnifyingGlassIcon} from '@heroicons/react/20/solid'
+import {Form} from "react-router-dom";
 
-const SearchBar: React.FC = () => {
+const SearchBar: React.FC<{
+    searching: string;
+    setSearching: Dispatch<SetStateAction<string>>;
+    onSearchBooks: () => void
+}> = (props) => {
     return (
         <>
-            <div className="w-full h-9 rounded-lg flex items-center justify-center">
-                <input className="w-full h-full outline-none px-2.5 rounded-bl-2xl rounded-tl-2xl text-black"
-                       placeholder="Search books" type="search"/>
+            <Form
+                className="w-full h-9 rounded-lg flex items-center justify-center"
+                onSubmit={(event) => {
+                    props.searching.trim() ? props.onSearchBooks() : event.preventDefault();
+                }}>
+                <input
+                    className="w-full h-full outline-none pl-3 pr-2 rounded-l-lg text-black"
+                    type="search"
+                    value={props.searching}
+                    onChange={(e) => {
+                        props.setSearching(e.target.value);
+                    }}
+                    placeholder="Search books"/>
 
-                <button type="button"
-                    className="w-14 h-full rounded-br-2xl rounded-tr-2xl bg-amber-600 flex items-center justify-center hover:bg-amber-700 hover:cursor-pointer">
-                    <MagnifyingGlassIcon
-                        className="m-auto h-5 w-5 text-white"
-                        aria-hidden="true"
-                    />
+                <button
+                    className="w-14 h-full rounded-r-lg bg-amber-600 flex items-center justify-center hover:bg-amber-700 active:bg-amber-600 hover:cursor-pointer"
+                    type="submit">
+                    <MagnifyingGlassIcon className="m-auto h-5 w-5 text-white" aria-hidden="true"/>
                 </button>
-            </div>
+            </Form>
         </>
     );
 }

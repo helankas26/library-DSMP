@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 import BookShowcaseItem from "./BookShowcaseItem.tsx";
 import useSnackbar from "../../hooks/use-snackbar.ts";
@@ -7,21 +7,19 @@ import Book from "../../model/Book.ts";
 import bookService from "../../services/api/book.ts";
 import categoryService from "../../services/api/category.ts";
 import GradientCircularProgress from "../shared/GradientCircularProgress.tsx";
+import useHomeState from "../../hooks/use-home-state.ts";
 
-const BookShowcase: React.FC<{
-    page: number;
-    setPage: Dispatch<SetStateAction<number>>;
-    selectedCategory: string
-}> = (props) => {
+const BookShowcase: React.FC = () => {
     const size: number = 12;
     const scrollToTop = useScrollToTop();
     const {showError} = useSnackbar();
+    const {page, setPage, selectedCategoryId, searchText} = useHomeState();
 
     const [books, setBooks] = useState<Book[]>([]);
     const [totalCount, setTotalCount] = useState<number>(0);
-    const [totalPages, setTotalPages] = useState(0);
-    const [from, setFrom] = useState(0);
-    const [to, setTo] = useState(0);
+    const [totalPages, setTotalPages] = useState<number>(0);
+    const [from, setFrom] = useState<number>(0);
+    const [to, setTo] = useState<number>(0);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const loadShowcaseBooks = useCallback(async () => {
@@ -30,10 +28,12 @@ const BookShowcase: React.FC<{
         try {
             let response;
 
-            if (!props.selectedCategory) {
-                response = await bookService.findAllBooksWithPagination(props.page, size);
+            if (selectedCategoryId) {
+                response = await categoryService.findAllBooksWithPaginationById(selectedCategoryId, page, size);
+            } else if (searchText) {
+                response = await bookService.findAllBooksBySearchWithPagination(searchText, page, size);
             } else {
-                response = await categoryService.findAllBooksWithPaginationById(props.selectedCategory, props.page, size);
+                response = await bookService.findAllBooksWithPagination(page, size);
             }
 
             setBooks(response.data.books);
@@ -48,17 +48,17 @@ const BookShowcase: React.FC<{
         } finally {
             setIsLoading(false);
         }
-    }, [props.page, props.selectedCategory]);
+    }, [page, selectedCategoryId, searchText]);
 
     const nextShowcaseBooks = async () => {
-        if (props.page < totalPages) {
-            props.setPage((prevState) => prevState + 1);
+        if (page < totalPages) {
+            setPage((prevState) => prevState + 1);
         }
     };
 
     const prevShowcaseBooks = async () => {
-        if (props.page > 1) {
-            props.setPage((prevState) => prevState - 1);
+        if (page > 1) {
+            setPage((prevState) => prevState - 1);
         }
     };
 
@@ -76,8 +76,10 @@ const BookShowcase: React.FC<{
             }
 
             {!isLoading && books.length === 0 &&
-                <div className="w-full h-[55vh] flex justify-center items-center  border border-amber-950">
-                    <p className="text-2xl font-medium text-blue-600">No books were found.</p>
+                <div className="w-full h-[55vh] flex justify-center items-center">
+                    <p className="text-xl font-medium bg-[#3d9cd2] text-white w-4/5 p-3 rounded-sm border-l-8 border-l-[#347ba3]">
+                        No books were found matching your selection.
+                    </p>
                 </div>
             }
 
@@ -94,13 +96,13 @@ const BookShowcase: React.FC<{
                             </span>
                             <div className="inline-flex mt-2 gap-3">
                                 <button
-                                    disabled={props.page <= 1}
+                                    disabled={page <= 1}
                                     onClick={prevShowcaseBooks}
                                     className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 active:bg-indigo-600 font-semibold py-2 px-4 rounded-l disabled:bg-gray-500">
                                     Prev
                                 </button>
                                 <button
-                                    disabled={props.page >= totalPages}
+                                    disabled={page >= totalPages}
                                     onClick={nextShowcaseBooks}
                                     className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 active:bg-indigo-600 font-semibold py-2 px-4 rounded-r disabled:bg-gray-500">
                                     Next
