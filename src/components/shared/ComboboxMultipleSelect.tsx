@@ -4,14 +4,15 @@ import {CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid'
 
 
 const ComboboxMultipleSelect: React.FC<{ objects: any[]; displayField: string; }> = (props) => {
+    const {objects, displayField} = props;
     const [selectedObjects, setSelectedObjects] = useState([]);
     const [query, setQuery] = useState('');
 
     const filteredObject =
         query === ''
-            ? props.objects
-            : props.objects.filter((object) => {
-                return object[props.displayField].toString().toLowerCase().includes(query.toLowerCase())
+            ? objects
+            : objects.filter((object) => {
+                return object[displayField].toString().toLowerCase().includes(query.toLowerCase())
             })
 
     return (
@@ -24,7 +25,7 @@ const ComboboxMultipleSelect: React.FC<{ objects: any[]; displayField: string; }
                         displayValue={(objects) =>
                             (objects as any).map((object: {
                                 [x: string]: any;
-                            }) => object[props.displayField]).join(', ')
+                            }) => object[displayField]).join(', ')
                         }
                         onChange={(event) => setQuery(event.target.value)}
                     />
@@ -55,7 +56,7 @@ const ComboboxMultipleSelect: React.FC<{ objects: any[]; displayField: string; }
                                         <>
                                             <span
                                                 className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>
-                                                {object[props.displayField]}
+                                                {object[displayField]}
                                             </span>
                                             {selected ? (
                                                 <span

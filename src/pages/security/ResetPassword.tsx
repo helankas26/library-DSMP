@@ -26,8 +26,9 @@ const ResetPassword: React.FC = () => {
             setLoading(true);
             try {
                 const response = await authService.checkOtpValid(otp);
-                setIsOtpValid(response.data.valid);
-                setIsSignUpDisabled(!response.data.valid);
+                const {valid} = response.data;
+                setIsOtpValid(valid);
+                setIsSignUpDisabled(!valid);
             } catch (error: any) {
                 showError(error);
             } finally {
@@ -48,13 +49,14 @@ const ResetPassword: React.FC = () => {
 
         try {
             const response = await authService.resetPassword(otp, password, confirmPassword);
-            const accessToken = response?.data?.accessToken;
-            dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
-            setRefreshTokenExpirationDate(response?.data?.refreshTokenExpires);
+            const {accessToken, user, refreshTokenExpires} = response?.data;
 
+            dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
+            setRefreshTokenExpirationDate(refreshTokenExpires);
             showAlert("Password reset successfully!", "success");
             setOtp('');
-            const to: string = response.data.user.role === 'ADMIN' ? '/dashboard' : response.data.user.role === 'USER' ? '/' : '/';
+
+            const to: string = user.role === 'ADMIN' ? '/dashboard' : user.role === 'USER' ? '/' : '/';
             navigate(to, {replace: true});
         } catch (error: any) {
             showError(error);

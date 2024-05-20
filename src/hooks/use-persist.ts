@@ -12,11 +12,15 @@ const usePersist = () => {
     const persist = async () => {
         try {
             const response = await authService.refreshToken();
-            dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: response.data.accessToken}});
+            const {accessToken} = response.data;
+            dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
         } catch (error: any) {
             dispatchAuth({type: 'LOGOUT', auth: {accessToken: undefined, profile: undefined}});
             removeRefreshTokenExpirationDate();
-            if (location.pathname.startsWith("/dashboard") || location.pathname.startsWith("/books")) navigate("/auth/login", {state: {from: location}})
+
+            if (location.pathname.startsWith("/dashboard") || location.pathname.startsWith("/books")) {
+                navigate("/auth/login", {state: {from: location}})
+            }
         }
     }
 

@@ -11,6 +11,7 @@ const MainHeader: React.FC<{
     onChangeSearchText: () => void
 }> = (props) => {
     const {auth} = useAuth();
+    const {searching, setSearching, onChangeSearchText} = props;
 
     return (
         <div className="z-50 bg-white sticky inset-x-0 top-0 pt-2">
@@ -25,9 +26,9 @@ const MainHeader: React.FC<{
 
                     <div className="w-1/2">
                         <SearchBar
-                            searching={props.searching}
-                            setSearching={props.setSearching}
-                            onSearchBooks={props.onChangeSearchText}
+                            searching={searching}
+                            setSearching={setSearching}
+                            onSearchBooks={onChangeSearchText}
                         />
                     </div>
 

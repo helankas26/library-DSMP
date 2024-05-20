@@ -31,10 +31,11 @@ const authReducer = (
 
 const AuthContextProvider: React.FC<{ children: ReactNode }> = (props) => {
     const [auth, dispatchAuth] = useReducer(authReducer, defaultAuthState);
+    const {children} = props;
 
     return (
         <AuthContext.Provider value={{auth, dispatchAuth}}>
-            {props.children}
+            {children}
         </AuthContext.Provider>
     )
 }

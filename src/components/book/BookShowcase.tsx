@@ -36,11 +36,12 @@ const BookShowcase: React.FC = () => {
                 response = await bookService.findAllBooksWithPagination(page, size);
             }
 
-            setBooks(response.data.books);
-            setTotalCount(response.data.totalCount);
-            setTotalPages(response.data.totalPages);
-            setFrom(response.data.from);
-            setTo(response.data.to);
+            const {books, from, to, totalCount, totalPages} = response.data;
+            setBooks(books);
+            setFrom(from);
+            setTo(to);
+            setTotalCount(totalCount);
+            setTotalPages(totalPages);
 
             scrollToTop();
         } catch (error: any) {

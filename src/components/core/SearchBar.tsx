@@ -7,19 +7,21 @@ const SearchBar: React.FC<{
     setSearching: Dispatch<SetStateAction<string>>;
     onSearchBooks: () => void
 }> = (props) => {
+    const {searching, setSearching, onSearchBooks} = props;
+
     return (
         <>
             <Form
                 className="w-full h-9 rounded-lg flex items-center justify-center"
                 onSubmit={(event) => {
-                    props.searching.trim() ? props.onSearchBooks() : event.preventDefault();
+                    searching.trim() ? onSearchBooks() : event.preventDefault();
                 }}>
                 <input
                     className="w-full h-full outline-none pl-3 pr-2 rounded-l-lg text-black"
                     type="search"
-                    value={props.searching}
+                    value={searching}
                     onChange={(e) => {
-                        props.setSearching(e.target.value);
+                        setSearching(e.target.value);
                     }}
                     placeholder="Search books"/>
 

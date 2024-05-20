@@ -7,6 +7,7 @@ import useSnackbar from "../../hooks/use-snackbar.ts";
 
 const CategoryFilter: React.FC<{ onChangeSelectedCategory: (category: string) => void }> = (props) => {
     const {showError} = useSnackbar();
+    const {onChangeSelectedCategory} = props;
 
     const [categories, setCategories] = useState<CategoryFilterListProps[]>([]);
 
@@ -27,7 +28,7 @@ const CategoryFilter: React.FC<{ onChangeSelectedCategory: (category: string) =>
     return (
         <div
             className="mx-1.5 w-48 max-h-[65vh] overflow-y-auto no-scrollbar text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow drop-shadow">
-            <CategoryFilterList categories={categories} onChangeCategoryFilter={props.onChangeSelectedCategory}/>
+            <CategoryFilterList categories={categories} onChangeCategoryFilter={onChangeSelectedCategory}/>
         </div>
     );
 }

@@ -4,14 +4,15 @@ import {CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid'
 
 
 const ComboboxSingleSelect: React.FC<{ objects: any[]; displayField: string }> = (props) => {
+    const {objects, displayField} = props;
     const [selectedObjects, setSelectedObjects] = useState([]);
     const [query, setQuery] = useState('');
 
     const filteredObject =
         query === ''
-            ? props.objects
-            : props.objects.filter((object) => {
-                return object[props.displayField].toString().toLowerCase().includes(query.toLowerCase())
+            ? objects
+            : objects.filter((object) => {
+                return object[displayField].toString().toLowerCase().includes(query.toLowerCase())
             })
 
     return (
@@ -21,7 +22,7 @@ const ComboboxSingleSelect: React.FC<{ objects: any[]; displayField: string }> =
                     className="relative w-full cursor-default overflow-hidden rounded bg-white text-left focus:outline-none sm:text-sm">
                     <Combobox.Input
                         className="appearance-none border rounded w-full py-2.5 px-3 text-sm text-gray-700 leading-5 focus:outline-none focus:shadow-outline"
-                        displayValue={(object) => (object as any)[props.displayField]}
+                        displayValue={(object) => (object as any)[displayField]}
                         onChange={(event) => setQuery(event.target.value)}
                     />
                     <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -51,7 +52,7 @@ const ComboboxSingleSelect: React.FC<{ objects: any[]; displayField: string }> =
                                         <>
                                             <span
                                                 className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>
-                                                {object[props.displayField]}
+                                                {object[displayField]}
                                             </span>
                                             {selected ? (
                                                 <span

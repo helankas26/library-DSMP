@@ -8,9 +8,10 @@ const useRefreshToken = () => {
     const refresh = async () => {
         try {
             const response = await authService.refreshToken();
-            dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: response.data.accessToken}});
+            const {accessToken} = response.data;
+            dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
 
-            return response.data.accessToken;
+            return accessToken;
         } catch (error: any) {
             dispatchAuth({type: 'LOGOUT', auth: {accessToken: undefined, profile: undefined}});
             removeRefreshTokenExpirationDate();

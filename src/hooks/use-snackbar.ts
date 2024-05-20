@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
-import SnackbarServiceProps from "../model/SnackbarServiceProps.ts";
 import {AlertColor} from "@mui/material/Alert/Alert";
+
+import SnackbarServiceProps from "../model/SnackbarServiceProps.ts";
 
 let listener: any;
 

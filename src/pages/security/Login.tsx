@@ -23,12 +23,13 @@ const Login: React.FC = () => {
 
         try {
             const response = await authService.login(username, password);
-            const accessToken = response?.data?.accessToken;
-            dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
-            setRefreshTokenExpirationDate(response?.data?.refreshTokenExpires);
+            const {accessToken, user, refreshTokenExpires} = response?.data;
 
+            dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
+            setRefreshTokenExpirationDate(refreshTokenExpires);
             setUsername('');
-            from = from ?? (response.data.user.role === 'ADMIN' ? '/dashboard' : response.data.user.role === 'USER' ? '/' : '/');
+
+            from = from ?? (user.role === 'ADMIN' ? '/dashboard' : user.role === 'USER' ? '/' : '/');
             navigate(from, {replace: true});
         } catch (error: any) {
             showError(error);

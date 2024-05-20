@@ -1,10 +1,10 @@
 import React from "react";
 
 const StatusLabel: React.FC<{ status: string }> = (props) => {
-
+    const {status} = props;
     let labelColor: string = '';
 
-    switch (props.status) {
+    switch (status) {
         case 'BORROWED':
             labelColor = 'text-green-500 bg-green-100';
             break;
@@ -27,7 +27,7 @@ const StatusLabel: React.FC<{ status: string }> = (props) => {
     return (
         <span
             className={`text-center align-baseline inline-flex px-2.5 py-1.5 mr-auto items-center font-semibold leading-none rounded-full ${labelColor}`}>
-            {props.status}
+            {status}
         </span>
     );
 }

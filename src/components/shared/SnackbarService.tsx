@@ -2,13 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Snackbar from '@mui/material/Snackbar';
 import {Alert} from "@mui/material";
+
 import SnackbarServiceProps from "../../model/SnackbarServiceProps.ts";
 
 const SnackbarService: React.FC<{ options: SnackbarServiceProps }> = (props) => {
-    const [open, setOpen] = React.useState<boolean>(props.options.isOpen);
+    const {options} = props;
+    const [open, setOpen] = React.useState<boolean>(options.isOpen);
 
     const handleClose = (_event: React.SyntheticEvent | Event, reason?: string) => {
-        props.options.onClear();
+        options.onClear();
         if (reason === 'clickaway') {
             return;
         }
@@ -25,9 +27,9 @@ const SnackbarService: React.FC<{ options: SnackbarServiceProps }> = (props) => 
                     onClose={handleClose}>
                     <Alert
                         onClose={handleClose}
-                        severity={props.options.severity}
+                        severity={options.severity}
                         sx={{width: '100%'}}>
-                        {props.options.message}
+                        {options.message}
                     </Alert>
                 </Snackbar>,
                 document.getElementById('snackbar-root') as HTMLElement

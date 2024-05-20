@@ -28,8 +28,9 @@ const Signup: React.FC = () => {
             setLoading(true);
             try {
                 const response = await authService.checkRegistrationValid(registrationNo);
-                setIsRegistrationValid(response.data.valid);
-                setIsSignUpDisabled(!response.data.valid);
+                const {valid} = response.data;
+                setIsRegistrationValid(valid);
+                setIsSignUpDisabled(!valid);
             } catch (error: any) {
                 showError(error);
             } finally {
@@ -48,7 +49,7 @@ const Signup: React.FC = () => {
     const signupHandler = async (event: FormEvent) => {
         event.preventDefault();
 
-        const user: User = {
+        const newUser: User = {
             username: username,
             profile: registrationNo,
             password: password,
@@ -56,13 +57,14 @@ const Signup: React.FC = () => {
         } as unknown as User;
 
         try {
-            const response = await authService.signup(user);
-            const accessToken = response?.data?.accessToken;
-            dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
-            setRefreshTokenExpirationDate(response?.data?.refreshTokenExpires);
+            const response = await authService.signup(newUser);
+            const {accessToken, user, refreshTokenExpires} = response?.data;
 
+            dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
+            setRefreshTokenExpirationDate(refreshTokenExpires);
             showAlert("Account create successfully!", "success");
-            const to: string = response.data.user.role === 'ADMIN' ? '/dashboard' : response.data.user.role === 'USER' ? '/' : '/';
+
+            const to: string = user.role === 'ADMIN' ? '/dashboard' : user.role === 'USER' ? '/' : '/';
             navigate(to, {replace: true});
         } catch (error: any) {
             showError(error);

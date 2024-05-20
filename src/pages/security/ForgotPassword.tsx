@@ -1,10 +1,10 @@
 import React, {FormEvent, useState} from "react";
 import {Form, Link, useNavigate} from "react-router-dom";
+
 import AuthCard from "../../components/shared/AuthCard.tsx";
 import forgetPasswordImage from "../../assets/forget-password.jpg";
 import authService from "../../services/api/auth.ts";
 import useSnackbar from "../../hooks/use-snackbar.ts";
-
 
 const ForgotPassword: React.FC = () => {
     const navigate = useNavigate();
@@ -19,8 +19,10 @@ const ForgotPassword: React.FC = () => {
         setIsSubmitting(true);
         try {
             const response = await authService.forgetPassword(email);
-            if (response.data.send) {
-                showAlert("Password rest OTP has been sent", 'info');
+            const {send} = response.data;
+
+            if (send) {
+                showAlert("Password reset OTP has been sent", 'info');
                 setEmail('');
                 navigate("/auth/reset-password");
             }
