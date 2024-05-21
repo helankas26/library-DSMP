@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useMemo, useState} from "react";
 import {Outlet, useLocation} from "react-router-dom";
 
 import MainHeader from "../components/core/MainHeader.tsx";
@@ -26,7 +26,7 @@ const HomeLayout: React.FC = () => {
         setSearchText(searching);
     };
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const verifyRefreshToken = async () => {
             if (!auth.accessToken && !location.state) {
                 await persist();
@@ -37,11 +37,18 @@ const HomeLayout: React.FC = () => {
     }, []);
 
     useEffect(() => {
+        let timer: NodeJS.Timeout;
+
         if (auth.accessToken) {
             const tokenDuration = getTokenDuration();
-            setTimeout(async () => {
+
+            timer = setTimeout(async () => {
                 await logout();
             }, tokenDuration);
+        }
+
+        return () => {
+            clearTimeout(timer);
         }
     }, [auth.accessToken, logout]);
 
@@ -64,17 +71,17 @@ const HomeLayout: React.FC = () => {
         };
     }, [location.pathname]);
 
+    const contextValue = useMemo(() => ({
+        page, setPage,
+        selectedCategoryId, setSelectedCategoryId,
+        searchText, setSearchText,
+        searching, setSearching
+    }), [page, selectedCategoryId, searchText, searching]);
+
     return (
         <div className="flex flex-col bg-[url('assets/home-texture.png')]">
             <MainHeader searching={searching} setSearching={setSearching} onChangeSearchText={changeSearchTextHandler}/>
-            <Outlet
-                context={
-                    {
-                        page, setPage,
-                        selectedCategoryId, setSelectedCategoryId,
-                        searchText, setSearchText,
-                        searching, setSearching
-                    } satisfies HomeStateContext}/>
+            <Outlet context={contextValue satisfies HomeStateContext}/>
             <MainFooter/>
         </div>
     );
