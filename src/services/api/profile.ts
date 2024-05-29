@@ -1,12 +1,21 @@
 import AxiosInstance from "../../config/axios-instance.ts";
 import HttpResponse from "../../utils/http-response.ts";
 import Profile from "../../model/Profile.ts";
+import HttpResponseWithPagination from "../../utils/http-response-with-pagination.ts";
 
 const PROFILES: string = '/profiles';
 
 
 const findAllProfiles = async () => {
     return await AxiosInstance.get<HttpResponse<Profile[]>>(PROFILES);
+}
+
+const findAllProfilesWithPagination = async (page: number, size: number) => {
+    return await AxiosInstance.get<HttpResponseWithPagination<Profile[]>>(`${PROFILES}/list?page=${page}&size=${size}`);
+}
+
+const findAllProfilesBySearchWithPagination = async (searchText: string, page: number, size: number) => {
+    return await AxiosInstance.get<HttpResponseWithPagination<Profile[]>>(`${PROFILES}/query?searchText=${searchText}&page=${page}&size=${size}`);
 }
 
 const createProfile = async (profile: Profile) => {
@@ -34,6 +43,8 @@ const deleteProfile = async (id: string) => {
 
 export default {
     findAllProfiles,
+    findAllProfilesWithPagination,
+    findAllProfilesBySearchWithPagination,
     createProfile,
     findProfileById,
     findProfileByAuthUser,
