@@ -51,13 +51,13 @@ const BookShowcase: React.FC = () => {
         }
     }, [page, selectedCategoryId, searchText]);
 
-    const nextShowcaseBooks = async () => {
+    const nextPage = async () => {
         if (page < totalPages) {
             setPage((prevState) => prevState + 1);
         }
     };
 
-    const prevShowcaseBooks = async () => {
+    const prevPage = async () => {
         if (page > 1) {
             setPage((prevState) => prevState - 1);
         }
@@ -98,13 +98,13 @@ const BookShowcase: React.FC = () => {
                             <div className="inline-flex mt-2 gap-3">
                                 <button
                                     disabled={page <= 1}
-                                    onClick={prevShowcaseBooks}
+                                    onClick={prevPage}
                                     className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 active:bg-indigo-600 font-semibold py-2 px-4 rounded-l disabled:bg-gray-500">
                                     Prev
                                 </button>
                                 <button
                                     disabled={page >= totalPages}
-                                    onClick={nextShowcaseBooks}
+                                    onClick={nextPage}
                                     className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 active:bg-indigo-600 font-semibold py-2 px-4 rounded-r disabled:bg-gray-500">
                                     Next
                                 </button>
