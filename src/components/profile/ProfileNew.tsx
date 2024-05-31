@@ -1,4 +1,4 @@
-import React, {FormEvent, useRef, useState} from "react";
+import React, {FormEvent, useEffect, useRef, useState} from "react";
 import {Form} from "react-router-dom";
 
 import SaveRecordButton from "../shared/SaveRecordButton.tsx";
@@ -7,6 +7,7 @@ import useSnackbar from "../../hooks/use-snackbar.ts";
 import Profile from "../../model/Profile.ts";
 import profileService from "../../services/api/profile.ts";
 import profileFirebaseService from "../../services/firebase/profile.ts";
+import {resizeProfileImage} from "../../utils/image-optimizer.ts";
 
 
 const ProfileNew: React.FC = () => {
@@ -20,26 +21,40 @@ const ProfileNew: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [type, setType] = useState<'LIBRARIAN' | 'MEMBER'>('MEMBER');
     const [address, setAddress] = useState<string>('');
-    const [previewImage, setPreviewImage] = useState<string>('');
+    const [imagePreview, setImagePreview] = useState<string>('');
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-    const fileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files![0];
-        setAvatar(file);
 
         if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const result = reader.result as string;
-                setPreviewImage(result);
-            };
-            reader.readAsDataURL(file);
+            try {
+                const imageFile = await resizeProfileImage(file);
+
+                // Creates a temporary URL pointing to the file object
+                const preview = URL.createObjectURL(imageFile);
+                setImagePreview(preview);
+                setAvatar(imageFile);
+
+                // Converts the image file to a base64-encoded string
+                /*const reader = new FileReader();
+                reader.onload = () => {
+                    const result = reader.result as string;
+                    setImagePreview(result);
+                };
+                reader.readAsDataURL(file);*/
+            } catch (error: any) {
+                showError(error);
+                setAvatar(null);
+                setImagePreview('');
+                fileInputRef.current!.value = '';
+            }
         }
     };
 
     const resetFileInput = () => {
         setAvatar(null);
-        setPreviewImage('');
+        setImagePreview('');
         if (fileInputRef.current) {
             fileInputRef.current.value = '';
         }
@@ -53,7 +68,7 @@ const ProfileNew: React.FC = () => {
 
         if (avatar) {
             try {
-                imageURL = await profileFirebaseService.saveProfileImage(avatar);
+                imageURL = await profileFirebaseService.uploadProfileImage(avatar);
             } catch (error: any) {
                 showError(error);
             }
@@ -78,7 +93,7 @@ const ProfileNew: React.FC = () => {
             setEmail('')
             setType("MEMBER")
             setAddress('')
-            setPreviewImage('')
+            setImagePreview('')
             fileInputRef.current!.value = '';
         } catch (error: any) {
             await profileFirebaseService.deleteProfileImage(imageURL);
@@ -87,15 +102,24 @@ const ProfileNew: React.FC = () => {
             setType("MEMBER");
             setIsSubmitting(false);
         }
-    }
+    };
+
+    useEffect(() => {
+        // Cleanup function to revoke the object URL
+        return () => {
+            if (imagePreview) {
+                URL.revokeObjectURL(imagePreview);
+            }
+        };
+    }, [imagePreview]);
 
     return (
         <div className="min-w-full border rounded mb-6">
             <div className="mx-auto max-w-screen-xl p-4 flex flex-col gap-5">
                 <div className="flex justify-center">
-                    <div className="relative  flex-shrink-0 w-36 h-36">
+                    <div className="relative flex-shrink-0 w-36 h-36">
                         <img className="w-full h-full border rounded-full"
-                             src={previewImage || profileAvatarImage}
+                             src={imagePreview || profileAvatarImage}
                              alt="profile photo"/>
                         {avatar && (
                             <button

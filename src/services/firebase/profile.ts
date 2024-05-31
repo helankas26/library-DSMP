@@ -2,7 +2,7 @@ import firebase, {storage} from "../../config/firebase";
 
 const PROFILE_IMAGES: string = 'images/profiles';
 
-const saveProfileImage = async (image: File) => {
+const uploadProfileImage = async (image: File) => {
     const storageRef = storage.ref();
     const imageRef = storageRef.child(`${PROFILE_IMAGES}/${Date.now() + '-' + image.name}`);
     const snapshot = await imageRef.put(image);
@@ -19,4 +19,4 @@ const deleteProfileImage = async (imageURL: string) => {
     }
 }
 
-export default {saveProfileImage, deleteProfileImage};
+export default {uploadProfileImage, deleteProfileImage};
