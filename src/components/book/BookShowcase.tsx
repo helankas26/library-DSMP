@@ -11,7 +11,7 @@ import useHomeState from "../../hooks/use-home-state.ts";
 
 const BookShowcase: React.FC = () => {
     const size: number = 12;
-    const scrollToTop = useScrollToTop();
+    const {scrollToTop} = useScrollToTop();
     const {showError} = useSnackbar();
     const {page, setPage, selectedCategoryId, searchText} = useHomeState();
 
