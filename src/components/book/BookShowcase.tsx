@@ -8,6 +8,7 @@ import bookService from "../../services/api/book.ts";
 import categoryService from "../../services/api/category.ts";
 import GradientCircularProgress from "../shared/GradientCircularProgress.tsx";
 import useHomeState from "../../hooks/use-home-state.ts";
+import PaginationBar from "../shared/PaginationBar.tsx";
 
 const BookShowcase: React.FC = () => {
     const size: number = 12;
@@ -51,13 +52,13 @@ const BookShowcase: React.FC = () => {
         }
     }, [page, selectedCategoryId, searchText]);
 
-    const nextPage = async () => {
+    const nextPageHandler = async () => {
         if (page < totalPages) {
             setPage((prevState) => prevState + 1);
         }
     };
 
-    const prevPage = async () => {
+    const prevPageHandler = async () => {
         if (page > 1) {
             setPage((prevState) => prevState - 1);
         }
@@ -90,27 +91,16 @@ const BookShowcase: React.FC = () => {
                         <BookShowcaseItem key={book._id} book={book}/>
                     ))}
 
-                    <div className="inline-block min-w-full shadow rounded-lg overflow-hidden mt-6 mb-5">
-                        <div className="px-5 py-5 bg-white rounded-lg flex flex-col items-center">
-                            <span className="text-xs sm:text-sm text-gray-900">
-                                Showing {from} to {to} of {totalCount} books
-                            </span>
-                            <div className="inline-flex mt-2 gap-3">
-                                <button
-                                    disabled={page <= 1}
-                                    onClick={prevPage}
-                                    className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 active:bg-indigo-600 font-semibold py-2 px-4 rounded-l disabled:bg-gray-500">
-                                    Prev
-                                </button>
-                                <button
-                                    disabled={page >= totalPages}
-                                    onClick={nextPage}
-                                    className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 active:bg-indigo-600 font-semibold py-2 px-4 rounded-r disabled:bg-gray-500">
-                                    Next
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <PaginationBar
+                        style={'mt-6 mb-5'}
+                        page={page}
+                        totalCount={totalCount}
+                        totalPages={totalPages}
+                        from={from}
+                        to={to}
+                        prevPageHandler={prevPageHandler}
+                        nextPageHandler={nextPageHandler}
+                    />
                 </>
             }
 
