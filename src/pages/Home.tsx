@@ -1,7 +1,7 @@
 import React from "react";
 
 import CategoryFilter from "../components/category/CategoryFilter.tsx";
-import MainBanner from "../components/MainBanner.tsx";
+import MainBanner from "../components/core/MainBanner.tsx";
 import BookShowcase from "../components/book/BookShowcase.tsx";
 import useHomeState from "../hooks/use-home-state.ts";
 
