@@ -29,7 +29,7 @@ const ErrorBoundary: React.FC = () => {
                             <p className="mb-4 text-lg font-light text-gray-500">
                                 {message}.
                             </p>
-                            <Link to='/dashboard'
+                            <Link to='/dashboard' replace={true}
                                   className="inline-flex text-white bg-sky-600 hover:bg-sky-500 active:bg-sky-600 font-medium rounded-lg text-sm px-6 py-3 text-center my-4 mr-6">
                                 Dashboard
                             </Link>
@@ -45,7 +45,7 @@ const ErrorBoundary: React.FC = () => {
                 </div>
             </div>
             <div className="block">
-                <DashboardFooter/>
+                <DashboardFooter color={'bg-[#E2E8F0]'}/>
             </div>
         </div>
     );
