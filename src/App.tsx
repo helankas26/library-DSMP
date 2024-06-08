@@ -12,6 +12,7 @@ import dashboardRoutes from "./routes/Dashboard.tsx";
 import useAxiosInstance from "./hooks/use-axios-instance.ts";
 import useUserRole from "./hooks/use-user-role.ts";
 import useProfile from "./hooks/use-profile.ts";
+import ErrorBoundary from "./pages/ErrorBoundary.tsx";
 
 const App: React.FC = () => {
     useAxiosInstance();
@@ -29,6 +30,7 @@ const App: React.FC = () => {
         {
             path: '/dashboard',
             element: <DashboardLayout/>,
+            ErrorBoundary: ErrorBoundary,
             children: dashboardRoutes
         }
     ]);
