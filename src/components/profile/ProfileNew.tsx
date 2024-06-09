@@ -1,5 +1,6 @@
 import React, {FormEvent, useEffect, useRef, useState} from "react";
 import {Form} from "react-router-dom";
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 import SaveRecordButton from "../shared/SaveRecordButton.tsx";
 import profileAvatarImage from "../../assets/profile-avatar.jpg";
@@ -85,7 +86,7 @@ const ProfileNew: React.FC = () => {
 
         try {
             await profileService.createProfile(profile);
-            showAlert("profile create successfully!", "success");
+            showAlert("profile created successfully!", "success");
 
             setAvatar(null)
             setFullName('')
@@ -125,11 +126,7 @@ const ProfileNew: React.FC = () => {
                             <button
                                 className="absolute cursor-pointer bottom-2 right-2 w-8 h-8 shadow border border-red-500 transition duration-150 bg-red-500 hover:bg-red-600 active:bg-red-500 text-white rounded-full flex items-center justify-center"
                                 onClick={resetFileInput}>
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                                          d="M6 18L18 6M6 6l12 12"/>
-                                </svg>
+                                <CloseRoundedIcon/>
                             </button>
                         )}
                     </div>

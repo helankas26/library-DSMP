@@ -13,7 +13,7 @@ import PaginationBar from "../shared/PaginationBar.tsx";
 import ContextHeader from "../shared/ContextHeader.tsx";
 
 const ProfileList: React.FC = () => {
-    const size: number = 20;
+    const size: number = 24;
     const {showError} = useSnackbar();
     const navigate = useNavigate();
     const {elementRef, scrollToTop} = useScrollToTop<HTMLDivElement>();

@@ -33,7 +33,7 @@ const findProfileByAuthUser = async () => {
 }
 
 const updateProfile = async (id: string, profile: Profile) => {
-    return await AxiosInstance.patch<HttpResponse<Profile>>(`${PROFILES}/${id}`, {profile});
+    return await AxiosInstance.patch<HttpResponse<Profile>>(`${PROFILES}/${id}`, {...profile});
 
 }
 
