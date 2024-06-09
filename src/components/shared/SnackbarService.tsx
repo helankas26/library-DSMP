@@ -10,10 +10,10 @@ const SnackbarService: React.FC<{ options: SnackbarServiceProps }> = (props) => 
     const [open, setOpen] = React.useState<boolean>(options.isOpen);
 
     const handleClose = (_event: React.SyntheticEvent | Event, reason?: string) => {
-        options.onClear();
         if (reason === 'clickaway') {
             return;
         }
+        options.onClear();
         setOpen(false);
     };
 
