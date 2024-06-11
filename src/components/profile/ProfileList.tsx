@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
+import React, {ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 import ViewButton from "../shared/ViewButton.tsx";
@@ -8,13 +8,14 @@ import useScrollToTop from "../../hooks/use-scroll-to-top.ts";
 import useSnackbar from "../../hooks/use-snackbar.ts";
 import Profile from "../../model/Profile.ts";
 import profileService from "../../services/api/profile.ts";
+import profileFirebaseService from "../../services/firebase/profile.ts";
 import GradientCircularProgress from "../shared/GradientCircularProgress.tsx";
 import PaginationBar from "../shared/PaginationBar.tsx";
 import ContextHeader from "../shared/ContextHeader.tsx";
 
 const ProfileList: React.FC = () => {
     const size: number = 24;
-    const {showError} = useSnackbar();
+    const {showError, showAlert} = useSnackbar();
     const navigate = useNavigate();
     const {elementRef, scrollToTop} = useScrollToTop<HTMLDivElement>();
 
@@ -86,6 +87,24 @@ const ProfileList: React.FC = () => {
 
     const profileUpdateHandler = (id: string) => {
         navigate(`${id}/edit`);
+    };
+
+    const profileDeleteHandler = async (profile: Profile, setOpen: Dispatch<SetStateAction<boolean>>) => {
+        try {
+            await profileService.deleteProfile(profile._id);
+            await profileFirebaseService.deleteProfileImage(profile.avatar);
+            showAlert("profile updated successfully!", "success");
+
+            if (!searchText) {
+                await loadProfiles();
+            } else {
+                await searchProfiles();
+            }
+
+            setOpen(false);
+        } catch (error: any) {
+            showError(error);
+        }
     };
 
     useEffect(() => {
@@ -192,7 +211,7 @@ const ProfileList: React.FC = () => {
                                         <UpdateButton id={profile._id} onUpdate={profileUpdateHandler}/>
                                     </td>
                                     <td className="px-5 py-1">
-                                        <DeleteButton/>
+                                        <DeleteButton type={"profile"} record={profile} onDelete={profileDeleteHandler}/>
                                     </td>
                                 </tr>
                             ))}
