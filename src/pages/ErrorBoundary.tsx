@@ -22,9 +22,9 @@ const ErrorBoundary: React.FC = () => {
                 <div className="w-9/12 m-auto py-16 min-h-screen flex items-center justify-center">
                     <div className="shadow-2xl overflow-hidden sm:rounded-lg pb-12 sm:px-48 bg-gray-100">
                         <div className="border-t border-gray-100 text-center pt-12">
-                            <h1 className="mb-4 text-7xl tracking-tight font-extrabold lg:text-9xl text-[#0284C7]">{error.response.status}</h1>
+                            <h1 className="mb-4 text-7xl tracking-tight font-extrabold lg:text-9xl text-[#0284C7]">{error.response?.status}</h1>
                             <p className="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl">
-                                {error.response.statusText}.
+                                {error.response?.statusText || error.name}.
                             </p>
                             <p className="mb-4 text-lg font-light text-gray-500">
                                 {message}.
