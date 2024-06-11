@@ -13,6 +13,8 @@ import GradientCircularProgress from "../shared/GradientCircularProgress.tsx";
 import PaginationBar from "../shared/PaginationBar.tsx";
 import ContextHeader from "../shared/ContextHeader.tsx";
 
+const ProfileDetails = React.lazy(() => import('./ProfileDetails.tsx'));
+
 const ProfileList: React.FC = () => {
     const size: number = 24;
     const {showError, showAlert} = useSnackbar();
@@ -205,7 +207,7 @@ const ProfileList: React.FC = () => {
                                         <p className="text-gray-900 whitespace-nowrap">{profile.type}</p>
                                     </td>
                                     <td className="px-5 py-1">
-                                        <ViewButton/>
+                                        <ViewButton id={profile._id} DetailsView={ProfileDetails}/>
                                     </td>
                                     <td className="px-5 py-1">
                                         <UpdateButton id={profile._id} onUpdate={profileUpdateHandler}/>
