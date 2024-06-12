@@ -88,13 +88,13 @@ const ProfileNew: React.FC = () => {
             await profileService.createProfile(profile);
             showAlert("profile created successfully!", "success");
 
-            setAvatar(null)
-            setFullName('')
-            setTelNo('')
-            setEmail('')
-            setType("MEMBER")
-            setAddress('')
-            setImagePreview('')
+            setAvatar(null);
+            setFullName('');
+            setTelNo('');
+            setEmail('');
+            setType("MEMBER");
+            setAddress('');
+            setImagePreview('');
             fileInputRef.current!.value = '';
         } catch (error: any) {
             await profileFirebaseService.deleteProfileImage(imageURL);
