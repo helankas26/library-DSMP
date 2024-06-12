@@ -10,7 +10,7 @@ const findAllAuthors = async () => {
 }
 
 const createAuthor = async (author: Author) => {
-    return await AxiosInstance.post<HttpResponse<Author>>(AUTHORS, {author});
+    return await AxiosInstance.post<HttpResponse<Author>>(AUTHORS, {...author});
 }
 
 const findAuthorById = async (id: string) => {
