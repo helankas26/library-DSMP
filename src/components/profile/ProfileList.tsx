@@ -95,7 +95,7 @@ const ProfileList: React.FC = () => {
         try {
             await profileService.deleteProfile(profile._id);
             await profileFirebaseService.deleteProfileImage(profile.avatar);
-            showAlert("profile updated successfully!", "success");
+            showAlert("Profile deleted successfully!", "success");
 
             if (!searchText) {
                 await loadProfiles();

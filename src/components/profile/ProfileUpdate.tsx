@@ -102,7 +102,7 @@ const ProfileUpdate: React.FC = () => {
 
         try {
             await profileService.updateProfile(profile._id, editedProfile);
-            showAlert("profile updated successfully!", "success");
+            showAlert("Profile updated successfully!", "success");
             navigate(-1);
         } catch (error: any) {
             await profileFirebaseService.deleteProfileImage(imageURL);

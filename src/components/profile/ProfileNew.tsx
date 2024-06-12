@@ -86,7 +86,7 @@ const ProfileNew: React.FC = () => {
 
         try {
             await profileService.createProfile(profile);
-            showAlert("profile created successfully!", "success");
+            showAlert("Profile created successfully!", "success");
 
             setAvatar(null);
             setFullName('');
