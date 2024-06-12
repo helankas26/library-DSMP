@@ -36,7 +36,18 @@ const ProfileDetails: React.FC<{ id: string; setIsOpen: Dispatch<SetStateAction<
                             className="w-auto h-36 rounded-lg"
                             src={profile.avatar}/>
                     </div>
-                    <div className="flex flex-col gap-3 mt-3 py-3 px-4 text-sm border rounded-lg w-full">
+                    <div
+                        className="flex flex-col gap-3 mt-3 py-3 px-4 text-sm border rounded-lg w-full h-52 overflow-auto">
+                        <div className="w-full flex items-center justify-between">
+                            <label htmlFor="id"
+                                   className="w-full text-gray-600 font-semibold">ID</label>
+                            <input
+                                className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                                id="id"
+                                type="text"
+                                value={profile._id}
+                                disabled={true}/>
+                        </div>
                         <div className="w-full flex items-center justify-between">
                             <label htmlFor="fullName"
                                    className="w-full text-gray-600 font-semibold">Full Name</label>
