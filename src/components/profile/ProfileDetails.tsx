@@ -1,31 +1,7 @@
-import React, {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
+import React from "react";
 
-import profileService from "../../services/api/profile.ts";
-import useSnackbar from "../../hooks/use-snackbar.ts";
-import Profile from "../../model/Profile.ts";
-
-const ProfileDetails: React.FC<{ id: string; setIsOpen: Dispatch<SetStateAction<boolean>> }> = (props) => {
-    const {id, setIsOpen} = props;
-    const {showError} = useSnackbar();
-
-    const [profile, setProfile] = useState<Profile>();
-
-    const loadProfileDetails = useCallback(async () => {
-        try {
-            const response = await profileService.findProfileById(id);
-
-            const {profile} = response.data;
-            setProfile(profile);
-            setIsOpen(true);
-        } catch (error: any) {
-            showError(error);
-        }
-    }, []);
-
-    useEffect(() => {
-        setIsOpen(false);
-        loadProfileDetails();
-    }, [loadProfileDetails]);
+const ProfileDetails: React.FC<{ record: any }> = (props) => {
+    const {record: profile} = props;
 
     return (
         profile && (

@@ -87,6 +87,16 @@ const ProfileList: React.FC = () => {
         }
     };
 
+    const profileViewHandler = async (id: string) => {
+        try {
+            const response = await profileService.findProfileById(id);
+            const {profile} = response.data;
+            return profile;
+        } catch (error: any) {
+            showError(error);
+        }
+    };
+
     const profileUpdateHandler = (id: string) => {
         navigate(`${id}/edit`);
     };
@@ -129,7 +139,12 @@ const ProfileList: React.FC = () => {
 
     return (
         <>
-            <ContextHeader title={"Profiles"} description={"All Profile"} elementRef={elementRef} searchTextChangeHandler={searchTextChangeHandler}/>
+            <ContextHeader
+                title={"Profiles"}
+                description={"All Profile"}
+                elementRef={elementRef}
+                searchTextChangeHandler={searchTextChangeHandler}
+            />
 
             <div className="min-w-full shadow rounded-lg overflow-x-auto">
                 {isLoading &&
@@ -207,7 +222,7 @@ const ProfileList: React.FC = () => {
                                         <p className="text-gray-900 whitespace-nowrap">{profile.type}</p>
                                     </td>
                                     <td className="px-5 py-1">
-                                        <ViewButton id={profile._id} title={"Profile"} description={"Profile"} DetailsView={ProfileDetails}/>
+                                        <ViewButton id={profile._id} onView={profileViewHandler} type={"Profile"} DetailsView={ProfileDetails}/>
                                     </td>
                                     <td className="px-5 py-1">
                                         <UpdateButton id={profile._id} onUpdate={profileUpdateHandler}/>

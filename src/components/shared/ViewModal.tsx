@@ -1,19 +1,18 @@
-import React, {Dispatch, Fragment, SetStateAction} from "react";
+import React, {Fragment} from "react";
 import {Dialog, Transition} from '@headlessui/react'
 
 const ViewModal: React.FC<{
-    id: string,
-    title: string;
-    description: string;
+    record: any,
+    type: string;
     open: boolean;
-    setIsOpen: Dispatch<SetStateAction<boolean>>;
-    DetailsView: React.LazyExoticComponent<React.FC<{ id: string; setIsOpen: Dispatch<SetStateAction<boolean>> }>>
+    onClose: () => void;
+    DetailsView: React.LazyExoticComponent<React.FC<{ record: any }>>
 }> = (props) => {
-    const {id, title, description, open, setIsOpen, DetailsView} = props;
+    const {record, type, open, onClose, DetailsView} = props;
 
     return (
         <Transition appear show={open} as={Fragment}>
-            <Dialog as="div" className="relative z-50" onClose={() => setIsOpen(false)}>
+            <Dialog as="div" className="relative z-50" onClose={onClose}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -42,23 +41,23 @@ const ViewModal: React.FC<{
                                 <Dialog.Title
                                     as="h3"
                                     className="text-gray-600 font-semibold">
-                                    {title}
+                                    {type}
                                 </Dialog.Title>
                                 <Dialog.Description
                                     as="span"
                                     className="text-xs">
-                                    {description} details
+                                    {type} details
                                 </Dialog.Description>
 
                                 <div className="mt-4">
-                                    <DetailsView id={id} setIsOpen={setIsOpen}/>
+                                    <DetailsView record={record}/>
                                 </div>
 
                                 <div className="flex justify-end mt-4">
                                     <button
                                         className="w-[100px] py-2 px-4 font-semibold text-gray-100 rounded-md leading-tight shadow border border-transparent transition duration-150 bg-red-600 hover:bg-red-500 active:bg-red-600 focus:outline-none focus:shadow-outline"
                                         type="button"
-                                        onClick={() => setIsOpen(false)}>
+                                        onClick={onClose}>
                                         Close
                                     </button>
                                 </div>

@@ -5,7 +5,6 @@ import HttpResponseWithPagination from "../../utils/http-response-with-paginatio
 
 const PROFILES: string = '/profiles';
 
-
 const findAllProfiles = async () => {
     return await AxiosInstance.get<HttpResponse<Profile[]>>(PROFILES);
 }
@@ -24,17 +23,14 @@ const createProfile = async (profile: Profile) => {
 
 const findProfileById = async (id: string) => {
     return await AxiosInstance.get<HttpResponse<Profile>>(`${PROFILES}/${id}`);
-
 }
 
 const findProfileByAuthUser = async () => {
     return await AxiosInstance.get<HttpResponse<Profile>>(`${PROFILES}/auth`);
-
 }
 
 const updateProfile = async (id: string, profile: Profile) => {
     return await AxiosInstance.patch<HttpResponse<Profile>>(`${PROFILES}/${id}`, {...profile});
-
 }
 
 const deleteProfile = async (id: string) => {
