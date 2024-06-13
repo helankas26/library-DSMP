@@ -92,6 +92,7 @@ const BookShowcase: React.FC = () => {
                     ))}
 
                     <PaginationBar
+                        title={"books"}
                         style={'mt-6 mb-5'}
                         page={page}
                         totalCount={totalCount}

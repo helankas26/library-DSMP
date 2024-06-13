@@ -224,6 +224,7 @@ const ProfileList: React.FC = () => {
 
             {!isLoading && profiles.length > 0 &&
                 <PaginationBar
+                    title={"profiles"}
                     style={'mt-2.5'}
                     page={page}
                     totalCount={totalCount}
