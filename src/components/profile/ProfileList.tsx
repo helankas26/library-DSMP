@@ -129,7 +129,7 @@ const ProfileList: React.FC = () => {
 
     return (
         <>
-            <ContextHeader elementRef={elementRef} searchTextChangeHandler={searchTextChangeHandler}/>
+            <ContextHeader title={"Profiles"} description={"All Profile"} elementRef={elementRef} searchTextChangeHandler={searchTextChangeHandler}/>
 
             <div className="min-w-full shadow rounded-lg overflow-x-auto">
                 {isLoading &&
