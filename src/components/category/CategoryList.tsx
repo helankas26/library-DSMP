@@ -37,7 +37,8 @@ const CategoryList: React.FC = () => {
             const response = await categoryService.findAllCategoriesWithPagination(page, size);
 
             const {categories, from, to, totalCount, totalPages} = response.data;
-            setCategories(categories);
+            const sortedCategories = categories.sort((a, b) => a.categoryName.localeCompare(b.categoryName));
+            setCategories(sortedCategories);
             setFrom(from);
             setTo(to);
             setTotalCount(totalCount);
@@ -57,7 +58,8 @@ const CategoryList: React.FC = () => {
             const response = await categoryService.findAllCategoriesBySearchWithPagination(searchText, page, size);
 
             const {categories, from, to, totalCount, totalPages} = response.data;
-            setCategories(categories);
+            const sortedCategories = categories.sort((a, b) => a.categoryName.localeCompare(b.categoryName));
+            setCategories(sortedCategories);
             setFrom(from);
             setTo(to);
             setTotalCount(totalCount);
@@ -157,7 +159,7 @@ const CategoryList: React.FC = () => {
     return (
         <>
             <div className="flex flex-col gap-8">
-                {!toggleUpdate && <CategoryCreateForm/>}
+                {!toggleUpdate && <CategoryCreateForm onRefreshCategories={refreshCategoriesHandler}/>}
 
                 {toggleUpdate && updateCategory &&
                     <CategoryUpdateForm

@@ -6,7 +6,8 @@ import useSnackbar from "../../hooks/use-snackbar.ts";
 import Author from "../../model/Author.ts";
 import authorService from "../../services/api/author.ts";
 
-const AuthorCreateForm: React.FC = () => {
+const AuthorCreateForm: React.FC<{ onRefreshAuthors: () => Promise<void> }> = (props) => {
+    const {onRefreshAuthors} = props;
     const {showError, showAlert} = useSnackbar();
 
     const [name, setName] = useState<string>('');
@@ -24,7 +25,7 @@ const AuthorCreateForm: React.FC = () => {
         try {
             await authorService.createAuthor(author);
             showAlert("Author created successfully!", "success");
-
+            await onRefreshAuthors();
             setName('');
         } catch (error: any) {
             showError(error);

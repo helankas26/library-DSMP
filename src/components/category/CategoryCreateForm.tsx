@@ -6,7 +6,8 @@ import useSnackbar from "../../hooks/use-snackbar.ts";
 import Category from "../../model/Category.ts";
 import categoryService from "../../services/api/category.ts";
 
-const CategoryCreateForm: React.FC = () => {
+const CategoryCreateForm: React.FC<{ onRefreshCategories: () => Promise<void> }> = (props) => {
+    const {onRefreshCategories} = props;
     const {showError, showAlert} = useSnackbar();
 
     const [categoryName, setCategoryName] = useState<string>('');
@@ -26,7 +27,7 @@ const CategoryCreateForm: React.FC = () => {
         try {
             await categoryService.createCategory(category);
             showAlert("Category created successfully!", "success");
-
+            await onRefreshCategories();
             setCategoryName('');
             setDescription('');
         } catch (error: any) {

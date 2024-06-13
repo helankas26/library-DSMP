@@ -37,7 +37,8 @@ const AuthorList: React.FC = () => {
             const response = await authorService.findAllAuthorsWithPagination(page, size);
 
             const {authors, from, to, totalCount, totalPages} = response.data;
-            setAuthors(authors);
+            const sortedAuthors = authors.sort((a, b) => a.name.localeCompare(b.name));
+            setAuthors(sortedAuthors);
             setFrom(from);
             setTo(to);
             setTotalCount(totalCount);
@@ -57,7 +58,8 @@ const AuthorList: React.FC = () => {
             const response = await authorService.findAllAuthorsBySearchWithPagination(searchText, page, size);
 
             const {authors, from, to, totalCount, totalPages} = response.data;
-            setAuthors(authors);
+            const sortedAuthors = authors.sort((a, b) => a.name.localeCompare(b.name));
+            setAuthors(sortedAuthors);
             setFrom(from);
             setTo(to);
             setTotalCount(totalCount);
@@ -157,7 +159,7 @@ const AuthorList: React.FC = () => {
     return (
         <>
             <div className="flex flex-col gap-8">
-                {!toggleUpdate && <AuthorCreateForm/>}
+                {!toggleUpdate && <AuthorCreateForm onRefreshAuthors={refreshAuthorsHandler}/>}
 
                 {toggleUpdate && updateAuthor &&
                     <AuthorUpdateForm
