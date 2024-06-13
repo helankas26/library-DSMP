@@ -4,11 +4,18 @@ import Category from "../../model/Category.ts";
 import Book from "../../model/Book.ts";
 import HttpResponseWithPagination from "../../utils/http-response-with-pagination.ts";
 
-
 const CATEGORIES: string = '/categories';
 
 const findAllCategories = async () => {
     return await AxiosInstance.get<HttpResponse<Category[]>>(CATEGORIES);
+}
+
+const findAllCategoriesWithPagination = async (page: number, size: number) => {
+    return await AxiosInstance.get<HttpResponseWithPagination<Category[]>>(`${CATEGORIES}/list?page=${page}&size=${size}`);
+}
+
+const findAllCategoriesBySearchWithPagination = async (searchText: string, page: number, size: number) => {
+    return await AxiosInstance.get<HttpResponseWithPagination<Category[]>>(`${CATEGORIES}/query?searchText=${searchText}&page=${page}&size=${size}`);
 }
 
 const findAllBooksWithPaginationById = async (id: string, page: number, size: number) => {
@@ -16,7 +23,7 @@ const findAllBooksWithPaginationById = async (id: string, page: number, size: nu
 }
 
 const createCategory = async (category: Category) => {
-    return await AxiosInstance.post<HttpResponse<Category>>(CATEGORIES, {category});
+    return await AxiosInstance.post<HttpResponse<Category>>(CATEGORIES, {...category});
 }
 
 const findCategoryById = async (id: string) => {
@@ -24,7 +31,7 @@ const findCategoryById = async (id: string) => {
 }
 
 const updateCategory = async (id: string, category: Category) => {
-    return await AxiosInstance.patch<HttpResponse<Category>>(`${CATEGORIES}/${id}`, {category});
+    return await AxiosInstance.patch<HttpResponse<Category>>(`${CATEGORIES}/${id}`, {...category});
 }
 
 const deleteCategory = async (id: string) => {
@@ -33,6 +40,8 @@ const deleteCategory = async (id: string) => {
 
 export default {
     findAllCategories,
+    findAllCategoriesWithPagination,
+    findAllCategoriesBySearchWithPagination,
     findAllBooksWithPaginationById,
     createCategory,
     findCategoryById,
