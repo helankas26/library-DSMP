@@ -1,105 +1,257 @@
-import React from "react";
+import React, {ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
+
 import ViewButton from "../shared/ViewButton.tsx";
 import UpdateButton from "../shared/UpdateButton.tsx";
 import DeleteButton from "../shared/DeleteButton.tsx";
 import AuthorCreateForm from "./AuthorCreateForm.tsx";
 import AuthorUpdateForm from "./AuthorUpdateForm.tsx";
+import useSnackbar from "../../hooks/use-snackbar.ts";
+import useScrollToTop from "../../hooks/use-scroll-to-top.ts";
+import Author from "../../model/Author.ts";
+import authorService from "../../services/api/author.ts";
+import ContextHeader from "../shared/ContextHeader.tsx";
+import GradientCircularProgress from "../shared/GradientCircularProgress.tsx";
+import PaginationBar from "../shared/PaginationBar.tsx";
+
+const AuthorDetails = React.lazy(() => import('./AuthorDetails.tsx'));
 
 const AuthorList: React.FC = () => {
+    const size: number = 24;
+    const {showError, showAlert} = useSnackbar();
+    const {elementRef, scrollToTop} = useScrollToTop<HTMLDivElement>();
+
+    const [authors, setAuthors] = useState<Author[]>([]);
+    const [page, setPage] = useState<number>(1);
+    const [totalCount, setTotalCount] = useState<number>(0);
+    const [totalPages, setTotalPages] = useState<number>(0);
+    const [from, setFrom] = useState<number>(0);
+    const [to, setTo] = useState<number>(0);
+    const [searchText, setSearchText] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [delay, setDelay] = useState<number>(750);
+    const [toggleUpdate, setToggleUpdate] = useState<boolean>(false);
+    const [updateAuthor, setUpdateAuthor] = useState<Author>();
+
+    const loadAuthors = useCallback(async () => {
+        try {
+            const response = await authorService.findAllAuthorsWithPagination(page, size);
+
+            const {authors, from, to, totalCount, totalPages} = response.data;
+            setAuthors(authors);
+            setFrom(from);
+            setTo(to);
+            setTotalCount(totalCount);
+            setTotalPages(totalPages);
+
+            scrollToTop();
+        } catch (error: any) {
+            showError(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [page, searchText]);
+
+
+    const searchAuthors = useCallback(async () => {
+        try {
+            const response = await authorService.findAllAuthorsBySearchWithPagination(searchText, page, size);
+
+            const {authors, from, to, totalCount, totalPages} = response.data;
+            setAuthors(authors);
+            setFrom(from);
+            setTo(to);
+            setTotalCount(totalCount);
+            setTotalPages(totalPages);
+            setDelay(0);
+
+            scrollToTop();
+        } catch (error: any) {
+            showError(error);
+        }
+    }, [page, searchText]);
+
+    const searchTextChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchText(event.target.value);
+        setPage(1);
+        setDelay(750);
+    };
+
+    const nextPageHandler = async () => {
+        if (page < totalPages) {
+            setPage((prevState) => prevState + 1);
+        }
+    };
+
+    const prevPageHandler = async () => {
+        if (page > 1) {
+            setPage((prevState) => prevState - 1);
+        }
+    };
+
+    const authorViewHandler = async (id: string) => {
+        try {
+            const response = await authorService.findAuthorById(id);
+            const {author} = response.data;
+            return author;
+        } catch (error: any) {
+            showError(error);
+        }
+    };
+
+    const authorUpdateHandler = async (id: string) => {
+        try {
+            const response = await authorService.findAuthorById(id);
+            const {author} = response.data;
+            setUpdateAuthor(author);
+            setToggleUpdate(true);
+
+            scrollToTop();
+        } catch (error: any) {
+            showError(error);
+        }
+    };
+
+    const refreshAuthorsHandler = async () => {
+        if (!searchText) {
+            await loadAuthors();
+        } else {
+            await searchAuthors();
+        }
+    };
+
+    const authorDeleteHandler = async (author: Author, setOpen: Dispatch<SetStateAction<boolean>>) => {
+        try {
+            await authorService.deleteAuthor(author._id);
+            showAlert("Author deleted successfully!", "success");
+
+            await refreshAuthorsHandler();
+
+            setOpen(false);
+        } catch (error: any) {
+            showError(error);
+        }
+    };
+
+    useEffect(() => {
+        if (!searchText) {
+            loadAuthors();
+        }
+    }, [loadAuthors]);
+
+    useEffect(() => {
+        const debounceSearch = setTimeout(() => {
+            if (searchText) {
+                searchAuthors();
+            }
+        }, delay);
+
+        return () => {
+            clearTimeout(debounceSearch);
+        };
+    }, [searchAuthors]);
+
     return (
         <>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6">
-                <div className="w-full">
-                    <h2 className="text-gray-600 font-semibold">Authors</h2>
-                    <span className="text-xs">All Author</span>
-                </div>
-                <div className="w-full flex bg-gray-50 items-center p-2 rounded-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400"
-                         viewBox="0 0 20 20"
-                         fill="currentColor">
-                        <path fillRule="evenodd"
-                              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                              clipRule="evenodd"/>
-                    </svg>
-                    <input className="bg-gray-50 outline-none ml-1 block w-full" type="search"
-                           placeholder="search..."/>
-                </div>
+            <div className="flex flex-col gap-8">
+                {!toggleUpdate && <AuthorCreateForm/>}
+
+                {toggleUpdate && updateAuthor &&
+                    <AuthorUpdateForm
+                        key={updateAuthor._id}
+                        author={updateAuthor}
+                        setUpdateAuthor={setUpdateAuthor}
+                        setToggleUpdate={setToggleUpdate}
+                        onRefreshAuthors={refreshAuthorsHandler}
+                    />
+                }
+
+                <ContextHeader
+                    title={"Authors"}
+                    description={"All Author"}
+                    elementRef={elementRef}
+                    searchTextChangeHandler={searchTextChangeHandler}
+                />
             </div>
 
-            <AuthorCreateForm/>
-            <AuthorUpdateForm/>
+            <div className="min-w-full shadow rounded-lg overflow-x-auto">
+                {isLoading &&
+                    <div className="w-full h-[60vh] flex justify-center items-center">
+                        <GradientCircularProgress/>
+                    </div>
+                }
 
-            <div
-                className="-mx-4 sm:-mx-8 px-4 sm:px-8 pb-1 sm:py-4 overflow-x-auto">
-                <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                {!isLoading && authors.length === 0 &&
+                    <div className="w-full h-[60vh] flex justify-center items-center">
+                        <p className="text-xl font-medium bg-[#3d9cd2] text-white w-4/5 p-3 rounded-sm border-l-8 border-l-[#347ba3]">
+                            No authors were found matching your selection.
+                        </p>
+                    </div>
+                }
+
+                {!isLoading && authors.length > 0 &&
                     <table className="min-w-full leading-normal">
                         <thead
                             className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
                             <tr>
-                                <th
-                                    className="px-5 py-3 font-semibold">
+                                <th className="px-5 py-3 font-semibold">
                                     Name
                                 </th>
-                                <th
-                                    className="px-5 py-3 font-semibold">
+                                <th className="px-5 py-3 font-semibold">
                                     Books
                                 </th>
-                                <th
-                                    className="px-5 py-3 font-semibold">
+                                <th className="px-5 py-3 font-semibold">
                                     View Option
                                 </th>
-                                <th
-                                    className="px-5 py-3 font-semibold">
+                                <th className="px-5 py-3 font-semibold">
                                     Update Option
                                 </th>
-                                <th
-                                    className="px-5 py-3 font-semibold">
+                                <th className="px-5 py-3 font-semibold">
                                     Delete Option
                                 </th>
                             </tr>
                         </thead>
 
                         <tbody className="bg-white text-sm">
-                            <tr className="border-b border-gray-200">
-                                <td className="px-5 py-1">
-                                    <p className="text-gray-900 whitespace-nowrap">3rd Edition</p>
-                                </td>
-                                <td className="px-5 py-1 max-w-xs overflow-hidden">
-                                    <p className="hover:bg-gray-100 rounded text-gray-900 whitespace-nowrap overflow-hidden overflow-ellipsis">3rd
-                                        Edition</p>
-                                    <p className="hover:bg-gray-100 rounded text-gray-900 whitespace-nowrap overflow-hidden overflow-ellipsis">Lorem
-                                        ipsum dolor sit amet.</p>
-                                </td>
-                                <td className="px-5 py-1">
-                                    <ViewButton/>
-                                </td>
-                                <td className="px-5 py-1">
-                                    <UpdateButton/>
-                                </td>
-                                <td className="px-5 py-1">
-                                    <DeleteButton/>
-                                </td>
-                            </tr>
+                            {authors.map((author) => (
+                                <tr key={author._id} className="border-b border-gray-200">
+                                    <td className="px-5 py-2">
+                                        <p className="text-gray-900 whitespace-nowrap">{author.name}</p>
+                                    </td>
+                                    <td className="px-5 py-2 max-w-xs overflow-hidden">
+                                        {author.books.map((book) => (
+                                            <p key={book._id}
+                                               className="hover:bg-gray-200 pl-2.5 rounded text-gray-900 whitespace-nowrap overflow-hidden overflow-ellipsis">{`${book.title} ${book.edition}`}</p>
+                                        ))}
+                                    </td>
+                                    <td className="px-5 py-2">
+                                        <ViewButton id={author._id} onView={authorViewHandler} type={"Author"} DetailsView={AuthorDetails}/>
+                                    </td>
+                                    <td className="px-5 py-2">
+                                        <UpdateButton id={author._id} onUpdate={authorUpdateHandler}/>
+                                    </td>
+                                    <td className="px-5 py-2">
+                                        <DeleteButton type={"author"} record={author} onDelete={authorDeleteHandler}/>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
-                    <div
-                        className="px-5 py-5 bg-white border-t flex flex-col items-center">
-                                <span className="text-xs sm:text-sm text-gray-900">
-                                    Showing 1 to 4 of 50 Entries
-                                </span>
-                        <div className="inline-flex mt-2 gap-3">
-                            <button
-                                className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 active:bg-indigo-600 font-semibold py-2 px-4 rounded-l">
-                                Prev
-                            </button>
-                            <button
-                                className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 active:bg-indigo-600 font-semibold py-2 px-4 rounded-r">
-                                Next
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
+
+            {!isLoading && authors.length > 0 &&
+                <PaginationBar
+                    title={"authors"}
+                    style={'mt-2.5'}
+                    page={page}
+                    totalCount={totalCount}
+                    totalPages={totalPages}
+                    from={from}
+                    to={to}
+                    prevPageHandler={prevPageHandler}
+                    nextPageHandler={nextPageHandler}
+                />
+            }
         </>
     );
 }

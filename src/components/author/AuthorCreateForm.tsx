@@ -34,7 +34,7 @@ const AuthorCreateForm: React.FC = () => {
     };
 
     return (
-        <div className="min-w-full border rounded mb-6">
+        <div className="min-w-full border rounded">
             <div className="mx-auto max-w-screen-xl p-4">
                 <Form className="flex flex-col sm:flex-row sm:items-end gap-5 sm:gap-10" onSubmit={saveAuthorHandler}>
                     <div className="w-full">
