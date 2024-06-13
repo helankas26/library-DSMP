@@ -3,11 +3,13 @@ import {Dialog, Transition} from '@headlessui/react'
 
 const ViewModal: React.FC<{
     id: string,
+    title: string;
+    description: string;
     open: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
     DetailsView: React.LazyExoticComponent<React.FC<{ id: string; setIsOpen: Dispatch<SetStateAction<boolean>> }>>
 }> = (props) => {
-    const {id, open, setIsOpen, DetailsView} = props;
+    const {id, title, description, open, setIsOpen, DetailsView} = props;
 
     return (
         <Transition appear show={open} as={Fragment}>
@@ -40,12 +42,12 @@ const ViewModal: React.FC<{
                                 <Dialog.Title
                                     as="h3"
                                     className="text-gray-600 font-semibold">
-                                    Profile
+                                    {title}
                                 </Dialog.Title>
                                 <Dialog.Description
                                     as="span"
                                     className="text-xs">
-                                    Profile details
+                                    {description} details
                                 </Dialog.Description>
 
                                 <div className="mt-4">

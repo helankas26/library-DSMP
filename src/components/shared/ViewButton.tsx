@@ -4,9 +4,11 @@ const ViewModal = React.lazy(() => import('./ViewModal.tsx'));
 
 const ViewButton: React.FC<{
     id: string;
+    title: string;
+    description: string;
     DetailsView: React.LazyExoticComponent<React.FC<{ id: string; setIsOpen: Dispatch<SetStateAction<boolean>> }>>
 }> = (props) => {
-    const {id, DetailsView} = props;
+    const {id, title, description, DetailsView} = props;
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     return (
@@ -20,7 +22,7 @@ const ViewButton: React.FC<{
 
             {isOpen && (
                 <Suspense>
-                    <ViewModal id={id} open={isOpen} setIsOpen={setIsOpen} DetailsView={DetailsView}/>
+                    <ViewModal id={id} title={title} description={description} open={isOpen} setIsOpen={setIsOpen} DetailsView={DetailsView}/>
                 </Suspense>
             )}
         </>

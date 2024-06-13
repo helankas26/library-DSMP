@@ -207,7 +207,7 @@ const ProfileList: React.FC = () => {
                                         <p className="text-gray-900 whitespace-nowrap">{profile.type}</p>
                                     </td>
                                     <td className="px-5 py-1">
-                                        <ViewButton id={profile._id} DetailsView={ProfileDetails}/>
+                                        <ViewButton id={profile._id} title={"Profile"} description={"Profile"} DetailsView={ProfileDetails}/>
                                     </td>
                                     <td className="px-5 py-1">
                                         <UpdateButton id={profile._id} onUpdate={profileUpdateHandler}/>
