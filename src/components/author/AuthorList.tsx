@@ -121,11 +121,15 @@ const AuthorList: React.FC = () => {
 
     const authorDeleteHandler = async (author: Author, setOpen: Dispatch<SetStateAction<boolean>>) => {
         try {
+            if (author._id === updateAuthor?._id) {
+                showError({message: "Can not delete. This author is to update!"});
+                setOpen(false);
+                return;
+            }
+
             await authorService.deleteAuthor(author._id);
             showAlert("Author deleted successfully!", "success");
-
             await refreshAuthorsHandler();
-
             setOpen(false);
         } catch (error: any) {
             showError(error);
