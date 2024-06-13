@@ -1,6 +1,8 @@
 import React from "react";
 
-const ProfileDetails: React.FC<{ record: any }> = (props) => {
+import Profile from "../../model/Profile.ts";
+
+const ProfileDetails: React.FC<{ record: Profile }> = (props) => {
     const {record: profile} = props;
 
     return (
