@@ -1,33 +1,40 @@
-import React, {Fragment, useState} from 'react'
+import React, {Dispatch, Fragment, SetStateAction, useState} from 'react'
 import {Combobox, Transition} from '@headlessui/react'
 import {CheckIcon, ChevronUpDownIcon} from '@heroicons/react/20/solid'
 
-
-const ComboboxSingleSelect: React.FC<{ objects: any[]; displayField: string }> = (props) => {
-    const {objects, displayField} = props;
-    const [selectedObjects, setSelectedObjects] = useState([]);
-    const [query, setQuery] = useState('');
+const ComboboxSingleSelect: React.FC<{
+    id: string;
+    objects: any[];
+    displayField: string;
+    selectedObjects: any;
+    setSelectedObjects: Dispatch<SetStateAction<any>>
+}> = (props) => {
+    const {id, objects, displayField, selectedObjects, setSelectedObjects} = props;
+    const [query, setQuery] = useState<string>('');
 
     const filteredObject =
         query === ''
             ? objects
             : objects.filter((object) => {
                 return object[displayField].toString().toLowerCase().includes(query.toLowerCase())
-            })
+            });
 
     return (
-        <Combobox value={selectedObjects} onChange={setSelectedObjects}>
+        <Combobox value={selectedObjects} onChange={setSelectedObjects} nullable>
             <div className="relative mt-1 rounded">
                 <div
                     className="relative w-full cursor-default overflow-hidden rounded bg-white text-left focus:outline-none sm:text-sm">
                     <Combobox.Input
                         className="appearance-none border rounded w-full py-2.5 px-3 text-sm text-gray-700 leading-5 focus:outline-none focus:shadow-outline"
-                        displayValue={(object) => (object as any)[displayField]}
+                        id={id}
+                        displayValue={(object) => (object as any)?.[displayField]}
                         onChange={(event) => setQuery(event.target.value)}
+                        required={true}
+                        autoComplete="off"
+                        placeholder={`Select ${id}`}
                     />
                     <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-                        <ChevronUpDownIcon
-                            className="h-5 w-5 text-gray-400"/>
+                        <ChevronUpDownIcon className="h-5 w-5 text-gray-400"/>
                     </Combobox.Button>
                 </div>
                 <Transition
@@ -45,7 +52,7 @@ const ComboboxSingleSelect: React.FC<{ objects: any[]; displayField: string }> =
                         ) : (
                             filteredObject.map((object) => (
                                 <Combobox.Option
-                                    key={object.id}
+                                    key={object._id}
                                     className={({active}) => `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-teal-600 text-white' : 'text-gray-900'}`}
                                     value={object}>
                                     {({selected, active}) => (
