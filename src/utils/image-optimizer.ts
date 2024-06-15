@@ -16,3 +16,20 @@ export const resizeProfileImage = (file: File): Promise<File> => {
         );
     });
 }
+
+export const resizeBookImage = (file: File): Promise<File> => {
+    return new Promise((resolve) => {
+        FileResizer.imageFileResizer(
+            file,
+            648,
+            750,
+            'JPEG',
+            75,
+            0,
+            (uri) => {
+                resolve(uri as File);
+            },
+            'file'
+        );
+    });
+}

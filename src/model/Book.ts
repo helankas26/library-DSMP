@@ -8,7 +8,7 @@ interface Book {
     cover: string;
     description: string;
     authors: Author[];
-    category: Category[];
+    category: Category;
     noOfCopies: number;
     availableCount: number;
     createdAt: Date;

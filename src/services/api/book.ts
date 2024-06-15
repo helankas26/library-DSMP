@@ -3,7 +3,6 @@ import HttpResponse from "../../utils/http-response.ts";
 import Book from "../../model/Book.ts";
 import HttpResponseWithPagination from "../../utils/http-response-with-pagination.ts";
 
-
 const BOOKS: string = '/books';
 
 const findAllBooks = async () => {
@@ -19,7 +18,7 @@ const findAllBooksBySearchWithPagination = async (searchText: string, page: numb
 }
 
 const createBook = async (book: Book) => {
-    return await AxiosInstance.post<HttpResponse<Book>>(BOOKS, {book});
+    return await AxiosInstance.post<HttpResponse<Book>>(BOOKS, {...book});
 }
 
 const findBookById = async (id: string) => {
@@ -27,7 +26,7 @@ const findBookById = async (id: string) => {
 }
 
 const updateBook = async (id: string, book: Book) => {
-    return await AxiosInstance.patch<HttpResponse<Book>>(`${BOOKS}/${id}`, {book});
+    return await AxiosInstance.patch<HttpResponse<Book>>(`${BOOKS}/${id}`, {...book});
 }
 
 const deleteBook = async (id: string) => {
