@@ -20,7 +20,7 @@ const ComboboxMultipleSelect: React.FC<{
             });
 
     return (
-        <Combobox value={selectedObjects} onChange={(event) => setSelectedObjects(event)} multiple>
+        <Combobox value={selectedObjects} by="_id" onChange={(event) => setSelectedObjects(event)} multiple>
             <div className="relative mt-1 rounded">
                 <div
                     className="relative w-full cursor-default overflow-hidden rounded bg-white text-left focus:outline-none sm:text-sm">
