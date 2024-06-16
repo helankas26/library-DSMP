@@ -181,13 +181,13 @@ const AuthorList: React.FC = () => {
 
             <div className="min-w-full shadow rounded-lg overflow-x-auto">
                 {isLoading &&
-                    <div className="w-full h-[60vh] flex justify-center items-center">
+                    <div className="w-full h-[41vh] flex justify-center items-center">
                         <GradientCircularProgress/>
                     </div>
                 }
 
                 {!isLoading && authors.length === 0 &&
-                    <div className="w-full h-[60vh] flex justify-center items-center">
+                    <div className="w-full h-[41vh] flex justify-center items-center">
                         <p className="text-xl font-medium bg-[#3d9cd2] text-white w-4/5 p-3 rounded-sm border-l-8 border-l-[#347ba3]">
                             No authors were found matching your selection.
                         </p>
