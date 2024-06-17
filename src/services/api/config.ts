@@ -2,7 +2,6 @@ import AxiosInstance from "../../config/axios-instance.ts";
 import HttpResponse from "../../utils/http-response.ts";
 import Config from "../../model/Config.ts";
 
-
 const CONFIGS: string = '/configs';
 
 const findAllConfigs = async () => {
@@ -18,7 +17,7 @@ const findConfigById = async (id: string) => {
 }
 
 const updateConfig = async (id: string, config: Config) => {
-    return await AxiosInstance.patch<HttpResponse<Config>>(`${CONFIGS}/${id}`, {config});
+    return await AxiosInstance.patch<HttpResponse<Config>>(`${CONFIGS}/${id}`, {...config});
 }
 
 const deleteConfig = async (id: string) => {
