@@ -17,6 +17,7 @@ const ConfigView: React.FC = () => {
     const [toggleUpdate, setToggleUpdate] = useState<boolean>(false);
     const [updateConfig, setUpdateConfig] = useState<Config>();
     const [updateConfigProp, setUpdateConfigProp] = useState<string>('');
+    const [updateType, setUpdateType] = useState<string>('');
 
     const loadConfigs = useCallback(async () => {
         try {
@@ -33,12 +34,13 @@ const ConfigView: React.FC = () => {
         }
     }, []);
 
-    const configUpdateHandler = async (id: string, configProp: string) => {
+    const configUpdateHandler = async (id: string, configProp: string, type: string) => {
         try {
             const response = await configService.findConfigById(id);
             const {config} = response.data;
             setUpdateConfig(config);
             setUpdateConfigProp(configProp);
+            setUpdateType(type);
             setToggleUpdate(true);
 
             scrollToTop();
@@ -68,7 +70,8 @@ const ConfigView: React.FC = () => {
                 <div className="border rounded mb-6 flex justify-center">
                     <ConfigUpdateCard
                         key={updateConfigProp}
-                        type={"Admission"}
+                        type={updateType}
+                        setUpdateType={setUpdateType}
                         config={updateConfig}
                         setUpdateConfig={setUpdateConfig}
                         configProp={updateConfigProp}

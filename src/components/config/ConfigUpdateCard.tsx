@@ -11,6 +11,7 @@ import configService from "../../services/api/config.ts";
 
 const ConfigUpdateCard: React.FC<{
     type: string;
+    setUpdateType: Dispatch<SetStateAction<string>>;
     config: Config;
     setUpdateConfig: Dispatch<SetStateAction<Config | undefined>>;
     configProp: string;
@@ -18,7 +19,16 @@ const ConfigUpdateCard: React.FC<{
     setToggleUpdate: Dispatch<SetStateAction<boolean>>;
     onRefreshConfigs: () => Promise<void>
 }> = (props) => {
-    const {type, config, setUpdateConfig, configProp, setUpdateConfigProp, setToggleUpdate, onRefreshConfigs} = props;
+    const {
+        type,
+        setUpdateType,
+        config,
+        setUpdateConfig,
+        configProp,
+        setUpdateConfigProp,
+        setToggleUpdate,
+        onRefreshConfigs
+    } = props;
     const {auth} = useAuth();
     const {showError, showAlert} = useSnackbar();
 
@@ -31,7 +41,7 @@ const ConfigUpdateCard: React.FC<{
         setIsUpdating(true);
 
         const editedConfig: Config = {
-            [configProp]: {fee: value}
+            [configProp]: (config as any)[configProp].fee !== undefined ? {fee: value} : {count: value}
         } as unknown as Config;
 
         try {
@@ -41,6 +51,7 @@ const ConfigUpdateCard: React.FC<{
             setToggleUpdate(false);
             setUpdateConfig(undefined);
             setUpdateConfigProp('');
+            setUpdateType('');
         } catch (error: any) {
             showError(error);
         } finally {
@@ -52,6 +63,7 @@ const ConfigUpdateCard: React.FC<{
         setToggleUpdate(false);
         setUpdateConfig(undefined);
         setUpdateConfigProp('');
+        setUpdateType('');
     };
 
     return (

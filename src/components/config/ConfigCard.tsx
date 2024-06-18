@@ -8,12 +8,12 @@ const ConfigCard: React.FC<{
     id: string;
     config: any;
     configProp: string;
-    updateHandler: (id: string, configProp: string) => void
+    updateHandler: (id: string, configProp: string, type: string) => void
 }> = (props) => {
     const {type, id, config, configProp, updateHandler} = props;
 
     const configUpdateHandler = async (id: string) => {
-        updateHandler(id, configProp);
+        updateHandler(id, configProp, type);
     };
 
     return (
