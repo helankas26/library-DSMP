@@ -153,7 +153,6 @@ const UserList: React.FC = () => {
         };
     }, [searchUsers]);
 
-
     return (
         <>
             <div className="flex flex-col gap-8">
@@ -193,58 +192,57 @@ const UserList: React.FC = () => {
                 {!isLoading && users.length > 0 &&
                     <table className="min-w-full leading-normal">
                         <thead className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
-                        <tr>
-                            <th className="pl-5 pr-2 py-3 font-semibold">Profile</th>
-                            <th className="pl-5 pr-2 py-3 font-semibold">Username</th>
-                            <th className="pl-5 pr-2 py-3 font-semibold">Role</th>
-                            <th className="pl-5 pr-2 py-3 font-semibold">Created Date</th>
-                            <th className="pl-5 pr-2 py-3 font-semibold">View Option</th>
-                            <th className="pl-5 pr-2 py-3 font-semibold">Update Option</th>
-                            <th className="pl-5 pr-2 py-3 font-semibold">Delete Option</th>
-                        </tr>
+                            <tr>
+                                <th className="pl-5 pr-2 py-3 font-semibold">Profile</th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">Username</th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">Role</th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">Created Date</th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">View Option</th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">Update Option</th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">Delete Option</th>
+                            </tr>
                         </thead>
 
                         <tbody className="bg-white text-sm">
-                        {users.map((user) => {
-                            const createdAt = new Date(user.createdAt).toISOString().split('T')[0];
+                            {users.map((user) => {
+                                const createdAt = new Date(user.createdAt).toISOString().split('T')[0];
 
-                            return (
-                                <tr className="border-b border-gray-200">
-                                    <td className="pl-5 pr-2 py-1">
-                                        <div className="flex items-center">
-                                            <div className="flex-shrink-0 w-14 h-14">
-                                                <img className="w-full h-full border rounded-full"
-                                                     src={user.profile.avatar}
-                                                     alt={user.profile.fullName}/>
+                                return (
+                                    <tr key={user._id} className="border-b border-gray-200">
+                                        <td className="pl-5 pr-2 py-1">
+                                            <div className="flex items-center">
+                                                <div className="flex-shrink-0 w-14 h-14">
+                                                    <img className="w-full h-full border rounded-full"
+                                                         src={user.profile.avatar}
+                                                         alt={user.profile.fullName}/>
+                                                </div>
+                                                <div className="ml-3 w-full">
+                                                    <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900 whitespace-nowrap">#{user.profile._id}</p>
+                                                    <p className="text-gray-900 whitespace-nowrap">{user.profile.fullName}</p>
+                                                </div>
                                             </div>
-                                            <div className="ml-3 w-full">
-                                                <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900 whitespace-nowrap">#{user.profile._id}</p>
-                                                <p className="text-gray-900 whitespace-nowrap">{user.profile.fullName}</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="pl-5 pr-2 py-1">
-                                        <p className="text-gray-900 whitespace-nowrap">{user.username}</p>
-                                    </td>
-                                    <td className="pl-5 pr-2 py-1">
-                                        <p className="text-gray-900 whitespace-nowrap">{user.role}</p>
-                                    </td>
-                                    <td className="pl-5 pr-2 py-1">
-                                        <p className="text-gray-900 whitespace-nowrap">{createdAt}</p>
-                                    </td>
-                                    <td className="px-5 py-1">
-                                        <ViewButton id={user._id} onView={userViewHandler} type={"User"}
-                                                    DetailsView={UserDetails}/>
-                                    </td>
-                                    <td className="px-5 py-1">
-                                        <UpdateButton id={user._id} onUpdate={userUpdateHandler}/>
-                                    </td>
-                                    <td className="px-5 py-1">
-                                        <DeleteButton type={"user"} record={user} onDelete={userDeleteHandler}/>
-                                    </td>
-                                </tr>
-                            )
-                        })}
+                                        </td>
+                                        <td className="pl-5 pr-2 py-1">
+                                            <p className="text-gray-900 whitespace-nowrap">{user.username}</p>
+                                        </td>
+                                        <td className="pl-5 pr-2 py-1">
+                                            <p className="text-gray-900 whitespace-nowrap">{user.role}</p>
+                                        </td>
+                                        <td className="pl-5 pr-2 py-1">
+                                            <p className="text-gray-900 whitespace-nowrap">{createdAt}</p>
+                                        </td>
+                                        <td className="px-5 py-1">
+                                            <ViewButton id={user._id} onView={userViewHandler} type={"User"} DetailsView={UserDetails}/>
+                                        </td>
+                                        <td className="px-5 py-1">
+                                            <UpdateButton id={user._id} onUpdate={userUpdateHandler}/>
+                                        </td>
+                                        <td className="px-5 py-1">
+                                            <DeleteButton type={"user"} record={user} onDelete={userDeleteHandler}/>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
                 }

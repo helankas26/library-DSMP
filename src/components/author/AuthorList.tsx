@@ -196,24 +196,13 @@ const AuthorList: React.FC = () => {
 
                 {!isLoading && authors.length > 0 &&
                     <table className="min-w-full leading-normal">
-                        <thead
-                            className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
+                        <thead className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
                             <tr>
-                                <th className="px-5 py-3 font-semibold">
-                                    Name
-                                </th>
-                                <th className="px-5 py-3 font-semibold">
-                                    Books
-                                </th>
-                                <th className="px-5 py-3 font-semibold">
-                                    View Option
-                                </th>
-                                <th className="px-5 py-3 font-semibold">
-                                    Update Option
-                                </th>
-                                <th className="px-5 py-3 font-semibold">
-                                    Delete Option
-                                </th>
+                                <th className="px-5 py-3 font-semibold">Name</th>
+                                <th className="px-5 py-3 font-semibold">Books</th>
+                                <th className="px-5 py-3 font-semibold">View Option</th>
+                                <th className="px-5 py-3 font-semibold">Update Option</th>
+                                <th className="px-5 py-3 font-semibold">Delete Option</th>
                             </tr>
                         </thead>
 

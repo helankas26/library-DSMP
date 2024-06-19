@@ -197,27 +197,14 @@ const CategoryList: React.FC = () => {
 
                 {!isLoading && categories.length > 0 &&
                     <table className="min-w-full leading-normal">
-                        <thead
-                            className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
+                        <thead className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
                             <tr>
-                                <th className="px-5 py-3 font-semibold">
-                                    Category Name
-                                </th>
-                                <th className="px-5 py-3 font-semibold">
-                                    Description
-                                </th>
-                                <th className="px-5 py-3 font-semibold">
-                                    Books
-                                </th>
-                                <th className="px-5 py-3 font-semibold">
-                                    View Option
-                                </th>
-                                <th className="px-5 py-3 font-semibold">
-                                    Update Option
-                                </th>
-                                <th className="px-5 py-3 font-semibold">
-                                    Delete Option
-                                </th>
+                                <th className="px-5 py-3 font-semibold">Category Name</th>
+                                <th className="px-5 py-3 font-semibold">Description</th>
+                                <th className="px-5 py-3 font-semibold">Books</th>
+                                <th className="px-5 py-3 font-semibold">View Option</th>
+                                <th className="px-5 py-3 font-semibold">Update Option</th>
+                                <th className="px-5 py-3 font-semibold">Delete Option</th>
                             </tr>
                         </thead>
 
@@ -239,8 +226,7 @@ const CategoryList: React.FC = () => {
                                         ))}
                                     </td>
                                     <td className="px-5 py-2">
-                                        <ViewButton id={category._id} onView={categoryViewHandler} type={"Category"}
-                                                    DetailsView={CategoryDetails}/>
+                                        <ViewButton id={category._id} onView={categoryViewHandler} type={"Category"} DetailsView={CategoryDetails}/>
                                     </td>
                                     <td className="px-5 py-2">
                                         <UpdateButton id={category._id} onUpdate={categoryUpdateHandler}/>

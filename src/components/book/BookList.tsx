@@ -164,54 +164,53 @@ const BookList: React.FC = () => {
 
                 {!isLoading && books.length > 0 &&
                     <table className="min-w-full leading-normal">
-                        <thead
-                            className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
-                        <tr>
-                            <th className="px-5 py-3 font-semibold">Title</th>
-                            <th className="px-5 py-3 font-semibold">Edition</th>
-                            <th className="px-5 py-3 font-semibold">Description</th>
-                            <th className="px-5 py-3 font-semibold">No of Copies</th>
-                            <th className="px-5 py-3 font-semibold">View Option</th>
-                            <th className="px-5 py-3 font-semibold">Update Option</th>
-                            <th className="px-5 py-3 font-semibold">Delete Option</th>
-                        </tr>
+                        <thead className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
+                            <tr>
+                                <th className="px-5 py-3 font-semibold">Title</th>
+                                <th className="px-5 py-3 font-semibold">Edition</th>
+                                <th className="px-5 py-3 font-semibold">Description</th>
+                                <th className="px-5 py-3 font-semibold">No of Copies</th>
+                                <th className="px-5 py-3 font-semibold">View Option</th>
+                                <th className="px-5 py-3 font-semibold">Update Option</th>
+                                <th className="px-5 py-3 font-semibold">Delete Option</th>
+                            </tr>
                         </thead>
 
                         <tbody className="bg-white text-sm">
-                        {books.map((book) => (
-                            <tr key={book._id} className="border-b border-gray-200">
-                                <td className="px-5 py-1">
-                                    <div className="flex flex-col lg:flex-row items-center">
-                                        <div className="flex-shrink-0 w-20 h-24">
-                                            <img className="w-full h-full border rounded-md"
-                                                 src={book.cover}
-                                                 alt={`${book.title} ${book.edition}`}/>
+                            {books.map((book) => (
+                                <tr key={book._id} className="border-b border-gray-200">
+                                    <td className="px-5 py-1">
+                                        <div className="flex flex-col lg:flex-row items-center">
+                                            <div className="flex-shrink-0 w-20 h-24">
+                                                <img className="w-full h-full border rounded-md"
+                                                     src={book.cover}
+                                                     alt={`${book.title} ${book.edition}`}/>
+                                            </div>
+                                            <div className="mt-1 lg:mt-0 lg:ml-3">
+                                                <p className="text-gray-900 whitespace-nowrap">{book.title}</p>
+                                            </div>
                                         </div>
-                                        <div className="mt-1 lg:mt-0 lg:ml-3">
-                                            <p className="text-gray-900 whitespace-nowrap">{book.title}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="px-5 py-1">
-                                    <p className="text-gray-900 whitespace-nowrap">{book.edition}</p>
-                                </td>
-                                <td className="px-5 py-1 max-w-xs overflow-hidden">
-                                    <p className="text-gray-900 whitespace-nowrap overflow-hidden overflow-ellipsis">{book.description}</p>
-                                </td>
-                                <td className="px-5 py-1">
-                                    <p className="text-gray-900 whitespace-nowrap">{book.noOfCopies}</p>
-                                </td>
-                                <td className="px-5 py-1">
-                                    <ViewButton id={book._id} onView={bookViewHandler} type={"Book"} DetailsView={BookDetails}/>
-                                </td>
-                                <td className="px-5 py-1">
-                                    <UpdateButton id={book._id} onUpdate={bookUpdateHandler}/>
-                                </td>
-                                <td className="px-5 py-1">
-                                    <DeleteButton type={"book"} record={book} onDelete={bookDeleteHandler}/>
-                                </td>
-                            </tr>
-                        ))}
+                                    </td>
+                                    <td className="px-5 py-1">
+                                        <p className="text-gray-900 whitespace-nowrap">{book.edition}</p>
+                                    </td>
+                                    <td className="px-5 py-1 max-w-xs overflow-hidden">
+                                        <p className="text-gray-900 whitespace-nowrap overflow-hidden overflow-ellipsis">{book.description}</p>
+                                    </td>
+                                    <td className="px-5 py-1">
+                                        <p className="text-gray-900 whitespace-nowrap">{book.noOfCopies}</p>
+                                    </td>
+                                    <td className="px-5 py-1">
+                                        <ViewButton id={book._id} onView={bookViewHandler} type={"Book"} DetailsView={BookDetails}/>
+                                    </td>
+                                    <td className="px-5 py-1">
+                                        <UpdateButton id={book._id} onUpdate={bookUpdateHandler}/>
+                                    </td>
+                                    <td className="px-5 py-1">
+                                        <DeleteButton type={"book"} record={book} onDelete={bookDeleteHandler}/>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 }
