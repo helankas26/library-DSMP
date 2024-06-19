@@ -163,33 +163,16 @@ const ProfileList: React.FC = () => {
 
                 {!isLoading && profiles.length > 0 &&
                     <table className="min-w-full leading-normal">
-                        <thead
-                            className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
+                        <thead className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
                             <tr>
-                                <th className="pl-5 pr-2 py-3 font-semibold">
-                                    Profile
-                                </th>
-                                <th className="pl-5 pr-2 py-3 font-semibold">
-                                    Email
-                                </th>
-                                <th className="pl-5 pr-2 py-3 font-semibold">
-                                    Tel No
-                                </th>
-                                <th className="pl-5 pr-2 py-3 font-semibold">
-                                    Address
-                                </th>
-                                <th className="pl-5 pr-2 py-3 font-semibold">
-                                    Type
-                                </th>
-                                <th className="pl-5 pr-2 py-3 font-semibold">
-                                    View Option
-                                </th>
-                                <th className="pl-5 pr-2 py-3 font-semibold">
-                                    Update Option
-                                </th>
-                                <th className="pl-5 pr-2 py-3 font-semibold">
-                                    Delete Option
-                                </th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">Profile</th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">Email</th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">Tel No</th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">Address</th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">Type</th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">View Option</th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">Update Option</th>
+                                <th className="pl-5 pr-2 py-3 font-semibold">Delete Option</th>
                             </tr>
                         </thead>
 
