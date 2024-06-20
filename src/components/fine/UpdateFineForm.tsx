@@ -1,8 +1,51 @@
-import React from "react";
+import React, {Dispatch, FormEvent, SetStateAction, useState} from "react";
+import {Form} from "react-router-dom";
+
 import UpdateRecordButton from "../shared/UpdateRecordButton.tsx";
 import CancelButton from "../shared/CancelButton.tsx";
+import Fine from "../../model/Fine.ts";
+import useSnackbar from "../../hooks/use-snackbar.ts";
+import fineService from "../../services/api/fine.ts";
 
-const UpdateFineForm: React.FC = () => {
+const UpdateFineForm: React.FC<{
+    fine: Fine;
+    setUpdateFine: Dispatch<SetStateAction<Fine | undefined>>;
+    setToggleUpdate: Dispatch<SetStateAction<boolean>>;
+    onRefreshFines: () => Promise<void>
+}> = (props) => {
+    const {fine, setUpdateFine, setToggleUpdate, onRefreshFines} = props;
+    const {showError, showAlert} = useSnackbar();
+
+    const [fee, setFee] = useState<number>(fine.fee);
+    const [isUpdating, setIsUpdating] = useState<boolean>(false);
+
+    const updateFineHandler = async (event: FormEvent) => {
+        event.preventDefault();
+
+        setIsUpdating(true);
+
+        const editedFine: Fine = {
+            fee: fee
+        } as Fine;
+
+        try {
+            await fineService.updateFine(fine._id, editedFine);
+            showAlert("Fine updated successfully!", "success");
+            await onRefreshFines();
+            setToggleUpdate(false);
+            setUpdateFine(undefined);
+        } catch (error: any) {
+            showError(error);
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+
+    const cancelUpdateHandler = () => {
+        setToggleUpdate(false);
+        setUpdateFine(undefined);
+    };
+
     return (
         <div className="min-w-full border rounded mb-6">
             <div className="mx-auto max-w-screen-xl p-4 flex flex-col gap-5">
@@ -10,12 +53,12 @@ const UpdateFineForm: React.FC = () => {
                     <div className="flex items-center justify-center">
                         <div className="flex-shrink-0 w-14 h-14">
                             <img className="w-full h-full border rounded-full"
-                                 src="https://avatars.githubusercontent.com/u/61771292?v=4"
-                                 alt=""/>
+                                 src={fine.member.avatar}
+                                 alt={fine.member.fullName}/>
                         </div>
                         <div className="ml-3">
-                            <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#972701564</p>
-                            <p className="text-gray-900">Helanka Singhapurage</p>
+                            <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{fine.member._id}</p>
+                            <p className="text-gray-900">{fine.member.fullName}</p>
                         </div>
                     </div>
 
@@ -23,29 +66,39 @@ const UpdateFineForm: React.FC = () => {
                         <div className="flex justify-center">
                             <div className="flex-shrink-0 w-14 h-16">
                                 <img className="w-full h-full border rounded-md"
-                                     src="https://m.media-amazon.com/images/I/81wAshyxQyL._AC_UF1000,1000_QL80_.jpg"
-                                     alt=""/>
+                                     src={fine.book.cover}
+                                     alt={`${fine.book.title} ${fine.book.edition}`}/>
                             </div>
                         </div>
                         <div className="ml-3">
-                            <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#2132483321</p>
-                            <p className="text-gray-900">Head First Java</p>
+                            <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{fine.book._id}</p>
+                            <p className="text-gray-900">{`${fine.book.title} ${fine.book.edition}`}</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-end gap-5 sm:gap-10">
+                <Form className="flex flex-col sm:flex-row sm:items-end gap-5 sm:gap-10" onSubmit={updateFineHandler}>
                     <div className="w-full">
                         <label htmlFor="fee"
                                className="block text-gray-600 text-sm font-semibold mb-2">Fee</label>
-                        <input type="number" id="fee" placeholder="Enter fee"
-                               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"/>
+                        <input
+                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                            id="fee"
+                            type="number"
+                            step={1}
+                            min={0}
+                            value={fee}
+                            onChange={(e) => {
+                                setFee(parseInt(e.target.value));
+                            }}
+                            required={true}
+                            placeholder="Enter fee"/>
                     </div>
                     <div className="w-full flex gap-5">
-                        <UpdateRecordButton/>
-                        <CancelButton/>
+                        <UpdateRecordButton isUpdating={isUpdating}/>
+                        <CancelButton isUpdating={isUpdating} onCancel={cancelUpdateHandler}/>
                     </div>
-                </div>
+                </Form>
             </div>
         </div>
     );
