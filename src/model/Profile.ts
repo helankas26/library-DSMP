@@ -6,10 +6,10 @@ interface Profile {
     telNo: string;
     address: string;
     type: 'LIBRARIAN' | 'MEMBER';
+    paymentStatus: number;
     reservationCount: number;
     borrowCount: number;
     createdAt: Date;
 }
-
 
 export default Profile;

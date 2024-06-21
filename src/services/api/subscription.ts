@@ -4,13 +4,12 @@ import Subscription from "../../model/Subscription.ts";
 
 const SUBSCRIPTIONS: string = '/subscriptions';
 
-
 const findAllSubscriptions = async () => {
     return await AxiosInstance.get<HttpResponse<Subscription[]>>(SUBSCRIPTIONS);
 }
 
 const createSubscription = async (subscription: Subscription) => {
-    return await AxiosInstance.post<HttpResponse<Subscription>>(SUBSCRIPTIONS, {subscription});
+    return await AxiosInstance.post<HttpResponse<Subscription>>(SUBSCRIPTIONS, {...subscription});
 }
 
 const findSubscriptionById = async (id: string) => {
@@ -18,7 +17,7 @@ const findSubscriptionById = async (id: string) => {
 }
 
 const updateSubscription = async (id: string, subscription: Subscription) => {
-    return await AxiosInstance.patch<HttpResponse<Subscription>>(`${SUBSCRIPTIONS}/${id}`, {subscription});
+    return await AxiosInstance.patch<HttpResponse<Subscription>>(`${SUBSCRIPTIONS}/${id}`, {...subscription});
 }
 
 const deleteSubscription = async (id: string) => {
