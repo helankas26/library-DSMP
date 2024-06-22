@@ -1,106 +1,223 @@
-import React from "react";
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
+
 import StatusLabel from "../shared/StatusLabel.tsx";
 import UpdateButton from "../shared/UpdateButton.tsx";
 import ReservationUpdateForm from "./ReservationUpdateForm.tsx";
+import useSnackbar from "../../hooks/use-snackbar.ts";
+import useScrollToTop from "../../hooks/use-scroll-to-top.ts";
+import Reservation from "../../model/Reservation.ts";
+import reservationService from "../../services/api/reservation.ts";
+import ContextHeader from "../shared/ContextHeader.tsx";
+import GradientCircularProgress from "../shared/GradientCircularProgress.tsx";
+import PaginationBar from "../shared/PaginationBar.tsx";
 
 const ReservationList: React.FC = () => {
+    const size: number = 24;
+    const {showError} = useSnackbar();
+    const {elementRef, scrollToTop} = useScrollToTop<HTMLDivElement>();
+
+    const [reservations, setReservations] = useState<Reservation[]>([]);
+    const [page, setPage] = useState<number>(1);
+    const [totalCount, setTotalCount] = useState<number>(0);
+    const [totalPages, setTotalPages] = useState<number>(0);
+    const [from, setFrom] = useState<number>(0);
+    const [to, setTo] = useState<number>(0);
+    const [searchText, setSearchText] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [delay, setDelay] = useState<number>(750);
+    const [toggleUpdate, setToggleUpdate] = useState<boolean>(false);
+    const [updateReservation, setUpdateReservation] = useState<Reservation>();
+
+    const loadReservations = useCallback(async () => {
+        try {
+            const response = await reservationService.findAllReservationsWithPagination(page, size);
+
+            const {reservations, from, to, totalCount, totalPages} = response.data;
+            setReservations(reservations);
+            setFrom(from);
+            setTo(to);
+            setTotalCount(totalCount);
+            setTotalPages(totalPages);
+
+            scrollToTop();
+        } catch (error: any) {
+            showError(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [page, searchText]);
+
+
+    const searchReservations = useCallback(async () => {
+        try {
+            const response = await reservationService.findAllReservationsBySearchWithPagination(searchText, page, size);
+
+            const {reservations, from, to, totalCount, totalPages} = response.data;
+            setReservations(reservations);
+            setFrom(from);
+            setTo(to);
+            setTotalCount(totalCount);
+            setTotalPages(totalPages);
+            setDelay(0);
+
+            scrollToTop();
+        } catch (error: any) {
+            showError(error);
+        }
+    }, [page, searchText]);
+
+    const searchTextChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchText(event.target.value);
+        setPage(1);
+        setDelay(750);
+    };
+
+    const nextPageHandler = async () => {
+        if (page < totalPages) {
+            setPage((prevState) => prevState + 1);
+        }
+    };
+
+    const prevPageHandler = async () => {
+        if (page > 1) {
+            setPage((prevState) => prevState - 1);
+        }
+    };
+
+    const reservationUpdateHandler = async (id: string) => {
+        try {
+            const response = await reservationService.findReservationById(id);
+            const {reservation} = response.data;
+            setUpdateReservation(reservation);
+            setToggleUpdate(true);
+
+            scrollToTop();
+        } catch (error: any) {
+            showError(error);
+        }
+    };
+
+    const refreshReservationsHandler = async () => {
+        if (!searchText) {
+            await loadReservations();
+        } else {
+            await searchReservations();
+        }
+    };
+
+    useEffect(() => {
+        if (!searchText) {
+            loadReservations();
+        }
+    }, [loadReservations]);
+
+    useEffect(() => {
+        const debounceSearch = setTimeout(() => {
+            if (searchText) {
+                searchReservations();
+            }
+        }, delay);
+
+        return () => {
+            clearTimeout(debounceSearch);
+        };
+    }, [searchReservations]);
+
     return (
         <>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6">
-                <div className="w-full">
-                    <h2 className="text-gray-600 font-semibold">Reservations</h2>
-                    <span className="text-xs">All Reservation</span>
-                </div>
-                <div className="w-full flex bg-gray-50 items-center p-2 rounded-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400"
-                         viewBox="0 0 20 20"
-                         fill="currentColor">
-                        <path fillRule="evenodd"
-                              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                              clipRule="evenodd"/>
-                    </svg>
-                    <input className="bg-gray-50 outline-none ml-1 block w-full" type="search"
-                           placeholder="search..."/>
-                </div>
+            <div className="flex flex-col gap-8">
+                {toggleUpdate && updateReservation &&
+                    <ReservationUpdateForm
+                        key={updateReservation._id}
+                        reservation={updateReservation}
+                        setUpdateReservation={setUpdateReservation}
+                        setToggleUpdate={setToggleUpdate}
+                        onRefreshReservations={refreshReservationsHandler}
+                    />
+                }
+
+                <ContextHeader
+                    title={"Reservations"}
+                    description={"All Reservations"}
+                    elementRef={elementRef}
+                    searchTextChangeHandler={searchTextChangeHandler}
+                />
             </div>
 
-            <ReservationUpdateForm/>
+            <div className="min-w-full shadow rounded-lg overflow-x-auto">
+                {isLoading &&
+                    <div className="w-full h-[60vh] flex justify-center items-center">
+                        <GradientCircularProgress/>
+                    </div>
+                }
 
-            <div
-                className="-mx-4 sm:-mx-8 px-4 sm:px-8 pb-1 sm:py-4 overflow-x-auto">
-                <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                {!isLoading && reservations.length === 0 &&
+                    <div className="w-full h-[60vh] flex justify-center items-center">
+                        <p className="text-xl font-medium bg-[#3d9cd2] text-white w-4/5 p-3 rounded-sm border-l-8 border-l-[#347ba3]">
+                            No reservations were found matching your selection.
+                        </p>
+                    </div>
+                }
+
+                {!isLoading && reservations.length > 0 &&
                     <table className="min-w-full leading-normal">
-                        <thead
-                            className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
+                        <thead className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
                             <tr>
-                                <th
-                                    className="px-5 py-3 font-semibold">
-                                    Member
-                                </th>
-                                <th
-                                    className="px-5 py-3 font-semibold">
-                                    Book
-                                </th>
-                                <th
-                                    className="px-5 py-3 font-semibold">
-                                    Status
-                                </th>
-                                <th
-                                    className="px-5 py-3 font-semibold">
-                                    Reserved Date
-                                </th>
-                                <th
-                                    className="px-5 py-3 font-semibold">
-                                    Due Date
-                                </th>
-                                <th
-                                    className="px-5 py-3 font-semibold">
-                                    Update Option
-                                </th>
+                                <th className="px-5 py-3 font-semibold">Member</th>
+                                <th className="px-5 py-3 font-semibold">Book</th>
+                                <th className="px-5 py-3 font-semibold">Status</th>
+                                <th className="px-5 py-3 font-semibold">Reserved Date</th>
+                                <th className="px-5 py-3 font-semibold">Due Date</th>
+                                <th className="px-5 py-3 font-semibold">Update Option</th>
                             </tr>
                         </thead>
 
                         <tbody className="bg-white text-sm">
-                            <tr className="border-b border-gray-200">
-                                <td className="px-5 py-1">
-                                    <p className="text-gray-900 whitespace-nowrap">Heshanka</p>
-                                </td>
-                                <td className="px-5 py-1">
-                                    <p className="text-gray-900 whitespace-nowrap">Java</p>
-                                </td>
-                                <td className="px-5 py-1">
-                                    <StatusLabel status={'BORROWED'}/>
-                                </td>
-                                <td className="px-5 py-1">
-                                    <p className="text-gray-900 whitespace-nowrap">2024-02-12</p>
-                                </td>
-                                <td className="px-5 py-1">
-                                    <p className="text-gray-900 whitespace-nowrap">2024-02-25</p>
-                                </td>
-                                <td className="px-5 py-1">
-                                    <UpdateButton/>
-                                </td>
-                            </tr>
+                            {reservations.map((reservation) => {
+                                const reservationAt = new Date(reservation.reservationAt).toISOString().split('T')[0];
+                                const dueAt = new Date(reservation.dueAt).toISOString().split('T')[0];
+
+                                return (
+                                    <tr key={reservation._id}  className="border-b border-gray-200">
+                                        <td className="px-5 py-1">
+                                            <p className="text-gray-900 whitespace-nowrap">{reservation.member.fullName}</p>
+                                        </td>
+                                        <td className="px-5 py-1">
+                                            <p className="text-gray-900 whitespace-nowrap">{reservation.book.title} {reservation.book.edition}</p>
+                                        </td>
+                                        <td className="px-5 py-1">
+                                            <StatusLabel status={reservation.status}/>
+                                        </td>
+                                        <td className="px-5 py-1">
+                                            <p className="text-gray-900 whitespace-nowrap">{reservationAt}</p>
+                                        </td>
+                                        <td className="px-5 py-1">
+                                            <p className="text-gray-900 whitespace-nowrap">{dueAt}</p>
+                                        </td>
+                                        <td className="px-5 py-1">
+                                            <UpdateButton id={reservation._id} onUpdate={reservationUpdateHandler}/>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </table>
-                    <div
-                        className="px-5 py-5 bg-white border-t flex flex-col items-center">
-                                <span className="text-xs sm:text-sm text-gray-900">
-                                    Showing 1 to 4 of 50 Entries
-                                </span>
-                        <div className="inline-flex mt-2 gap-3">
-                            <button
-                                className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 active:bg-indigo-600 font-semibold py-2 px-4 rounded-l">
-                                Prev
-                            </button>
-                            <button
-                                className="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 active:bg-indigo-600 font-semibold py-2 px-4 rounded-r">
-                                Next
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
+
+            {!isLoading && reservations.length > 0 &&
+                <PaginationBar
+                    title={"reservations"}
+                    style={'mt-2.5'}
+                    page={page}
+                    totalCount={totalCount}
+                    totalPages={totalPages}
+                    from={from}
+                    to={to}
+                    prevPageHandler={prevPageHandler}
+                    nextPageHandler={nextPageHandler}
+                />
+            }
         </>
     );
 }
