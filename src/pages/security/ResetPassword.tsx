@@ -49,7 +49,7 @@ const ResetPassword: React.FC = () => {
 
         try {
             const response = await authService.resetPassword(otp, password, confirmPassword);
-            const {accessToken, user, refreshTokenExpires} = response?.data;
+            const {accessToken, user, refreshTokenExpires} = response.data;
 
             dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
             setRefreshTokenExpirationDate(refreshTokenExpires);

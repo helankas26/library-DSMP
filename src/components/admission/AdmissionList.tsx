@@ -213,12 +213,12 @@ const AdmissionList: React.FC = () => {
                                             <div className="flex items-center">
                                                 <div className="flex-shrink-0 w-14 h-14">
                                                     <img className="w-full h-full border rounded-full"
-                                                         src={admission.member.avatar}
-                                                         alt={admission.member.fullName}/>
+                                                         src={admission.member?.avatar}
+                                                         alt={admission.member?.fullName}/>
                                                 </div>
                                                 <div className="ml-3 w-full">
-                                                    <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900 whitespace-nowrap">#{admission.member._id}</p>
-                                                    <p className="text-gray-900 whitespace-nowrap">{admission.member.fullName}</p>
+                                                    <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900 whitespace-nowrap">#{admission.member?._id}</p>
+                                                    <p className="text-gray-900 whitespace-nowrap">{admission.member?.fullName}</p>
                                                 </div>
                                             </div>
                                         </td>
@@ -226,7 +226,7 @@ const AdmissionList: React.FC = () => {
                                             <p className="text-gray-900 whitespace-nowrap">{admission.fee}</p>
                                         </td>
                                         <td className="px-5 py-1">
-                                            <p className="text-gray-900 whitespace-nowrap">{admission.librarian.fullName}</p>
+                                            <p className="text-gray-900 whitespace-nowrap">{admission.librarian?.fullName}</p>
                                         </td>
                                         <td className="px-5 py-1">
                                             <p className="text-gray-900 whitespace-nowrap">{paidAt}</p>

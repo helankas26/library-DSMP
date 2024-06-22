@@ -214,7 +214,7 @@ const SubscriptionList: React.FC = () => {
                                 return (
                                     <tr key={subscription._id} className="border-b border-gray-200">
                                         <td className="px-5 py-2">
-                                            <p className="text-gray-900 whitespace-nowrap">{subscription.member.fullName}</p>
+                                            <p className="text-gray-900 whitespace-nowrap">{subscription.member?.fullName}</p>
                                         </td>
                                         <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{subscription.fee}</p>
@@ -223,7 +223,7 @@ const SubscriptionList: React.FC = () => {
                                             <p className="text-gray-900 whitespace-nowrap">{subscription.paidFor}</p>
                                         </td>
                                         <td className="px-5 py-2">
-                                            <p className="text-gray-900 whitespace-nowrap">{subscription.librarian.fullName}</p>
+                                            <p className="text-gray-900 whitespace-nowrap">{subscription.librarian?.fullName}</p>
                                         </td>
                                         <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{paidAt}</p>

@@ -13,7 +13,7 @@ const AdmissionDetails: React.FC<{ record: Admission }> = (props) => {
                     <div className="flex justify-center">
                         <img
                             className="w-auto h-36 rounded-lg"
-                            src={admission.member.avatar}/>
+                            src={admission.member?.avatar}/>
                     </div>
                     <div className="flex flex-col gap-3 mt-3 py-3 px-4 text-sm border rounded-lg w-full h-52 overflow-auto">
                         <div className="w-full flex items-center justify-between">
@@ -23,7 +23,7 @@ const AdmissionDetails: React.FC<{ record: Admission }> = (props) => {
                                 className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                                 id="id"
                                 type="text"
-                                value={admission.member._id}
+                                value={admission.member?._id}
                                 disabled={true}/>
                         </div>
                         <div className="w-full flex items-center justify-between">
@@ -33,7 +33,7 @@ const AdmissionDetails: React.FC<{ record: Admission }> = (props) => {
                                 className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                                 id="fullName"
                                 type="text"
-                                value={admission.member.fullName}
+                                value={admission.member?.fullName}
                                 disabled={true}/>
                         </div>
                         <div className="w-full flex items-center justify-between">
@@ -43,7 +43,7 @@ const AdmissionDetails: React.FC<{ record: Admission }> = (props) => {
                                 className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                                 id="fee"
                                 type="number"
-                                value={admission.fee}
+                                value={admission.fee!}
                                 disabled={true}/>
                         </div>
                         <div className="w-full flex items-center justify-between">
@@ -53,7 +53,7 @@ const AdmissionDetails: React.FC<{ record: Admission }> = (props) => {
                                 className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                                 id="handledBy"
                                 type="text"
-                                value={admission.librarian.fullName}
+                                value={admission.librarian?.fullName}
                                 disabled={true}/>
                         </div>
                         <div className="w-full flex items-center justify-between">

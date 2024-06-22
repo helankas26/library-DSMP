@@ -212,13 +212,13 @@ const FineList: React.FC = () => {
                                 return (
                                     <tr key={fine._id} className="border-b border-gray-200">
                                         <td className="px-5 py-2">
-                                            <p className="text-gray-900 whitespace-nowrap">{fine.member.fullName}</p>
+                                            <p className="text-gray-900 whitespace-nowrap">{fine.member?.fullName}</p>
                                         </td>
                                         <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{fine.fee}</p>
                                         </td>
                                         <td className="px-5 py-2">
-                                            <p className="text-gray-900 whitespace-nowrap">{`${fine.book.title} ${fine.book.edition}`}</p>
+                                            <p className="text-gray-900 whitespace-nowrap">{`${fine.book?.title} ${fine.book?.edition}`}</p>
                                         </td>
                                         <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{fine.noOfDate}</p>
@@ -227,7 +227,7 @@ const FineList: React.FC = () => {
                                             <p className="text-gray-900 whitespace-nowrap">{paidAt}</p>
                                         </td>
                                         <td className="px-5 py-2">
-                                            <p className="text-gray-900 whitespace-nowrap">{fine.librarian.fullName}</p>
+                                            <p className="text-gray-900 whitespace-nowrap">{fine.librarian?.fullName}</p>
                                         </td>
                                         <td className="px-5 py-2">
                                             <ViewButton id={fine._id} onView={fineViewHandler} type={"Fine"} DetailsView={FineDetails}/>

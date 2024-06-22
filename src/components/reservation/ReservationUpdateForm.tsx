@@ -53,12 +53,12 @@ const ReservationUpdateForm: React.FC<{
                     <div className="flex items-center justify-center">
                         <div className="flex-shrink-0 w-14 h-14">
                             <img className="w-full h-full border rounded-full"
-                                 src={reservation.member.avatar}
-                                 alt={reservation.member.fullName}/>
+                                 src={reservation.member?.avatar}
+                                 alt={reservation.member?.fullName}/>
                         </div>
                         <div className="ml-3">
-                            <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{reservation.member._id}</p>
-                            <p className="text-gray-900">{reservation.member.fullName}</p>
+                            <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{reservation.member?._id}</p>
+                            <p className="text-gray-900">{reservation.member?.fullName}</p>
                         </div>
                     </div>
 
@@ -66,13 +66,13 @@ const ReservationUpdateForm: React.FC<{
                         <div className="flex justify-center">
                             <div className="flex-shrink-0 w-14 h-16">
                                 <img className="w-full h-full border rounded-md"
-                                     src={reservation.book.cover}
-                                     alt={`${reservation.book.title} ${reservation.book.edition}`}/>
+                                     src={reservation.book?.cover}
+                                     alt={`${reservation.book?.title} ${reservation.book?.edition}`}/>
                             </div>
                         </div>
                         <div className="ml-3">
-                            <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{reservation.book._id}</p>
-                            <p className="text-gray-900">{`${reservation.book.title} ${reservation.book.edition}`}</p>
+                            <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{reservation.book?._id}</p>
+                            <p className="text-gray-900">{`${reservation.book?.title} ${reservation.book?.edition}`}</p>
                         </div>
                     </div>
                 </div>

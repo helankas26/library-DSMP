@@ -12,7 +12,7 @@ const useProfile = () => {
         const findProfileByAuthUser = async () => {
             try {
                 const response = await profileService.findProfileByAuthUser();
-                const {profile} = response?.data;
+                const {profile} = response.data;
                 dispatchAuth({type: 'SET_PROFILE', auth: {profile: profile}});
             } catch (error: any) {
                 showError(error);

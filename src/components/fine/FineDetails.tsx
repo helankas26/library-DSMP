@@ -13,10 +13,10 @@ const FineDetails: React.FC<{ record: Fine }> = (props) => {
                     <div className="flex justify-center gap-16">
                         <img
                             className="w-24 h-24 rounded-full"
-                            src={fine.member.avatar}/>
+                            src={fine.member?.avatar}/>
                         <img
                             className="w-auto h-28 rounded-lg"
-                            src={fine.book.cover}/>
+                            src={fine.book?.cover}/>
                     </div>
                     <div className="flex flex-col gap-3 mt-3 py-3 px-4 text-sm border rounded-lg w-full h-52 overflow-auto">
                         <div className="w-full flex items-center justify-between">
@@ -26,7 +26,7 @@ const FineDetails: React.FC<{ record: Fine }> = (props) => {
                                 className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                                 id="book"
                                 type="text"
-                                value={`${fine.book.title} ${fine.book.edition}`}
+                                value={`${fine.book?.title} ${fine.book?.edition}`}
                                 disabled={true}/>
                         </div>
                         <div className="w-full flex items-center justify-between">
@@ -36,7 +36,7 @@ const FineDetails: React.FC<{ record: Fine }> = (props) => {
                                 className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                                 id="id"
                                 type="text"
-                                value={fine.member._id}
+                                value={fine.member?._id}
                                 disabled={true}/>
                         </div>
                         <div className="w-full flex items-center justify-between">
@@ -46,7 +46,7 @@ const FineDetails: React.FC<{ record: Fine }> = (props) => {
                                 className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                                 id="fullName"
                                 type="text"
-                                value={fine.member.fullName}
+                                value={fine.member?.fullName}
                                 disabled={true}/>
                         </div>
                         <div className="w-full flex items-center justify-between">
@@ -76,7 +76,7 @@ const FineDetails: React.FC<{ record: Fine }> = (props) => {
                                 className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                                 id="handledBy"
                                 type="text"
-                                value={fine.librarian.fullName}
+                                value={fine.librarian?.fullName}
                                 disabled={true}/>
                         </div>
                         <div className="w-full flex items-center justify-between">

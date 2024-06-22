@@ -53,12 +53,12 @@ const UpdateFineForm: React.FC<{
                     <div className="flex items-center justify-center">
                         <div className="flex-shrink-0 w-14 h-14">
                             <img className="w-full h-full border rounded-full"
-                                 src={fine.member.avatar}
-                                 alt={fine.member.fullName}/>
+                                 src={fine.member?.avatar}
+                                 alt={fine.member?.fullName}/>
                         </div>
                         <div className="ml-3">
-                            <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{fine.member._id}</p>
-                            <p className="text-gray-900">{fine.member.fullName}</p>
+                            <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{fine.member?._id}</p>
+                            <p className="text-gray-900">{fine.member?.fullName}</p>
                         </div>
                     </div>
 
@@ -66,13 +66,13 @@ const UpdateFineForm: React.FC<{
                         <div className="flex justify-center">
                             <div className="flex-shrink-0 w-14 h-16">
                                 <img className="w-full h-full border rounded-md"
-                                     src={fine.book.cover}
-                                     alt={`${fine.book.title} ${fine.book.edition}`}/>
+                                     src={fine.book?.cover}
+                                     alt={`${fine.book?.title} ${fine.book?.edition}`}/>
                             </div>
                         </div>
                         <div className="ml-3">
-                            <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{fine.book._id}</p>
-                            <p className="text-gray-900">{`${fine.book.title} ${fine.book.edition}`}</p>
+                            <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{fine.book?._id}</p>
+                            <p className="text-gray-900">{`${fine.book?.title} ${fine.book?.edition}`}</p>
                         </div>
                     </div>
                 </div>

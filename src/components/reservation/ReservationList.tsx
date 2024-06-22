@@ -180,10 +180,10 @@ const ReservationList: React.FC = () => {
                                 return (
                                     <tr key={reservation._id}  className="border-b border-gray-200">
                                         <td className="px-5 py-1">
-                                            <p className="text-gray-900 whitespace-nowrap">{reservation.member.fullName}</p>
+                                            <p className="text-gray-900 whitespace-nowrap">{reservation.member?.fullName}</p>
                                         </td>
                                         <td className="px-5 py-1">
-                                            <p className="text-gray-900 whitespace-nowrap">{reservation.book.title} {reservation.book.edition}</p>
+                                            <p className="text-gray-900 whitespace-nowrap">{reservation.book?.title} {reservation.book?.edition}</p>
                                         </td>
                                         <td className="px-5 py-1">
                                             <StatusLabel status={reservation.status}/>

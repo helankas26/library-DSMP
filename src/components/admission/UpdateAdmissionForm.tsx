@@ -52,12 +52,12 @@ const UpdateAdmissionForm: React.FC<{
                 <div className="flex items-center justify-center">
                     <div className="flex-shrink-0 w-14 h-14">
                         <img className="w-full h-full border rounded-full"
-                             src={admission.member.avatar}
-                             alt={admission.member.fullName}/>
+                             src={admission.member?.avatar}
+                             alt={admission.member?.fullName}/>
                     </div>
                     <div className="ml-3">
-                        <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{admission.member._id}</p>
-                        <p className="text-gray-900">{admission.member.fullName}</p>
+                        <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{admission.member?._id}</p>
+                        <p className="text-gray-900">{admission.member?.fullName}</p>
                     </div>
                 </div>
 

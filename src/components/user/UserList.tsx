@@ -213,12 +213,12 @@ const UserList: React.FC = () => {
                                             <div className="flex items-center">
                                                 <div className="flex-shrink-0 w-14 h-14">
                                                     <img className="w-full h-full border rounded-full"
-                                                         src={user.profile.avatar}
-                                                         alt={user.profile.fullName}/>
+                                                         src={user.profile?.avatar}
+                                                         alt={user.profile?.fullName}/>
                                                 </div>
                                                 <div className="ml-3 w-full">
-                                                    <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900 whitespace-nowrap">#{user.profile._id}</p>
-                                                    <p className="text-gray-900 whitespace-nowrap">{user.profile.fullName}</p>
+                                                    <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900 whitespace-nowrap">#{user.profile?._id}</p>
+                                                    <p className="text-gray-900 whitespace-nowrap">{user.profile?.fullName}</p>
                                                 </div>
                                             </div>
                                         </td>

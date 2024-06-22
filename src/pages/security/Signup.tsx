@@ -58,7 +58,7 @@ const Signup: React.FC = () => {
 
         try {
             const response = await authService.signup(newUser);
-            const {accessToken, user, refreshTokenExpires} = response?.data;
+            const {accessToken, user, refreshTokenExpires} = response.data;
 
             dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
             setRefreshTokenExpirationDate(refreshTokenExpires);

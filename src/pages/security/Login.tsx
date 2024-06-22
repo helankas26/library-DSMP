@@ -23,7 +23,7 @@ const Login: React.FC = () => {
 
         try {
             const response = await authService.login(username, password);
-            const {accessToken, user, refreshTokenExpires} = response?.data;
+            const {accessToken, user, refreshTokenExpires} = response.data;
 
             dispatchAuth({type: 'SET_TOKEN', auth: {accessToken: accessToken}});
             setRefreshTokenExpirationDate(refreshTokenExpires);

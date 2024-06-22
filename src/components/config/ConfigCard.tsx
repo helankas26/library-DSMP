@@ -27,7 +27,7 @@ const ConfigCard: React.FC<{
                     <div className="bg-cyan-100 rounded-md p-1 text-center w-[70px]">
                         <p className="text-cyan-600 font-semibold text-sm">{config.fee || config.count}</p>
                     </div>
-                    <p className="font-semibold text-xs text-gray-200">{config.librarian.fullName}</p>
+                    <p className="font-semibold text-xs text-gray-200">{config.librarian?.fullName}</p>
                 </div>
             </div>
             <UpdateButton id={id} onUpdate={configUpdateHandler}/>
