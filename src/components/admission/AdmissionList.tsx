@@ -223,7 +223,7 @@ const AdmissionList: React.FC = () => {
                                             </div>
                                         </td>
                                         <td className="px-5 py-1">
-                                            <p className="text-gray-900 whitespace-nowrap">{admission.fee}</p>
+                                            <p className="text-gray-900 whitespace-nowrap">{admission.fee.toFixed(2)}</p>
                                         </td>
                                         <td className="px-5 py-1">
                                             <p className="text-gray-900 whitespace-nowrap">{admission.librarian?.fullName}</p>

@@ -56,7 +56,7 @@ const FineDetails: React.FC<{ record: Fine }> = (props) => {
                                 className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                                 id="fee"
                                 type="number"
-                                value={fine.fee}
+                                value={fine.fee.toFixed(2)}
                                 disabled={true}/>
                         </div>
                         <div className="w-full flex items-center justify-between">

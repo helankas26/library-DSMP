@@ -176,10 +176,10 @@ const SubscriptionPayment: React.FC = () => {
                                         <PaymentStatusLabel paymentStatus={profile.paymentStatus}/>
                                     </td>
                                     <td className="pl-5 pr-2 py-1">
-                                        <p className="text-gray-900 whitespace-nowrap">{(profile as ProfileWithPayment).fee}</p>
+                                        <p className="text-gray-900 whitespace-nowrap">{(profile as ProfileWithPayment).fee.toFixed(2)}</p>
                                     </td>
                                     <td className="pl-5 pr-2 py-1 max-w-xs overflow-hidden">
-                                        <p className="text-gray-900 whitespace-nowrap">{(profile as ProfileWithPayment).totalAmount}</p>
+                                        <p className="text-gray-900 whitespace-nowrap">{(profile as ProfileWithPayment).totalAmount.toFixed(2)}</p>
                                     </td>
                                     <td className="px-5 py-1">
                                         <PaymentButton

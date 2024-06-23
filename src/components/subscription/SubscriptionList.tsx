@@ -217,7 +217,7 @@ const SubscriptionList: React.FC = () => {
                                             <p className="text-gray-900 whitespace-nowrap">{subscription.member?.fullName}</p>
                                         </td>
                                         <td className="px-5 py-2">
-                                            <p className="text-gray-900 whitespace-nowrap">{subscription.fee}</p>
+                                            <p className="text-gray-900 whitespace-nowrap">{subscription.fee.toFixed(2)}</p>
                                         </td>
                                         <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{subscription.paidFor}</p>

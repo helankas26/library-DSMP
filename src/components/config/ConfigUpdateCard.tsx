@@ -76,7 +76,9 @@ const ConfigUpdateCard: React.FC<{
                     </div>
                     <div className="flex flex-col gap-1 ml-10">
                         <div className="bg-cyan-100 rounded-md p-1 text-center w-[120px]">
-                            <p className="text-cyan-600 font-semibold text-md">Prev: {(config as any)[configProp].fee}</p>
+                            <p className="text-cyan-600 font-semibold text-md">
+                                Prev: {(config as any)[configProp].fee ? (config as any)[configProp].fee.toFixed(2) : (config as any)[configProp].count}
+                            </p>
                             <input
                                 className="appearance-none border rounded-md w-full py-1 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                                 id="value"

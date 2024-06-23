@@ -25,7 +25,7 @@ const ConfigCard: React.FC<{
                 </div>
                 <div className="flex flex-col gap-1 ml-10">
                     <div className="bg-cyan-100 rounded-md p-1 text-center w-[70px]">
-                        <p className="text-cyan-600 font-semibold text-sm">{config.fee || config.count}</p>
+                        <p className="text-cyan-600 font-semibold text-sm">{config.fee ? config.fee.toFixed(2) : config.count}</p>
                     </div>
                     <p className="font-semibold text-xs text-gray-200">{config.librarian?.fullName}</p>
                 </div>

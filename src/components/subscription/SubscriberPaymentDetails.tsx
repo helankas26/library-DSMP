@@ -68,7 +68,7 @@ const SubscriberPaymentDetails: React.FC<{
                                  className="py-2 px-4 text-sm text-gray-800 border-b last:border-b-0 w-full">
                                 <div className="flex items-center justify-between w-full">
                                     <p>{payment.payFor}</p>
-                                    <p>{profile.fee}</p>
+                                    <p>{profile.fee.toFixed(2)}</p>
                                     <Form onSubmit={(event: FormEvent) => paymentHandler(event, payment.index)}>
                                         <PayButton
                                             isPaying={isPaying && activePaymentIndex === payment.index}
