@@ -6,10 +6,10 @@ const ComboboxSingleSelect: React.FC<{
     id: string;
     objects: any[];
     displayField: string;
-    selectedObjects: any;
-    setSelectedObjects: Dispatch<SetStateAction<any>>
+    selectedObject: any;
+    setSelectedObject: Dispatch<SetStateAction<any>>
 }> = (props) => {
-    const {id, objects, displayField, selectedObjects, setSelectedObjects} = props;
+    const {id, objects, displayField, selectedObject, setSelectedObject} = props;
     const [query, setQuery] = useState<string>('');
 
     const compareSelected = (a: any, b: any) => {
@@ -24,7 +24,7 @@ const ComboboxSingleSelect: React.FC<{
             });
 
     return (
-        <Combobox value={selectedObjects} by={compareSelected} onChange={setSelectedObjects} nullable>
+        <Combobox value={selectedObject} by={compareSelected} onChange={setSelectedObject} nullable>
             <div className="relative mt-1 rounded">
                 <div
                     className="relative w-full cursor-default overflow-hidden rounded bg-white text-left focus:outline-none sm:text-sm">

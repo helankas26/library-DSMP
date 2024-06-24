@@ -235,8 +235,8 @@ const BookNew: React.FC = () => {
                                 id={"category"}
                                 objects={categoriesList}
                                 displayField={"categoryName"}
-                                selectedObjects={category}
-                                setSelectedObjects={setCategory}
+                                selectedObject={category}
+                                setSelectedObject={setCategory}
                             />
                         </div>
                         <div className="w-full sm:w-1/2 md:w-1/3 lg:w-full">
