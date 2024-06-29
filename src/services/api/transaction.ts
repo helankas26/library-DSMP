@@ -2,7 +2,6 @@ import AxiosInstance from "../../config/axios-instance.ts";
 import HttpResponse from "../../utils/http-response.ts";
 import Transaction from "../../model/Transaction.ts";
 
-
 const TRANSACTIONS: string = '/transactions';
 
 const findAllTransactions = async () => {
@@ -10,15 +9,19 @@ const findAllTransactions = async () => {
 }
 
 const createTransaction = async (transaction: Transaction) => {
-    return await AxiosInstance.post<HttpResponse<Transaction>>(TRANSACTIONS, {transaction});
+    return await AxiosInstance.post<HttpResponse<Transaction>>(TRANSACTIONS, {...transaction});
 }
 
 const findTransactionById = async (id: string) => {
     return await AxiosInstance.get<HttpResponse<Transaction>>(`${TRANSACTIONS}/${id}`);
 }
 
+const getTransactionFineDetailsById = async (id: string) => {
+    return await AxiosInstance.get<HttpResponse<Transaction>>(`${TRANSACTIONS}/${id}/fines`);
+}
+
 const updateTransaction = async (id: string, transaction: Transaction) => {
-    return await AxiosInstance.patch<HttpResponse<Transaction>>(`${TRANSACTIONS}/${id}`, {transaction});
+    return await AxiosInstance.patch<HttpResponse<Transaction>>(`${TRANSACTIONS}/${id}`, {...transaction});
 }
 
 const deleteTransaction = async (id: string) => {
@@ -29,6 +32,7 @@ export default {
     findAllTransactions,
     createTransaction,
     findTransactionById,
+    getTransactionFineDetailsById,
     updateTransaction,
     deleteTransaction
 };

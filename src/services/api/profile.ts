@@ -9,6 +9,10 @@ const findAllProfiles = async () => {
     return await AxiosInstance.get<HttpResponse<Profile[]>>(PROFILES);
 }
 
+const findAllMembers = async () => {
+    return await AxiosInstance.get<HttpResponse<Profile[]>>(`${PROFILES}/members`);
+}
+
 const findAllProfilesWithPagination = async (page: number, size: number) => {
     return await AxiosInstance.get<HttpResponseWithPagination<Profile[]>>(`${PROFILES}/list?page=${page}&size=${size}`);
 }
@@ -41,6 +45,14 @@ const findProfileByAuthUser = async () => {
     return await AxiosInstance.get<HttpResponse<Profile>>(`${PROFILES}/auth`);
 }
 
+const getMemberCurrentLoansById = async (id: string) => {
+    return await AxiosInstance.get<HttpResponse<Profile>>(`${PROFILES}/${id}/transactions`);
+}
+
+const getMemberAvailableReservationsById = async (id: string) => {
+    return await AxiosInstance.get<HttpResponse<Profile>>(`${PROFILES}/${id}/reservations`);
+}
+
 const updateProfile = async (id: string, profile: Profile) => {
     return await AxiosInstance.patch<HttpResponse<Profile>>(`${PROFILES}/${id}`, {...profile});
 }
@@ -51,6 +63,7 @@ const deleteProfile = async (id: string) => {
 
 export default {
     findAllProfiles,
+    findAllMembers,
     findAllProfilesWithPagination,
     findAllProfilesBySearchWithPagination,
     findAllMembersPaymentStatus,
@@ -59,6 +72,8 @@ export default {
     findProfileById,
     findMemberPaymentStatusById,
     findProfileByAuthUser,
+    getMemberCurrentLoansById,
+    getMemberAvailableReservationsById,
     updateProfile,
     deleteProfile
 };

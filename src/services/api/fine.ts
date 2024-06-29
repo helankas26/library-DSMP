@@ -25,8 +25,8 @@ const findAllFinesBySearchWithPaginationByAuthUser = async (searchText: string, 
     return await AxiosInstance.get<HttpResponseWithPagination<Fine[]>>(`${FINES}/auth/query?searchText=${searchText}&page=${page}&size=${size}`);
 }
 
-const createFine = async (fine: Fine) => {
-    return await AxiosInstance.post<HttpResponse<Fine>>(FINES, {...fine});
+const createFine = async (fines: Fine) => {
+    return await AxiosInstance.post<HttpResponse<Fine>>(FINES, {...fines});
 }
 
 const findFineById = async (id: string) => {

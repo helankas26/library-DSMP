@@ -16,6 +16,10 @@ const findConfigById = async (id: string) => {
     return await AxiosInstance.get<HttpResponse<Config>>(`${CONFIGS}/${id}`);
 }
 
+const getConfig = async () => {
+    return await AxiosInstance.get<HttpResponse<Config>>(`${CONFIGS}/config`);
+}
+
 const updateConfig = async (id: string, config: Config) => {
     return await AxiosInstance.patch<HttpResponse<Config>>(`${CONFIGS}/${id}`, {...config});
 }
@@ -28,6 +32,7 @@ export default {
     findAllConfigs,
     createConfig,
     findConfigById,
+    getConfig,
     updateConfig,
     deleteConfig
 };
