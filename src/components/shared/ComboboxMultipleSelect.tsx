@@ -7,7 +7,7 @@ const ComboboxMultipleSelect: React.FC<{
     objects: any[];
     displayField: string;
     selectedObjects: any[];
-    setSelectedObjects: Dispatch<SetStateAction<any[]>>
+    setSelectedObjects: Dispatch<SetStateAction<any[]>> | ((objects: any[]) => void)
 }> = (props) => {
     const {id, objects, displayField, selectedObjects, setSelectedObjects} = props;
     const [query, setQuery] = useState<string>('');

@@ -7,7 +7,7 @@ const ComboboxSingleSelect: React.FC<{
     objects: any[];
     displayField: string;
     selectedObject: any;
-    setSelectedObject: Dispatch<SetStateAction<any>>
+    setSelectedObject: Dispatch<SetStateAction<any>> | ((objects: any) => void)
 }> = (props) => {
     const {id, objects, displayField, selectedObject, setSelectedObject} = props;
     const [query, setQuery] = useState<string>('');
