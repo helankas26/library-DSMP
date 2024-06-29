@@ -1,3 +1,6 @@
+import Transaction from "./Transaction.ts";
+import Reservation from "./Reservation.ts";
+
 interface Profile {
     _id: string;
     fullName: string;
@@ -9,6 +12,8 @@ interface Profile {
     paymentStatus: number;
     reservationCount: number;
     borrowCount: number;
+    transactions: Transaction[];
+    reservations: Reservation[];
     createdAt: Date;
 }
 

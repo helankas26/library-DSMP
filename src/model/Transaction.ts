@@ -9,6 +9,7 @@ interface Transaction {
     librarian: Profile;
     issuedAt: Date;
     dueAt: Date;
+    noOfDate: number;
     returnedAt: Date;
 }
 

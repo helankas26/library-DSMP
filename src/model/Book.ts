@@ -5,6 +5,7 @@ interface Book {
     _id: string;
     title: string;
     edition: string;
+    name: string;
     cover: string;
     description: string;
     authors: Author[];
