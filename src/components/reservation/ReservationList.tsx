@@ -179,22 +179,22 @@ const ReservationList: React.FC = () => {
 
                                 return (
                                     <tr key={reservation._id}  className="border-b border-gray-200">
-                                        <td className="px-5 py-1">
+                                        <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{reservation.member?.fullName}</p>
                                         </td>
-                                        <td className="px-5 py-1">
+                                        <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{reservation.book?.title} {reservation.book?.edition}</p>
                                         </td>
-                                        <td className="px-5 py-1">
+                                        <td className="px-5 py-2">
                                             <StatusLabel status={reservation.status}/>
                                         </td>
-                                        <td className="px-5 py-1">
+                                        <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{reservationAt}</p>
                                         </td>
-                                        <td className="px-5 py-1">
+                                        <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{dueAt}</p>
                                         </td>
-                                        <td className="px-5 py-1">
+                                        <td className="px-5 py-2">
                                             <UpdateButton id={reservation._id} onUpdate={reservationUpdateHandler}/>
                                         </td>
                                     </tr>
