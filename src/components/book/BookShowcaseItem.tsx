@@ -2,12 +2,12 @@ import React from "react";
 
 import Book from "../../model/Book.ts";
 
-const BookShowcaseItem: React.FC<{ book: Book }> = (props) => {
-    const {book} = props;
+const BookShowcaseItem: React.FC<{ book: Book; style: string; }> = (props) => {
+    const {book, style} = props;
 
     return (
         <div
-            className="relative grid h-[24rem] w-full max-w-[18rem] flex-col items-end justify-center overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
+            className={`relative grid h-[24rem] w-full ${style} flex-col items-end justify-center overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700`}>
             <div
                 className="absolute inset-0 m-0 h-full w-full overflow-hidden rounded-none bg-transparent bg-cover bg-clip-border bg-center text-gray-700 shadow-none">
                 <img className="rounded-t-xl h-full w-full"

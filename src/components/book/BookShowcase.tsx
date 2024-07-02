@@ -1,4 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 
 import BookShowcaseItem from "./BookShowcaseItem.tsx";
 import useSnackbar from "../../hooks/use-snackbar.ts";
@@ -9,9 +10,11 @@ import categoryService from "../../services/api/category.ts";
 import GradientCircularProgress from "../shared/GradientCircularProgress.tsx";
 import useHomeState from "../../hooks/use-home-state.ts";
 import PaginationBar from "../shared/PaginationBar.tsx";
+import useUserRole from "../../hooks/use-user-role.ts";
 
 const BookShowcase: React.FC = () => {
     const size: number = 12;
+    const userRole = useUserRole();
     const {scrollToTop} = useScrollToTop();
     const {showError} = useSnackbar();
     const {page, setPage, selectedCategoryId, searchText} = useHomeState();
@@ -88,7 +91,13 @@ const BookShowcase: React.FC = () => {
             {!isLoading && books.length > 0 &&
                 <>
                     {books.map((book) => (
-                        <BookShowcaseItem key={book._id} book={book}/>
+                        userRole === 'USER' ? (
+                            <Link key={book._id} to={`/books/${book._id}`}>
+                                <BookShowcaseItem book={book} style={'min-w-[18rem]'}/>
+                            </Link>
+                        ) : (
+                            <BookShowcaseItem key={book._id} book={book} style={'max-w-[18rem]'}/>
+                        )
                     ))}
 
                     <PaginationBar

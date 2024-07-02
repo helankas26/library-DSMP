@@ -1,57 +1,90 @@
-import React from "react";
+import React, {useState} from "react";
+import {LoaderFunctionArgs} from "@remix-run/router/utils.ts";
+import {useLoaderData} from "react-router-dom";
+
+import bookService from "../services/api/book.ts";
+import reservationService from "../services/api/reservation.ts";
+import HttpResponse from "../utils/http-response.ts";
+import Book from "../model/Book.ts";
+import Reservation from "../model/Reservation.ts";
+import useSnackbar from "../hooks/use-snackbar.ts";
 
 const BookDetails: React.FC = () => {
+    const {book} = useLoaderData() as HttpResponse<Book>;
+    const {showError, showAlert} = useSnackbar();
+
+    const [isReserving, setIsReserving] = useState<boolean>(false);
+
+    const reservationHandler = async () => {
+        setIsReserving(true);
+
+        const reservation: Reservation = {
+            book: book._id
+        } as unknown as Reservation;
+
+        try {
+            await reservationService.createReservation(reservation);
+            showAlert("Reserved successfully!", "success");
+        } catch (error: any) {
+            showError(error);
+        } finally {
+            setIsReserving(false);
+        }
+    };
+
     return (
         <div className="p-6 lg:max-w-6xl max-w-2xl mx-auto">
             <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="w-full lg:sticky top-28 sm:flex gap-2">
-                    <img src="https://m.media-amazon.com/images/I/81wAshyxQyL._AC_UF1000,1000_QL80_.jpg"
-                         alt="Product"
-                         className="w-full rounded object-cover border"/>
+                    <img className="w-full rounded object-cover border"
+                         src={book.cover}
+                         alt={book.name}/>
                 </div>
                 <div>
-                    <h2 className="text-4xl font-medium text-gray-800">Head first Java</h2>
+                    <h2 className="text-4xl font-medium text-gray-800">{book.name}</h2>
                     <div className="mt-8">
-                        <p className="text-gray-800">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut beatae culpa dolore error
-                            inventore iure non omnis perferendis provident quia ratione reprehenderit, sed soluta
-                            tenetur totam unde voluptatem. Ducimus, voluptatem.
-                        </p>
+                        <p className="text-gray-800 bg-white">{book.description}</p>
                     </div>
                     <div className="mt-8">
-                        <span className="bg-green-500 text-gray-50 py-1 px-4 rounded-3xl">Available</span>
-                        <span className="bg-red-500 text-gray-50 py-1 px-4 rounded-3xl">Not Available</span>
+                        {book.availableCount > 0 &&
+                            <span className="bg-green-500 text-gray-50 py-1 px-4 rounded-3xl">Available</span>
+                        }
+
+                        {book.availableCount === 0 &&
+                            <span className="bg-red-500 text-gray-50 py-1 px-4 rounded-3xl">Not Available</span>
+                        }
                     </div>
                     <div className="mt-8">
-                        <button type="button"
-                                className="w-full mt-4 px-4 py-3 bg-[#FB641B] hover:bg-[#e65610] text-white font-medium rounded">
-                            Reserve Your Copy
+                        <button
+                            className="w-full mt-2 py-3 px-4 font-medium text-white rounded shadow transition duration-150 bg-orange-500 hover:bg-orange-600 active:bg-orange-500 disabled:cursor-not-allowed disabled:bg-gray-500"
+                            type="button"
+                            onClick={reservationHandler}
+                            disabled={book.availableCount === 0 || isReserving}>
+                            {!isReserving && 'Reserve Your Copy'}
+                            {isReserving && 'Reserving . . .'}
+
                         </button>
                     </div>
                     <div className="mt-8 relative overflow-x-auto shadow-xl">
-                        <table className="w-full text-sm text-left rtl:text-right text-gray-500 border">
-                            <tr className="border-b">
-                                <th className="px-6 py-3 text-xs text-gray-700 uppercase">
-                                    Title
-                                </th>
-                                <td className="px-6 py-3">
-                                    Black
-                                </td>
+                        <table className="w-full text-sm text-left rtl:text-right border">
+                            <tr className="border-b bg-white">
+                                <th className="px-6 py-3 text-xs text-gray-700 uppercase">Title</th>
+                                <td className="px-6 py-3">{book.title}</td>
                             </tr>
                             <tr className="border-b bg-gray-50">
-                                <th className="px-6 py-3 text-xs text-gray-700 uppercase bg-gray-50">
-                                    Authors
-                                </th>
-                                <td className="px-6 py-3">
-                                    Black
-                                </td>
+                                <th className="px-6 py-3 text-xs text-gray-700 uppercase">Edition</th>
+                                <td className="px-6 py-3">{book.edition}</td>
                             </tr>
-                            <tr className="border-b">
-                                <th className="px-6 py-3 text-xs text-gray-700 uppercase">
-                                    Category
-                                </th>
+                            <tr className="border-b bg-white">
+                                <th className="px-6 py-3 text-xs text-gray-700 uppercase">Category</th>
+                                <td className="px-6 py-3">{book.category?.categoryName}</td>
+                            </tr>
+                            <tr className="border-b bg-gray-50">
+                                <th className="px-6 py-3 text-xs text-gray-700 uppercase bg-gray-50">Authors</th>
                                 <td className="px-6 py-3">
-                                    Black
+                                    {book.authors?.map((author) => (
+                                        <p className="leading-normal">{author.name}</p>
+                                    ))}
                                 </td>
                             </tr>
                         </table>
@@ -63,3 +96,14 @@ const BookDetails: React.FC = () => {
 }
 
 export default BookDetails;
+
+export const loader = async ({params}: LoaderFunctionArgs) => {
+    const {id} = params;
+
+    try {
+        const response = await bookService.findBookById(id!);
+        return {book: response.data.book};
+    } catch (error: any) {
+        throw {...error};
+    }
+}
