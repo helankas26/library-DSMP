@@ -180,7 +180,7 @@ const TransactionList: React.FC = () => {
                                 return (
                                     <tr key={transaction._id} className="border-b border-gray-200">
                                         <td className="px-5 py-2">
-                                            <p className="text-gray-900 whitespace-nowrap">{transaction.member.fullName}</p>
+                                            <p className="text-gray-900 whitespace-nowrap">{transaction.member?.fullName}</p>
                                         </td>
                                         <td className="px-5 py-2 max-w-sm overflow-hidden">
                                             {transaction.books.map((book) => (
@@ -204,7 +204,7 @@ const TransactionList: React.FC = () => {
                                             <p className="text-gray-900 whitespace-nowrap">{returnedAt}</p>
                                         </td>
                                         <td className="px-5 py-2">
-                                            <p className="text-gray-900 whitespace-nowrap">{transaction.librarian.fullName}</p>
+                                            <p className="text-gray-900 whitespace-nowrap">{transaction.librarian?.fullName}</p>
                                         </td>
                                         <td className="px-5 py-2">
                                             <ViewButton id={transaction._id} onView={transactionViewHandler} type={"Transaction"} DetailsView={TransactionDetails}/>
