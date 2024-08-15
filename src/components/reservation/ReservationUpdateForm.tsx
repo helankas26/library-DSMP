@@ -67,12 +67,12 @@ const ReservationUpdateForm: React.FC<{
                             <div className="flex-shrink-0 w-14 h-16">
                                 <img className="w-full h-full border rounded-md"
                                      src={reservation.book?.cover}
-                                     alt={`${reservation.book?.title} ${reservation.book?.edition}`}/>
+                                     alt={reservation.book?.name}/>
                             </div>
                         </div>
                         <div className="ml-3">
                             <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{reservation.book?._id}</p>
-                            <p className="text-gray-900">{`${reservation.book?.title} ${reservation.book?.edition}`}</p>
+                            <p className="text-gray-900">{reservation.book?.name}</p>
                         </div>
                     </div>
                 </div>

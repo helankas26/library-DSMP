@@ -12,7 +12,7 @@ const BookShowcaseItem: React.FC<{ book: Book; style: string; }> = (props) => {
                 className="absolute inset-0 m-0 h-full w-full overflow-hidden rounded-none bg-transparent bg-cover bg-clip-border bg-center text-gray-700 shadow-none">
                 <img className="rounded-t-xl h-full w-full"
                      src={book.cover}
-                     alt={book.title + " " + book.edition}/>
+                     alt={book.name}/>
                 <div
                     className="absolute inset-0 w-full h-full to-black/10 bg-gradient-to-t from-black/95 via-black/35"></div>
             </div>

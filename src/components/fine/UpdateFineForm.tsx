@@ -67,12 +67,12 @@ const UpdateFineForm: React.FC<{
                             <div className="flex-shrink-0 w-14 h-16">
                                 <img className="w-full h-full border rounded-md"
                                      src={fine.book?.cover}
-                                     alt={`${fine.book?.title} ${fine.book?.edition}`}/>
+                                     alt={fine.book?.name}/>
                             </div>
                         </div>
                         <div className="ml-3">
                             <p className="bg-gray-200 px-1.5 text-center rounded text-gray-900">#{fine.book?._id}</p>
-                            <p className="text-gray-900">{`${fine.book?.title} ${fine.book?.edition}`}</p>
+                            <p className="text-gray-900">{fine.book?.name}</p>
                         </div>
                     </div>
                 </div>

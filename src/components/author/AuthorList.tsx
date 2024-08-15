@@ -215,7 +215,7 @@ const AuthorList: React.FC = () => {
                                     <td className="px-5 py-2 max-w-xs overflow-hidden">
                                         {author.books.map((book) => (
                                             <p key={book._id}
-                                               className="hover:bg-gray-200 pl-2.5 rounded text-gray-900 whitespace-nowrap overflow-hidden overflow-ellipsis">{`${book.title} ${book.edition}`}</p>
+                                               className="hover:bg-gray-200 pl-2.5 rounded text-gray-900 whitespace-nowrap overflow-hidden overflow-ellipsis">{book.name}</p>
                                         ))}
                                     </td>
                                     <td className="px-5 py-2">

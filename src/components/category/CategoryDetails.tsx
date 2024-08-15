@@ -51,7 +51,7 @@ const CategoryDetails: React.FC<{ record: Category }> = (props) => {
 
                                 {category.books.map((book) => (
                                     <p key={book._id}
-                                       className="w-full pl-2.5 rounded text-gray-700 border border-gray-300 bg-gray-50">{`${book.title} ${book.edition}`}</p>
+                                       className="w-full pl-2.5 rounded text-gray-700 border border-gray-300 bg-gray-50">{book.name}</p>
                                 ))}
                             </div>
                         </div>

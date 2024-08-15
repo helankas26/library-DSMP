@@ -183,7 +183,7 @@ const ReservationList: React.FC = () => {
                                             <p className="text-gray-900 whitespace-nowrap">{reservation.member?.fullName}</p>
                                         </td>
                                         <td className="px-5 py-2">
-                                            <p className="text-gray-900 whitespace-nowrap">{reservation.book?.title} {reservation.book?.edition}</p>
+                                            <p className="text-gray-900 whitespace-nowrap">{reservation.book?.name}</p>
                                         </td>
                                         <td className="px-5 py-2">
                                             <StatusLabel status={reservation.status}/>

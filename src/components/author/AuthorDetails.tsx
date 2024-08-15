@@ -41,7 +41,7 @@ const AuthorDetails: React.FC<{ record: Author }> = (props) => {
 
                                 {author.books.map((book) => (
                                     <p key={book._id}
-                                       className="w-full pl-2.5 rounded text-gray-700 border border-gray-300 bg-gray-50">{`${book.title} ${book.edition}`}</p>
+                                       className="w-full pl-2.5 rounded text-gray-700 border border-gray-300 bg-gray-50">{book.name}</p>
                                 ))}
                             </div>
                         </div>
