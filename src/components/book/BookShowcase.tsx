@@ -93,7 +93,7 @@ const BookShowcase: React.FC = () => {
                     {books.map((book) => (
                         userRole === 'USER' ? (
                             <Link key={book._id} to={`/books/${book._id}`}>
-                                <BookShowcaseItem book={book} style={'min-w-[18rem]'}/>
+                                <BookShowcaseItem book={book} style={'min-w-[18rem] max-w-[18rem]'}/>
                             </Link>
                         ) : (
                             <BookShowcaseItem key={book._id} book={book} style={'max-w-[18rem]'}/>

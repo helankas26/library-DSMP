@@ -102,7 +102,7 @@ const BookNew: React.FC = () => {
 
         const book: Book = {
             title: title,
-            edition: edition,
+            edition: edition || undefined,
             cover: imageURL,
             description: description,
             authors: authorsIds,
@@ -205,7 +205,6 @@ const BookNew: React.FC = () => {
                                     onChange={(e) => {
                                         setEdition(e.target.value);
                                     }}
-                                    required={true}
                                     placeholder="Enter edition"/>
                             </div>
                             <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/2">

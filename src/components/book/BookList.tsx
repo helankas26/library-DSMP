@@ -179,20 +179,20 @@ const BookList: React.FC = () => {
                         <tbody className="bg-white text-sm">
                             {books.map((book) => (
                                 <tr key={book._id} className="border-b border-gray-200">
-                                    <td className="px-5 py-1">
+                                    <td className="px-5 py-1 max-w-xs overflow-hidden">
                                         <div className="flex flex-col lg:flex-row items-center">
                                             <div className="flex-shrink-0 w-20 h-24">
                                                 <img className="w-full h-full border rounded-md"
                                                      src={book.cover}
-                                                     alt={`${book.title} ${book.edition}`}/>
+                                                     alt={book.name}/>
                                             </div>
-                                            <div className="mt-1 lg:mt-0 lg:ml-3">
-                                                <p className="text-gray-900 whitespace-nowrap">{book.title}</p>
+                                            <div className="mt-1 lg:mt-0 lg:ml-3 overflow-hidden">
+                                                <p className="text-gray-900 whitespace-nowrap overflow-hidden overflow-ellipsis">{book.title}</p>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="px-5 py-1">
-                                        <p className="text-gray-900 whitespace-nowrap">{book.edition}</p>
+                                        <p className="text-gray-900 whitespace-nowrap">{book.edition || 'N/A'}</p>
                                     </td>
                                     <td className="px-5 py-1 max-w-xs overflow-hidden">
                                         <p className="text-gray-900 whitespace-nowrap overflow-hidden overflow-ellipsis">{book.description}</p>

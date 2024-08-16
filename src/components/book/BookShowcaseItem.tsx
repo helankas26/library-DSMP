@@ -17,7 +17,7 @@ const BookShowcaseItem: React.FC<{ book: Book; style: string; }> = (props) => {
                     className="absolute inset-0 w-full h-full to-black/10 bg-gradient-to-t from-black/95 via-black/35"></div>
             </div>
             <div className="relative py-6 px-3 space-y-2">
-                <h2 className="block font-sans text-4xl font-medium tracking-normal text-white antialiased bg-gray-700 bg-opacity-75 rounded-xl px-2">
+                <h2 className="block font-sans text-2xl font-medium tracking-normal text-white antialiased bg-gray-700 bg-opacity-75 rounded-xl px-2">
                     {book.title}
                 </h2>
                 <h2 className="block font-sans text-lg text-center font-medium tracking-normal text-orange-700 antialiased bg-gray-600 bg-opacity-75 rounded-xl px-2">

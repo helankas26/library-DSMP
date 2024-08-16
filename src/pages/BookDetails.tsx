@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {LoaderFunctionArgs} from "@remix-run/router/utils.ts";
 import {useLoaderData} from "react-router-dom";
 
@@ -8,9 +8,11 @@ import HttpResponse from "../utils/http-response.ts";
 import Book from "../model/Book.ts";
 import Reservation from "../model/Reservation.ts";
 import useSnackbar from "../hooks/use-snackbar.ts";
+import useScrollToTop from "../hooks/use-scroll-to-top.ts";
 
 const BookDetails: React.FC = () => {
     const {book} = useLoaderData() as HttpResponse<Book>;
+    const {scrollToTop} = useScrollToTop();
     const {showError, showAlert} = useSnackbar();
 
     const [isReserving, setIsReserving] = useState<boolean>(false);
@@ -32,8 +34,12 @@ const BookDetails: React.FC = () => {
         }
     };
 
+    useEffect(() => {
+        scrollToTop();
+    }, []);
+
     return (
-        <div className="p-6 lg:max-w-6xl max-w-2xl mx-auto">
+        <div className="p-6 max-w-2xl lg:max-w-6xl mx-auto">
             <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="w-full lg:sticky top-28 sm:flex gap-2">
                     <img className="w-full rounded object-cover border"
@@ -67,26 +73,28 @@ const BookDetails: React.FC = () => {
                     </div>
                     <div className="mt-8 relative overflow-x-auto shadow-xl">
                         <table className="w-full text-sm text-left rtl:text-right border">
-                            <tr className="border-b bg-white">
-                                <th className="px-6 py-3 text-xs text-gray-700 uppercase">Title</th>
-                                <td className="px-6 py-3">{book.title}</td>
-                            </tr>
-                            <tr className="border-b bg-gray-50">
-                                <th className="px-6 py-3 text-xs text-gray-700 uppercase">Edition</th>
-                                <td className="px-6 py-3">{book.edition}</td>
-                            </tr>
-                            <tr className="border-b bg-white">
-                                <th className="px-6 py-3 text-xs text-gray-700 uppercase">Category</th>
-                                <td className="px-6 py-3">{book.category?.categoryName}</td>
-                            </tr>
-                            <tr className="border-b bg-gray-50">
-                                <th className="px-6 py-3 text-xs text-gray-700 uppercase bg-gray-50">Authors</th>
-                                <td className="px-6 py-3">
-                                    {book.authors?.map((author) => (
-                                        <p className="leading-normal">{author.name}</p>
-                                    ))}
-                                </td>
-                            </tr>
+                            <tbody>
+                                <tr className="border-b bg-white">
+                                    <th className="px-6 py-3 text-xs text-gray-700 uppercase">Title</th>
+                                    <td className="px-6 py-3">{book.title}</td>
+                                </tr>
+                                <tr className="border-b bg-gray-50">
+                                    <th className="px-6 py-3 text-xs text-gray-700 uppercase">Edition</th>
+                                    <td className="px-6 py-3">{book.edition || 'N/A'}</td>
+                                </tr>
+                                <tr className="border-b bg-white">
+                                    <th className="px-6 py-3 text-xs text-gray-700 uppercase">Category</th>
+                                    <td className="px-6 py-3">{book.category?.categoryName}</td>
+                                </tr>
+                                <tr className="border-b bg-gray-50">
+                                    <th className="px-6 py-3 text-xs text-gray-700 uppercase bg-gray-50">Authors</th>
+                                    <td className="px-6 py-3">
+                                        {book.authors?.map((author) => (
+                                            <p key={author._id} className="leading-normal">{author.name}</p>
+                                        ))}
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
