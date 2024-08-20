@@ -21,6 +21,10 @@ const findUserById = async (id: string) => {
     return await AxiosInstance.get<HttpResponse<User>>(`${USERS}/${id}`);
 }
 
+const findUserByAuthUser = async () => {
+    return await AxiosInstance.get<HttpResponse<User>>(`${USERS}/auth`);
+}
+
 const updateUser = async (id: string, user: User) => {
     return await AxiosInstance.patch<HttpResponse<User>>(`${USERS}/${id}`, {user});
 }
@@ -42,6 +46,7 @@ export default {
     findAllUsersWithPagination,
     findAllUsersBySearchWithPagination,
     findUserById,
+    findUserByAuthUser,
     updateUser,
     updateUserByAuthUser,
     changePasswordByAuthUser,

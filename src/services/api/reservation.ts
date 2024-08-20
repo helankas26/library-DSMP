@@ -41,6 +41,10 @@ const updateReservation = async (id: string, reservation: Reservation) => {
     return await AxiosInstance.patch<HttpResponse<Reservation>>(`${RESERVATIONS}/${id}`, {...reservation});
 }
 
+const updateReservationByAuthUser = async (id: string, reservation: Reservation) => {
+    return await AxiosInstance.patch<HttpResponse<Reservation>>(`${RESERVATIONS}/${id}/auth`, {...reservation});
+}
+
 const deleteReservation = async (id: string) => {
     return await AxiosInstance.delete<{ id: string }>(`${RESERVATIONS}/${id}`);
 }
@@ -55,5 +59,6 @@ export default {
     findReservationById,
     findReservationByIdWithByAuthUser,
     updateReservation,
+    updateReservationByAuthUser,
     deleteReservation
 };

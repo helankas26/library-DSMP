@@ -57,6 +57,10 @@ const updateProfile = async (id: string, profile: Profile) => {
     return await AxiosInstance.patch<HttpResponse<Profile>>(`${PROFILES}/${id}`, {...profile});
 }
 
+const updateProfileByAuthUser = async (profile: Profile) => {
+    return await AxiosInstance.patch<HttpResponse<Profile>>(`${PROFILES}/auth`, {...profile});
+}
+
 const deleteProfile = async (id: string) => {
     return await AxiosInstance.delete<{ id: string }>(`${PROFILES}/${id}`);
 }
@@ -75,5 +79,6 @@ export default {
     getMemberCurrentLoansById,
     getMemberAvailableReservationsById,
     updateProfile,
+    updateProfileByAuthUser,
     deleteProfile
 };
