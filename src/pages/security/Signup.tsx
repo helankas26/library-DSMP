@@ -9,6 +9,7 @@ import useSnackbar from "../../hooks/use-snackbar.ts";
 import useAuth from "../../hooks/use-auth.ts";
 import {setRefreshTokenExpirationDate} from "../../utils/local-storage.ts";
 import User from "../../model/User.ts";
+import UserRole from "../../enum/UserRole.ts";
 
 const Signup: React.FC = () => {
     const navigate = useNavigate();
@@ -64,7 +65,7 @@ const Signup: React.FC = () => {
             setRefreshTokenExpirationDate(refreshTokenExpires);
             showAlert("Account create successfully!", "success");
 
-            const to: string = user.role === 'ADMIN' ? '/dashboard' : user.role === 'USER' ? '/' : '/';
+            const to: string = user.role === UserRole.Admin ? '/dashboard' : user.role === UserRole.User ? '/' : '/';
             navigate(to, {replace: true});
         } catch (error: any) {
             showError(error);

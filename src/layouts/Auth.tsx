@@ -7,11 +7,11 @@ import useUserRole from "../hooks/use-user-role.ts";
 const AuthLayout: React.FC = () => {
     const navigate = useNavigate();
     const {auth} = useAuth();
-    const userRole = useUserRole();
+    const {isAdmin, isUser} = useUserRole();
 
     useEffect(() => {
-        if (auth.accessToken && userRole === 'ADMIN') navigate("/dashboard");
-        if (auth.accessToken && userRole === 'USER') navigate("/");
+        if (auth.accessToken && isAdmin()) navigate("/dashboard");
+        if (auth.accessToken && isUser()) navigate("/");
     }, [auth]);
 
     return (

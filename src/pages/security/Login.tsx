@@ -7,6 +7,7 @@ import authService from "../../services/api/auth.ts";
 import useSnackbar from "../../hooks/use-snackbar.ts";
 import useAuth from "../../hooks/use-auth.ts";
 import {setRefreshTokenExpirationDate} from "../../utils/local-storage.ts";
+import UserRole from "../../enum/UserRole.ts";
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Login: React.FC = () => {
             setRefreshTokenExpirationDate(refreshTokenExpires);
             setUsername('');
 
-            from = from ?? (user.role === 'ADMIN' ? '/dashboard' : user.role === 'USER' ? '/' : '/');
+            from = from ?? (user.role === UserRole.Admin ? '/dashboard' : user.role === UserRole.User ? '/' : '/');
             navigate(from, {replace: true});
         } catch (error: any) {
             showError(error);

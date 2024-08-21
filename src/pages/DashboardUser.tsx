@@ -4,14 +4,13 @@ import useUserRole from "../hooks/use-user-role.ts";
 import DashboardLibrarian from "./DashboardLibrarian.tsx";
 import DashboardMember from "./DashboardMember.tsx";
 
-
 const DashboardUser: React.FC = () => {
-    const userRole = useUserRole();
+    const {isAdmin, isUser} = useUserRole();
 
     return (
         <>
-            {userRole === 'ADMIN' && <DashboardLibrarian/>}
-            {userRole === 'USER' && <DashboardMember/>}
+            {isAdmin() && <DashboardLibrarian/>}
+            {isUser() && <DashboardMember/>}
         </>
     );
 }

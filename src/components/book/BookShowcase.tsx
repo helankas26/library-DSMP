@@ -14,7 +14,7 @@ import useUserRole from "../../hooks/use-user-role.ts";
 
 const BookShowcase: React.FC = () => {
     const size: number = 12;
-    const userRole = useUserRole();
+    const {isUser} = useUserRole();
     const {scrollToTop} = useScrollToTop();
     const {showError} = useSnackbar();
     const {page, setPage, selectedCategoryId, searchText} = useHomeState();
@@ -91,7 +91,7 @@ const BookShowcase: React.FC = () => {
             {!isLoading && books.length > 0 &&
                 <>
                     {books.map((book) => (
-                        userRole === 'USER' ? (
+                        isUser() ? (
                             <Link key={book._id} to={`/books/${book._id}`}>
                                 <BookShowcaseItem book={book} style={'min-w-[18rem] max-w-[18rem]'}/>
                             </Link>

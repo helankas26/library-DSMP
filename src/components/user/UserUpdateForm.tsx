@@ -6,6 +6,7 @@ import CancelButton from "../shared/CancelButton.tsx";
 import User from "../../model/User.ts";
 import useSnackbar from "../../hooks/use-snackbar.ts";
 import userService from "../../services/api/user.ts";
+import UserRole from "../../enum/UserRole.ts";
 
 const UserUpdateForm: React.FC<{
     user: User;
@@ -74,9 +75,9 @@ const UserUpdateForm: React.FC<{
                                     value="USER"
                                     name="role"
                                     onChange={() => {
-                                        setRole("USER");
+                                        setRole(UserRole.User);
                                     }}
-                                    checked={role === "USER"}/>
+                                    checked={role === UserRole.User}/>
                                 <label htmlFor="user"
                                        className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-green-600 peer-checked:font-semibold peer-checked:text-white">USER</label>
                             </div>
@@ -88,9 +89,9 @@ const UserUpdateForm: React.FC<{
                                     value="ADMIN"
                                     name="role"
                                     onChange={() => {
-                                        setRole("ADMIN");
+                                        setRole(UserRole.Admin);
                                     }}
-                                    checked={role === "ADMIN"}/>
+                                    checked={role === UserRole.Admin}/>
                                 <label htmlFor="admin"
                                        className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-red-600 peer-checked:font-semibold peer-checked:text-white">ADMIN</label>
                             </div>

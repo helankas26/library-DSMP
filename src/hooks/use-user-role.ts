@@ -2,6 +2,7 @@ import {useEffect, useReducer} from "react";
 import {jwtDecode} from "jwt-decode";
 
 import useAuth from "./use-auth.ts";
+import UserRole from "../enum/UserRole.ts";
 
 const userRoleReducer = (role: string | undefined, action: { type: string; role: string | undefined; }) => {
     if (action.type === 'SET_ROLE') {
@@ -20,7 +21,10 @@ const useUserRole = () => {
         dispatchUserRole({type: 'SET_ROLE', role: role});
     }, [auth.accessToken]);
 
-    return userRole;
+    const isAdmin = () => userRole === UserRole.Admin;
+    const isUser = () => userRole === UserRole.User;
+
+    return {userRole, isAdmin, isUser};
 }
 
 export default useUserRole;
