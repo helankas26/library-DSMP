@@ -1,21 +1,20 @@
 import React, {Dispatch, SetStateAction, Suspense, useState} from "react";
 
-const DeleteModal = React.lazy(() => import('./DeleteModal.tsx'));
+const CancelReservationModal = React.lazy(() => import('./CancelReservationModal.tsx'));
 
-const DeleteButton: React.FC<{
-    type: string;
-    record: any;
-    onDelete: (record: any, setOpen: Dispatch<SetStateAction<boolean>>) => Promise<void>
+const CancelReservationButton: React.FC<{
+    id: string;
+    onCancel: (record: any, setOpen: Dispatch<SetStateAction<boolean>>) => Promise<void>
 }> = (props) => {
-    const {type, record, onDelete} = props;
+    const {id, onCancel} = props;
     const [open, setOpen] = useState<boolean>(false);
 
     const closeHandler = () => {
         setOpen(false);
     };
 
-    const deleteHandler = async () => {
-        await onDelete(record, setOpen);
+    const cancelHandler = async () => {
+        await onCancel(id, setOpen);
     };
 
     return (
@@ -24,16 +23,16 @@ const DeleteButton: React.FC<{
                 className="px-4 py-2 font-semibold text-red-900 transition duration-150 bg-red-100 hover:bg-red-200 active:bg-red-300 active:bg-opacity-75 leading-tight rounded shadow"
                 type="button"
                 onClick={() => setOpen(true)}>
-                Delete
+                Cancel
             </button>
 
             {open && (
                 <Suspense>
-                    <DeleteModal type={type} open={open} onClose={closeHandler} onDelete={deleteHandler}/>
+                    <CancelReservationModal open={open} onClose={closeHandler} onCancel={cancelHandler}/>
                 </Suspense>
             )}
         </>
     );
 }
 
-export default DeleteButton;
+export default CancelReservationButton;

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
+import React, {ChangeEvent, Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
 
 import StatusLabel from "../shared/StatusLabel.tsx";
 import UpdateButton from "../shared/UpdateButton.tsx";
@@ -10,10 +10,13 @@ import reservationService from "../../services/api/reservation.ts";
 import ContextHeader from "../shared/ContextHeader.tsx";
 import GradientCircularProgress from "../shared/GradientCircularProgress.tsx";
 import PaginationBar from "../shared/PaginationBar.tsx";
+import useUserRole from "../../hooks/use-user-role.ts";
+import CancelReservationButton from "../shared/CancelReservationButton.tsx";
 
 const ReservationList: React.FC = () => {
     const size: number = 24;
-    const {showError} = useSnackbar();
+    const {showError, showAlert} = useSnackbar();
+    const {userRole, isAdmin, isUser} = useUserRole();
     const {elementRef, scrollToTop} = useScrollToTop<HTMLDivElement>();
 
     const [reservations, setReservations] = useState<Reservation[]>([]);
@@ -30,41 +33,57 @@ const ReservationList: React.FC = () => {
 
     const loadReservations = useCallback(async () => {
         try {
-            const response = await reservationService.findAllReservationsWithPagination(page, size);
+            let response;
 
-            const {reservations, from, to, totalCount, totalPages} = response.data;
-            setReservations(reservations);
-            setFrom(from);
-            setTo(to);
-            setTotalCount(totalCount);
-            setTotalPages(totalPages);
+            if (isAdmin()) {
+                response = await reservationService.findAllReservationsWithPagination(page, size);
+            } else if (isUser()) {
+                response = await reservationService.findAllReservationsWithPaginationByAuthUser(page, size);
+            }
 
-            scrollToTop();
+            if (response) {
+                const {reservations, from, to, totalCount, totalPages} = response.data;
+                setReservations(reservations);
+                setFrom(from);
+                setTo(to);
+                setTotalCount(totalCount);
+                setTotalPages(totalPages);
+
+                scrollToTop();
+            }
         } catch (error: any) {
             showError(error);
         } finally {
             setIsLoading(false);
         }
-    }, [page, searchText]);
+    }, [page, searchText, userRole]);
 
 
     const searchReservations = useCallback(async () => {
         try {
-            const response = await reservationService.findAllReservationsBySearchWithPagination(searchText, page, size);
+            let response;
 
-            const {reservations, from, to, totalCount, totalPages} = response.data;
-            setReservations(reservations);
-            setFrom(from);
-            setTo(to);
-            setTotalCount(totalCount);
-            setTotalPages(totalPages);
-            setDelay(0);
+            if (isAdmin()) {
+                response = await reservationService.findAllReservationsBySearchWithPagination(searchText, page, size);
+            } else if (isUser()) {
+                response = await reservationService.findAllReservationsBySearchWithPaginationByAuthUser(searchText, page, size);
+            }
 
-            scrollToTop();
+            if (response) {
+                const {reservations, from, to, totalCount, totalPages} = response.data;
+                setReservations(reservations);
+                setFrom(from);
+                setTo(to);
+                setTotalCount(totalCount);
+                setTotalPages(totalPages);
+                setDelay(0);
+
+                scrollToTop();
+            }
         } catch (error: any) {
             showError(error);
         }
-    }, [page, searchText]);
+    }, [page, searchText, userRole]);
 
     const searchTextChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchText(event.target.value);
@@ -105,6 +124,21 @@ const ReservationList: React.FC = () => {
         }
     };
 
+    const reservationCancelHandler = async (id: string, setOpen: Dispatch<SetStateAction<boolean>>) => {
+        const editedReservation: Reservation = {
+            status: 'CANCELLED'
+        } as Reservation;
+
+        try {
+            await reservationService.updateReservationByAuthUser(id, editedReservation);
+            showAlert("Transaction cancelled successfully!", "success");
+            await refreshReservationsHandler();
+            setOpen(false);
+        } catch (error: any) {
+            showError(error);
+        }
+    };
+
     useEffect(() => {
         if (!searchText) {
             loadReservations();
@@ -126,7 +160,7 @@ const ReservationList: React.FC = () => {
     return (
         <>
             <div className="flex flex-col gap-8">
-                {toggleUpdate && updateReservation &&
+                {toggleUpdate && updateReservation && isAdmin() &&
                     <ReservationUpdateForm
                         key={updateReservation._id}
                         reservation={updateReservation}
@@ -163,12 +197,13 @@ const ReservationList: React.FC = () => {
                     <table className="min-w-full leading-normal">
                         <thead className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
                             <tr>
-                                <th className="px-5 py-3 font-semibold">Member</th>
+                                {isAdmin() && <th className="px-5 py-3 font-semibold">Member</th>}
                                 <th className="px-5 py-3 font-semibold">Book</th>
                                 <th className="px-5 py-3 font-semibold">Status</th>
                                 <th className="px-5 py-3 font-semibold">Reserved Date</th>
                                 <th className="px-5 py-3 font-semibold">Due Date</th>
-                                <th className="px-5 py-3 font-semibold">Update Option</th>
+                                {isAdmin() && <th className="px-5 py-3 font-semibold">Update Option</th>}
+                                {isUser() && reservations.some(reservation => reservation.status === 'RESERVED') && <th className="px-5 py-3 font-semibold">Cancel Option</th>}
                             </tr>
                         </thead>
 
@@ -179,9 +214,11 @@ const ReservationList: React.FC = () => {
 
                                 return (
                                     <tr key={reservation._id}  className="border-b border-gray-200">
-                                        <td className="px-5 py-2">
-                                            <p className="text-gray-900 whitespace-nowrap">{reservation.member?.fullName}</p>
-                                        </td>
+                                        {isAdmin() &&
+                                            <td className="px-5 py-2">
+                                                <p className="text-gray-900 whitespace-nowrap">{reservation.member?.fullName}</p>
+                                            </td>
+                                        }
                                         <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{reservation.book?.name}</p>
                                         </td>
@@ -194,9 +231,16 @@ const ReservationList: React.FC = () => {
                                         <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{dueAt}</p>
                                         </td>
-                                        <td className="px-5 py-2">
-                                            <UpdateButton id={reservation._id} onUpdate={reservationUpdateHandler}/>
-                                        </td>
+                                        {isAdmin() &&
+                                            <td className="px-5 py-2">
+                                                <UpdateButton id={reservation._id} onUpdate={reservationUpdateHandler}/>
+                                            </td>
+                                        }
+                                        {isUser() && reservation.status === 'RESERVED' &&
+                                            <td className="px-5 py-2">
+                                                <CancelReservationButton id={reservation._id} onCancel={reservationCancelHandler}/>
+                                            </td>
+                                        }
                                     </tr>
                                 )
                             })}

@@ -1,8 +1,11 @@
 import React from "react";
 
 import Transaction from "../../model/Transaction.ts";
+import useUserRole from "../../hooks/use-user-role.ts";
 
 const TransactionDetails: React.FC<{ record: Transaction }> = (props) => {
+    const {isAdmin} = useUserRole();
+
     const {record: transaction} = props;
     const issuedAt = new Date(transaction.issuedAt).toISOString().split('T')[0];
     const dueAt = new Date(transaction.dueAt).toISOString().split('T')[0];
@@ -12,33 +15,39 @@ const TransactionDetails: React.FC<{ record: Transaction }> = (props) => {
         transaction && (
             <div className="min-w-full border rounded">
                 <div className="m-4 overflow-x-auto">
-                    <div className="flex justify-center">
-                        <img
-                            className="w-auto h-32 rounded-lg"
-                            src={transaction.member?.avatar}/>
-                    </div>
+                    {isAdmin() &&
+                        <div className="flex justify-center">
+                            <img
+                                className="w-auto h-32 rounded-lg"
+                                src={transaction.member?.avatar}/>
+                        </div>
+                    }
                     <div
                         className="flex flex-col gap-3 mt-3 py-3 px-4 text-sm border rounded-lg w-full h-52 overflow-auto">
-                        <div className="w-full flex items-center justify-between">
-                            <label htmlFor="id"
-                                   className="w-full text-gray-600 font-semibold">ID</label>
-                            <input
-                                className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
-                                id="id"
-                                type="text"
-                                value={transaction._id}
-                                disabled={true}/>
-                        </div>
-                        <div className="w-full flex items-center justify-between">
-                            <label htmlFor="fullName"
-                                   className="w-full text-gray-600 font-semibold">Full Name</label>
-                            <input
-                                className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
-                                id="fullName"
-                                type="text"
-                                value={transaction.member?.fullName}
-                                disabled={true}/>
-                        </div>
+                        {isAdmin() &&
+                            <div className="w-full flex items-center justify-between">
+                                <label htmlFor="id"
+                                       className="w-full text-gray-600 font-semibold">ID</label>
+                                <input
+                                    className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                                    id="id"
+                                    type="text"
+                                    value={transaction._id}
+                                    disabled={true}/>
+                            </div>
+                        }
+                        {isAdmin() &&
+                            <div className="w-full flex items-center justify-between">
+                                <label htmlFor="fullName"
+                                       className="w-full text-gray-600 font-semibold">Full Name</label>
+                                <input
+                                    className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                                    id="fullName"
+                                    type="text"
+                                    value={transaction.member?.fullName}
+                                    disabled={true}/>
+                            </div>
+                        }
                         <div className="w-full flex items-center justify-between">
                             <label htmlFor="books"
                                    className="w-full text-gray-600 font-semibold">Books</label>
@@ -96,16 +105,18 @@ const TransactionDetails: React.FC<{ record: Transaction }> = (props) => {
                                     disabled={true}/>
                             </div>
                         }
-                        <div className="w-full flex items-center justify-between">
-                            <label htmlFor="handledBy"
-                                   className="w-full text-gray-600 font-semibold">Handled By</label>
-                            <input
-                                className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
-                                id="handledBy"
-                                type="text"
-                                value={transaction.librarian?.fullName}
-                                disabled={true}/>
-                        </div>
+                        {isAdmin() &&
+                            <div className="w-full flex items-center justify-between">
+                                <label htmlFor="handledBy"
+                                       className="w-full text-gray-600 font-semibold">Handled By</label>
+                                <input
+                                    className="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                                    id="handledBy"
+                                    type="text"
+                                    value={transaction.librarian?.fullName}
+                                    disabled={true}/>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

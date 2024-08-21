@@ -11,12 +11,14 @@ import ContextHeader from "../shared/ContextHeader.tsx";
 import GradientCircularProgress from "../shared/GradientCircularProgress.tsx";
 import PaginationBar from "../shared/PaginationBar.tsx";
 import UpdateSubscriptionForm from "./UpdateSubscriptionForm.tsx";
+import useUserRole from "../../hooks/use-user-role.ts";
 
 const PaymentDetails = React.lazy(() => import('./PaymentDetails.tsx'));
 
 const SubscriptionList: React.FC = () => {
     const size: number = 24;
     const {showError, showAlert} = useSnackbar();
+    const {userRole, isAdmin, isUser} = useUserRole();
     const {elementRef, scrollToTop} = useScrollToTop<HTMLDivElement>();
 
     const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
@@ -33,41 +35,57 @@ const SubscriptionList: React.FC = () => {
 
     const loadSubscriptions = useCallback(async () => {
         try {
-            const response = await subscriptionService.findAllSubscriptionsWithPagination(page, size);
+            let response;
 
-            const {subscriptions, from, to, totalCount, totalPages} = response.data;
-            setSubscriptions(subscriptions);
-            setFrom(from);
-            setTo(to);
-            setTotalCount(totalCount);
-            setTotalPages(totalPages);
+            if (isAdmin()) {
+                response = await subscriptionService.findAllSubscriptionsWithPagination(page, size);
+            } else if (isUser()) {
+                response = await subscriptionService.findAllSubscriptionsWithPaginationByAuthUser(page, size);
+            }
 
-            scrollToTop();
+            if (response) {
+                const {subscriptions, from, to, totalCount, totalPages} = response.data;
+                setSubscriptions(subscriptions);
+                setFrom(from);
+                setTo(to);
+                setTotalCount(totalCount);
+                setTotalPages(totalPages);
+
+                scrollToTop();
+            }
         } catch (error: any) {
             showError(error);
         } finally {
             setIsLoading(false);
         }
-    }, [page, searchText]);
+    }, [page, searchText, userRole]);
 
 
     const searchSubscriptions = useCallback(async () => {
         try {
-            const response = await subscriptionService.findAllSubscriptionsBySearchWithPagination(searchText, page, size);
+            let response;
 
-            const {subscriptions, from, to, totalCount, totalPages} = response.data;
-            setSubscriptions(subscriptions);
-            setFrom(from);
-            setTo(to);
-            setTotalCount(totalCount);
-            setTotalPages(totalPages);
-            setDelay(0);
+            if (isAdmin()) {
+                response = await subscriptionService.findAllSubscriptionsBySearchWithPagination(searchText, page, size);
+            } else if (isUser()) {
+                response = await subscriptionService.findAllSubscriptionsBySearchWithPaginationByAuthUser(searchText, page, size);
+            }
 
-            scrollToTop();
+            if (response) {
+                const {subscriptions, from, to, totalCount, totalPages} = response.data;
+                setSubscriptions(subscriptions);
+                setFrom(from);
+                setTo(to);
+                setTotalCount(totalCount);
+                setTotalPages(totalPages);
+                setDelay(0);
+
+                scrollToTop();
+            }
         } catch (error: any) {
             showError(error);
         }
-    }, [page, searchText]);
+    }, [page, searchText, userRole]);
 
     const searchTextChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchText(event.target.value);
@@ -89,9 +107,20 @@ const SubscriptionList: React.FC = () => {
 
     const subscriptionViewHandler = async (id: string) => {
         try {
-            const response = await subscriptionService.findSubscriptionById(id);
-            const {subscription} = response.data;
-            return subscription;
+            let response;
+
+            if (isAdmin()) {
+                response = await subscriptionService.findSubscriptionById(id);
+            } else if (isUser()) {
+                response = await subscriptionService.findSubscriptionByIdWithByAuthUser(id);
+            }
+
+            if (response) {
+                const {subscription} = response.data;
+                return subscription;
+            }
+
+            return null;
         } catch (error: any) {
             showError(error);
         }
@@ -194,15 +223,15 @@ const SubscriptionList: React.FC = () => {
                     <table className="min-w-full leading-normal">
                         <thead className="border-b-2 border-gray-200 bg-gray-100 text-left text-xs text-gray-600 uppercase tracking-wider">
                             <tr>
-                                <th className="px-5 py-3 font-semibold">Member</th>
+                                {isAdmin() && <th className="px-5 py-3 font-semibold">Member</th>}
                                 <th className="px-5 py-3 font-semibold">Fee</th>
                                 <th className="px-5 py-3 font-semibold">Paid For</th>
-                                <th className="px-5 py-3 font-semibold">Librarian</th>
+                                {isAdmin() && <th className="px-5 py-3 font-semibold">Librarian</th>}
                                 <th className="px-5 py-3 font-semibold">Paid Date</th>
                                 <th className="px-5 py-3 font-semibold">Update Date</th>
                                 <th className="px-5 py-3 font-semibold">View Option</th>
-                                <th className="px-5 py-3 font-semibold">Update Option</th>
-                                <th className="px-5 py-3 font-semibold">Delete Option</th>
+                                {isAdmin() && <th className="px-5 py-3 font-semibold">Update Option</th>}
+                                {isAdmin() && <th className="px-5 py-3 font-semibold">Delete Option</th>}
                             </tr>
                         </thead>
 
@@ -213,18 +242,23 @@ const SubscriptionList: React.FC = () => {
 
                                 return (
                                     <tr key={subscription._id} className="border-b border-gray-200">
-                                        <td className="px-5 py-2">
-                                            <p className="text-gray-900 whitespace-nowrap">{subscription.member?.fullName}</p>
-                                        </td>
+                                        {isAdmin() &&
+                                            <td className="px-5 py-2">
+                                                <p className="text-gray-900 whitespace-nowrap">{subscription.member?.fullName}</p>
+                                            </td>
+                                        }
+
                                         <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{subscription.fee.toFixed(2)}</p>
                                         </td>
                                         <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{subscription.paidFor}</p>
                                         </td>
-                                        <td className="px-5 py-2">
-                                            <p className="text-gray-900 whitespace-nowrap">{subscription.librarian?.fullName}</p>
-                                        </td>
+                                        {isAdmin() &&
+                                            <td className="px-5 py-2">
+                                                <p className="text-gray-900 whitespace-nowrap">{subscription.librarian?.fullName}</p>
+                                            </td>
+                                        }
                                         <td className="px-5 py-2">
                                             <p className="text-gray-900 whitespace-nowrap">{paidAt}</p>
                                         </td>
@@ -234,12 +268,18 @@ const SubscriptionList: React.FC = () => {
                                         <td className="px-5 py-2">
                                             <ViewButton id={subscription._id} onView={subscriptionViewHandler} type={"Subscription"} DetailsView={PaymentDetails}/>
                                         </td>
-                                        <td className="px-5 py-2">
-                                            <UpdateButton id={subscription._id} onUpdate={subscriptionUpdateHandler}/>
-                                        </td>
-                                        <td className="px-5 py-2">
-                                            <DeleteButton type={"subscription"} record={subscription} onDelete={subscriptionDeleteHandler}/>
-                                        </td>
+                                        {isAdmin() &&
+                                            <td className="px-5 py-2">
+                                                <UpdateButton id={subscription._id}
+                                                              onUpdate={subscriptionUpdateHandler}/>
+                                            </td>
+                                        }
+                                        {isAdmin() &&
+                                            <td className="px-5 py-2">
+                                                <DeleteButton type={"subscription"} record={subscription}
+                                                              onDelete={subscriptionDeleteHandler}/>
+                                            </td>
+                                        }
                                     </tr>
                                 )
                             })}
