@@ -213,7 +213,7 @@ const TransactionList: React.FC = () => {
                                                 <p className="text-gray-900 whitespace-nowrap">{transaction.member?.fullName}</p>
                                             </td>
                                         }
-                                        <td className="px-5 py-2 max-w-sm overflow-hidden">
+                                        <td className="px-5 py-2 max-w-72 overflow-hidden">
                                             {transaction.books.map((book) => (
                                                 <p key={book._id}
                                                    className="hover:bg-gray-200 pl-2.5 rounded text-gray-900 whitespace-nowrap overflow-hidden overflow-ellipsis"
@@ -236,7 +236,7 @@ const TransactionList: React.FC = () => {
                                         </td>
                                         {isAdmin() &&
                                             <td className="px-5 py-2">
-                                                <p className="text-gray-900 whitespace-nowrap">{transaction.librarian?.fullName}</p>
+                                                <p className="text-gray-900 whitespace-nowrap">{transaction.librarian?.fullName.split(' ')[0]}</p>
                                             </td>
                                         }
                                         <td className="px-5 py-2">
