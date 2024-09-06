@@ -62,13 +62,14 @@ const SubscriberPaymentDetails: React.FC<{
                             <p className="text-gray-900">{profile.fullName}</p>
                         </div>
                     </div>
-                    <div className="mt-4 flex flex-col border rounded-lg">
+                    <div className="mt-4 flex flex-col border rounded-lg overflow-x-auto">
                         {payments.map((payment) => (
                             <div key={payment.index}
-                                 className="py-2 px-4 text-sm text-gray-800 border-b last:border-b-0 w-full">
+                                 className="py-2 px-4 text-sm text-gray-800 border-b last:border-b-0 w-full min-w-max"
+                            >
                                 <div className="flex items-center justify-between w-full">
-                                    <p>{payment.payFor}</p>
-                                    <p>{profile.fee.toFixed(2)}</p>
+                                    <p className="min-w-32 whitespace-nowrap">{payment.payFor}</p>
+                                    <p className="min-w-16">{profile.fee.toFixed(2)}</p>
                                     <Form onSubmit={(event: FormEvent) => paymentHandler(event, payment.index)}>
                                         <PayButton
                                             isPaying={isPaying && activePaymentIndex === payment.index}

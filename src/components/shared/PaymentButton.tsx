@@ -31,7 +31,7 @@ const PaymentButton: React.FC<{
     return (
         <>
             <button
-                className="px-4 py-2 font-semibold text-white transition duration-150 bg-red-500 hover:bg-red-600 active:bg-red-500 leading-tight rounded shadow"
+                className="px-4 py-2 font-semibold text-white transition duration-150 bg-red-500 hover:bg-red-600 active:bg-red-500 leading-tight rounded shadow whitespace-nowrap"
                 type="button"
                 onClick={paymentHandler}>
                 Pay {type}
