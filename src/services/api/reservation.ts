@@ -25,6 +25,10 @@ const findAllReservationsBySearchWithPaginationByAuthUser = async (searchText: s
     return await AxiosInstance.get<HttpResponseWithPagination<Reservation[]>>(`${RESERVATIONS}/auth/query?searchText=${searchText}&page=${page}&size=${size}`);
 }
 
+const findAllReserved = async () => {
+    return await AxiosInstance.get<HttpResponse<Reservation[]>>(`${RESERVATIONS}/reserved`);
+}
+
 const createReservation = async (reservation: Reservation) => {
     return await AxiosInstance.post<HttpResponse<Reservation>>(RESERVATIONS, {...reservation});
 }
@@ -55,6 +59,7 @@ export default {
     findAllReservationsBySearchWithPagination,
     findAllReservationsWithPaginationByAuthUser,
     findAllReservationsBySearchWithPaginationByAuthUser,
+    findAllReserved,
     createReservation,
     findReservationById,
     findReservationByIdWithByAuthUser,

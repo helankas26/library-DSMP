@@ -25,6 +25,10 @@ const findAllTransactionsBySearchWithPaginationByAuthUser = async (searchText: s
     return await AxiosInstance.get<HttpResponseWithPagination<Transaction[]>>(`${TRANSACTIONS}/auth/query?searchText=${searchText}&page=${page}&size=${size}`);
 }
 
+const findAllOverdue = async () => {
+    return await AxiosInstance.get<HttpResponse<Transaction[]>>(`${TRANSACTIONS}/overdue`);
+}
+
 const createTransaction = async (transaction: Transaction) => {
     return await AxiosInstance.post<HttpResponse<Transaction>>(TRANSACTIONS, {...transaction});
 }
@@ -55,6 +59,7 @@ export default {
     findAllTransactionsBySearchWithPagination,
     findAllTransactionsWithPaginationByAuthUser,
     findAllTransactionsBySearchWithPaginationByAuthUser,
+    findAllOverdue,
     createTransaction,
     findTransactionById,
     findTransactionByIdWithByAuthUser,

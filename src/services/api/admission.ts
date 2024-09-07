@@ -18,6 +18,10 @@ const findAllAdmissionsBySearchWithPagination = async (searchText: string, page:
     return await AxiosInstance.get<HttpResponseWithPagination<Admission[]>>(`${ADMISSIONS}/query?searchText=${searchText}&page=${page}&size=${size}`);
 }
 
+const getTodayAdmissionsCollection = async () => {
+    return await AxiosInstance.get<HttpResponse<number>>(`${ADMISSIONS}/today-collection`);
+}
+
 const createAdmission = async (admission: Admission) => {
     return await AxiosInstance.post<HttpResponse<Admission>>(ADMISSIONS, {...admission});
 }
@@ -38,6 +42,7 @@ export default {
     findAllAdmissions,
     findAllAdmissionsWithPagination,
     findAllAdmissionsBySearchWithPagination,
+    getTodayAdmissionsCollection,
     createAdmission,
     findAdmissionById,
     updateAdmission,

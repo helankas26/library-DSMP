@@ -25,6 +25,10 @@ const findAllSubscriptionsBySearchWithPaginationByAuthUser = async (searchText: 
     return await AxiosInstance.get<HttpResponseWithPagination<Subscription[]>>(`${SUBSCRIPTIONS}/auth/query?searchText=${searchText}&page=${page}&size=${size}`);
 }
 
+const getTodaySubscriptionsCollection = async () => {
+    return await AxiosInstance.get<HttpResponse<number>>(`${SUBSCRIPTIONS}/today-collection`);
+}
+
 const createSubscription = async (subscription: Subscription) => {
     return await AxiosInstance.post<HttpResponse<Subscription>>(SUBSCRIPTIONS, {...subscription});
 }
@@ -51,6 +55,7 @@ export default {
     findAllSubscriptionsBySearchWithPagination,
     findAllSubscriptionsWithPaginationByAuthUser,
     findAllSubscriptionsBySearchWithPaginationByAuthUser,
+    getTodaySubscriptionsCollection,
     createSubscription,
     findSubscriptionById,
     findSubscriptionByIdWithByAuthUser,

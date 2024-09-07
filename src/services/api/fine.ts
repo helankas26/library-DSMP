@@ -25,6 +25,10 @@ const findAllFinesBySearchWithPaginationByAuthUser = async (searchText: string, 
     return await AxiosInstance.get<HttpResponseWithPagination<Fine[]>>(`${FINES}/auth/query?searchText=${searchText}&page=${page}&size=${size}`);
 }
 
+const getTodayFinesCollection = async () => {
+    return await AxiosInstance.get<HttpResponse<number>>(`${FINES}/today-collection`);
+}
+
 const createFine = async (fines: Fine) => {
     return await AxiosInstance.post<HttpResponse<Fine>>(FINES, {...fines});
 }
@@ -52,6 +56,7 @@ export default {
     findAllFinesBySearchWithPagination,
     findAllFinesWithPaginationByAuthUser,
     findAllFinesBySearchWithPaginationByAuthUser,
+    getTodayFinesCollection,
     createFine,
     findFineById,
     findFineByIdWithByAuthUser,

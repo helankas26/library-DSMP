@@ -2,6 +2,7 @@ import AxiosInstance from "../../config/axios-instance.ts";
 import HttpResponse from "../../utils/http-response.ts";
 import Profile from "../../model/Profile.ts";
 import HttpResponseWithPagination from "../../utils/http-response-with-pagination.ts";
+import ProfileWithPayment from "../../model/ProfileWithPayment.ts";
 
 const PROFILES: string = '/profiles';
 
@@ -29,6 +30,10 @@ const findAllMembersPaymentStatusBySearch = async (searchText: string, page: num
     return await AxiosInstance.get<HttpResponseWithPagination<Profile[]>>(`${PROFILES}/payment-status/query?searchText=${searchText}&page=${page}&size=${size}`);
 }
 
+const findAllPaymentArrears = async () => {
+    return await AxiosInstance.get<HttpResponse<Profile[]>>(`${PROFILES}/payment-status/arrears`);
+}
+
 const createProfile = async (profile: Profile) => {
     return await AxiosInstance.post<HttpResponse<Profile>>(PROFILES, {...profile});
 }
@@ -43,6 +48,10 @@ const findMemberPaymentStatusById = async (id: string) => {
 
 const findProfileByAuthUser = async () => {
     return await AxiosInstance.get<HttpResponse<Profile>>(`${PROFILES}/auth`);
+}
+
+const findPaymentArrearsByAuthUser = async () => {
+    return await AxiosInstance.get<HttpResponse<ProfileWithPayment>>(`${PROFILES}/payment-status/arrears`);
 }
 
 const getMemberCurrentLoansById = async (id: string) => {
@@ -72,10 +81,12 @@ export default {
     findAllProfilesBySearchWithPagination,
     findAllMembersPaymentStatus,
     findAllMembersPaymentStatusBySearch,
+    findAllPaymentArrears,
     createProfile,
     findProfileById,
     findMemberPaymentStatusById,
     findProfileByAuthUser,
+    findPaymentArrearsByAuthUser,
     getMemberCurrentLoansById,
     getMemberAvailableReservationsById,
     updateProfile,
