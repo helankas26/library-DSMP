@@ -97,9 +97,9 @@ const SubscriptionCard: React.FC = () => {
                             ))}
 
                             {isUser() && payments.map((payment) => (
-                                <tr key={payment.index} className="border-b border-b-gray-100">
+                                <tr key={payment.index} className="border-b border-b-gray-100 text-red-500 last:text-blue-500">
                                     <td className="py-2 px-4">
-                                        <p className="font-normal text-red-500">{payment.payFor}</p>
+                                        <p className="font-normal">{payment.payFor}</p>
                                     </td>
                                 </tr>
                             ))}
