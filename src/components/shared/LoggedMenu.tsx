@@ -7,6 +7,8 @@ import useAuth from "../../hooks/use-auth.ts";
 import useSnackbar from "../../hooks/use-snackbar.ts";
 import authService from "../../services/api/auth.ts";
 import {removeRefreshTokenExpirationDate} from "../../utils/local-storage.ts";
+import {useAppDispatch} from "../../hooks/use-store.ts";
+import {clearSubRoutes} from "../../store/dashboard-route/sub-route-slice.ts";
 
 
 function classNames(...classes: string[]) {
@@ -18,6 +20,7 @@ const LoggedMenu: React.FC = () => {
     const location = useLocation();
     const {auth, dispatchAuth} = useAuth();
     const {showError} = useSnackbar();
+    const dispatch = useAppDispatch();
 
     const signOutHandler = async () => {
         try {
@@ -62,6 +65,7 @@ const LoggedMenu: React.FC = () => {
                                 {({active}) => (
                                     <Link
                                         to="/dashboard/console"
+                                        onClick={() => dispatch(clearSubRoutes())}
                                         className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')}>
                                         Dashboard
                                     </Link>
@@ -71,6 +75,7 @@ const LoggedMenu: React.FC = () => {
                                 {({active}) => (
                                     <Link
                                         to="/dashboard/console/account/settings"
+                                        onClick={() => dispatch(clearSubRoutes())}
                                         className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')}>
                                         Account settings
                                     </Link>

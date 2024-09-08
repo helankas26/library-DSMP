@@ -69,7 +69,7 @@ const DashboardNavBar: React.FC = () => {
                     onClick={() => dispatch(setSubRoutes(dashboardRoute.subRoutes))}
                     className={({isActive}) => {
                         return (
-                            `${isActive || subRoutes.length && (dashboardRoute.path === subRoutes[0].path && location.pathname.split("/").includes(location.pathname.split("/")[location.pathname.split("/").length - 1])) ?
+                            `${isActive || subRoutes.length && (dashboardRoute.path === subRoutes[0].path && subRoutes.find((subRoute) => subRoute.path === location.pathname.split("/")[location.pathname.split("/").length - 1])) ?
                                 `text-purple-500` :
                                 undefined
                             } cursor-pointer px-2 py-2 hover:bg-gray-200 hover:text-purple-700 rounded mb-2.5 flex items-center`
