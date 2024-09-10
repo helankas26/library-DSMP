@@ -76,7 +76,7 @@ const ChangePasswordLoggedUser: React.FC<{ profile: Profile }> = (props) => {
                                     setCurrentPassword(e.target.value);
                                 }}
                                 required={true}
-                                placeholder="Enter current assword"/>
+                                placeholder="Enter current password"/>
                         </div>
                         <div className="w-full sm:w-1/2 md:w-1/4 lg:w-1/3">
                             <label htmlFor="password"

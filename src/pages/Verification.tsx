@@ -39,7 +39,7 @@ const Verification: React.FC = () => {
                 if (to) {
                     navigate(to, {replace: true});
                 } else {
-                    navigate('/dashboard/console', {replace: true});
+                    navigate('/dashboard/console/home', {replace: true});
                 }
             });
         }
