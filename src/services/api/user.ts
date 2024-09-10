@@ -2,6 +2,7 @@ import AxiosInstance from "../../config/axios-instance.ts";
 import HttpResponse from "../../utils/http-response.ts";
 import User from "../../model/User.ts";
 import HttpResponseWithPagination from "../../utils/http-response-with-pagination.ts";
+import HttpResponseWithToken from "../../utils/http-response-with-token.ts";
 
 const USERS: string = '/users';
 
@@ -30,11 +31,11 @@ const updateUser = async (id: string, user: User) => {
 }
 
 const updateUserByAuthUser = async (user: User) => {
-    return await AxiosInstance.patch<HttpResponse<User>>(`${USERS}/auth`, {user});
+    return await AxiosInstance.patch<HttpResponse<User>>(`${USERS}/auth`, {...user});
 }
 
 const changePasswordByAuthUser = async (user: User) => {
-    return await AxiosInstance.patch<HttpResponse<User>>(`${USERS}/auth/changePassword`, {user});
+    return await AxiosInstance.patch<HttpResponseWithToken>(`${USERS}/auth/changePassword`, {...user});
 }
 
 const deleteUser = async (id: string) => {

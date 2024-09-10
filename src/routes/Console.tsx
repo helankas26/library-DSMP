@@ -24,6 +24,7 @@ import UserLayout from "../layouts/User.tsx";
 import userRoutes from "./User.tsx";
 import ConfigLayout from "../layouts/Config.tsx";
 import configRoutes from "./Config.tsx";
+import AccountSettings from "../pages/security/AccountSettings.tsx";
 
 const consoleRoutes: RouteObject[] = [
     {index: true, element: <Navigate to="home" replace={true}/>},
@@ -82,6 +83,10 @@ const consoleRoutes: RouteObject[] = [
         path: 'configurations',
         element: <ConfigLayout/>,
         children: configRoutes
+    },
+    {
+        path: 'account/settings',
+        element: <AccountSettings/>
     }
 ];
 

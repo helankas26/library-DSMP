@@ -10,7 +10,6 @@ import {removeRefreshTokenExpirationDate} from "../../utils/local-storage.ts";
 import {useAppDispatch} from "../../hooks/use-store.ts";
 import {clearSubRoutes} from "../../store/dashboard-route/sub-route-slice.ts";
 
-
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
@@ -21,6 +20,17 @@ const LoggedMenu: React.FC = () => {
     const {auth, dispatchAuth} = useAuth();
     const {showError} = useSnackbar();
     const dispatch = useAppDispatch();
+
+    const toAccountSettings: string = '/dashboard/console/account/settings';
+
+    const navigateToAccountSettings = () => {
+        try {
+            navigate('/dashboard/console/account/settings', {state: {to: toAccountSettings}});
+            dispatch(clearSubRoutes());
+        } catch (error: any) {
+            showError(error);
+        }
+    }
 
     const signOutHandler = async () => {
         try {
@@ -73,12 +83,12 @@ const LoggedMenu: React.FC = () => {
                             </Menu.Item>
                             <Menu.Item>
                                 {({active}) => (
-                                    <Link
-                                        to="/dashboard/console/account/settings"
-                                        onClick={() => dispatch(clearSubRoutes())}
-                                        className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm')}>
+                                    <button
+                                        className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block w-full px-4 py-2 text-left text-sm')}
+                                        type="button"
+                                        onClick={navigateToAccountSettings}>
                                         Account settings
-                                    </Link>
+                                    </button>
                                 )}
                             </Menu.Item>
                             <Menu.Item>

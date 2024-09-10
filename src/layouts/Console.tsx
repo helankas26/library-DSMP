@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Outlet, useNavigate} from "react-router-dom";
+import {Outlet, useLocation, useNavigate} from "react-router-dom";
 
 import useAuth from "../hooks/use-auth.ts";
 import {getTokenDuration} from "../utils/local-storage.ts";
@@ -11,13 +11,14 @@ import DashboardFooter from "../components/core/dashboard-nav/DashboardFooter.ts
 const ConsoleLayout: React.FC = () => {
     const {auth} = useAuth();
     const logout = useLogout();
+    const location = useLocation();
     const navigate = useNavigate();
 
     const [isAuthChecked, setIsAuthChecked] = useState(false);
 
     useEffect(() => {
         if (!auth.accessToken) {
-            navigate('/dashboard/verification', {replace: true});
+            navigate('/dashboard/verification', {state: location.state, replace: true});
         }
 
         setIsAuthChecked(true);

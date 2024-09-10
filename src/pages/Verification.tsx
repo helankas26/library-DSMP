@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 import useAuth from "../hooks/use-auth.ts";
 import usePersist from "../hooks/use-persist.ts";
@@ -10,7 +10,10 @@ const Verification: React.FC = () => {
     const {auth} = useAuth();
     const persist = usePersist();
     const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useAppDispatch();
+
+    const to = location.state?.to;
 
     useEffect(() => {
         const verifyRefreshToken = async () => {
@@ -33,7 +36,11 @@ const Verification: React.FC = () => {
 
         if (auth.accessToken && auth.profile) {
             getDashboardRoutes().then(() => {
-                navigate('/dashboard/console', {replace: true});
+                if (to) {
+                    navigate(to, {replace: true});
+                } else {
+                    navigate('/dashboard/console', {replace: true});
+                }
             });
         }
     }, [dispatch, navigate]);
