@@ -72,7 +72,7 @@ const BookShowcase: React.FC = () => {
     }, [loadShowcaseBooks]);
 
     return (
-        <div className="flex justify-center lg:justify-normal gap-x-12 gap-y-6 flex-wrap">
+        <div className="flex justify-center 2xl:justify-normal gap-x-12 gap-y-6 flex-wrap">
 
             {isLoading &&
                 <div className="w-full h-[55vh] flex justify-center items-center">
