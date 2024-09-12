@@ -12,6 +12,7 @@ import GradientCircularProgress from "../shared/GradientCircularProgress.tsx";
 import PaginationBar from "../shared/PaginationBar.tsx";
 import useUserRole from "../../hooks/use-user-role.ts";
 import CancelReservationButton from "../shared/CancelReservationButton.tsx";
+import ReservationStatus from "../../enum/ReservationStatus.ts";
 
 const ReservationList: React.FC = () => {
     const size: number = 24;
@@ -126,7 +127,7 @@ const ReservationList: React.FC = () => {
 
     const reservationCancelHandler = async (id: string, setOpen: Dispatch<SetStateAction<boolean>>) => {
         const editedReservation: Reservation = {
-            status: 'CANCELLED'
+            status: ReservationStatus.Cancelled
         } as Reservation;
 
         try {
@@ -203,7 +204,7 @@ const ReservationList: React.FC = () => {
                                 <th className="px-5 py-3 font-semibold">Reserved Date</th>
                                 <th className="px-5 py-3 font-semibold">Due Date</th>
                                 {isAdmin() && <th className="px-5 py-3 font-semibold">Update Option</th>}
-                                {isUser() && reservations.some(reservation => reservation.status === 'RESERVED') && <th className="px-5 py-3 font-semibold">Cancel Option</th>}
+                                {isUser() && reservations.some(reservation => reservation.status === ReservationStatus.Reserved) && <th className="px-5 py-3 font-semibold">Cancel Option</th>}
                             </tr>
                         </thead>
 
@@ -236,7 +237,7 @@ const ReservationList: React.FC = () => {
                                                 <UpdateButton id={reservation._id} onUpdate={reservationUpdateHandler}/>
                                             </td>
                                         }
-                                        {isUser() && reservation.status === 'RESERVED' &&
+                                        {isUser() && reservation.status === ReservationStatus.Reserved &&
                                             <td className="px-5 py-2">
                                                 <CancelReservationButton id={reservation._id} onCancel={reservationCancelHandler}/>
                                             </td>

@@ -17,7 +17,7 @@ const UserUpdateForm: React.FC<{
     const {user, setUpdateUser, setToggleUpdate, onRefreshUsers} = props;
     const {showError, showAlert} = useSnackbar();
 
-    const [role, setRole] = useState<'ADMIN' | 'USER'>(user.role);
+    const [role, setRole] = useState<UserRole.Admin | UserRole.User>(user.role);
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
     const updateUserHandler = async (event: FormEvent) => {
@@ -72,28 +72,28 @@ const UserUpdateForm: React.FC<{
                                     className="peer hidden"
                                     id="user"
                                     type="radio"
-                                    value="USER"
+                                    value={UserRole.User}
                                     name="role"
                                     onChange={() => {
                                         setRole(UserRole.User);
                                     }}
                                     checked={role === UserRole.User}/>
                                 <label htmlFor="user"
-                                       className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-green-600 peer-checked:font-semibold peer-checked:text-white">USER</label>
+                                       className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-green-600 peer-checked:font-semibold peer-checked:text-white">{UserRole.User}</label>
                             </div>
                             <div className="w-full">
                                 <input
                                     className="peer hidden"
                                     id="admin"
                                     type="radio"
-                                    value="ADMIN"
+                                    value={UserRole.Admin}
                                     name="role"
                                     onChange={() => {
                                         setRole(UserRole.Admin);
                                     }}
                                     checked={role === UserRole.Admin}/>
                                 <label htmlFor="admin"
-                                       className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-red-600 peer-checked:font-semibold peer-checked:text-white">ADMIN</label>
+                                       className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-red-600 peer-checked:font-semibold peer-checked:text-white">{UserRole.Admin}</label>
                             </div>
                         </div>
                     </div>

@@ -10,6 +10,7 @@ import profileService from "../../services/api/profile.ts";
 import profileFirebaseService from "../../services/firebase/profile.ts";
 import {resizeProfileImage} from "../../utils/image-optimizer.ts";
 import Admission from "../../model/Admission.ts";
+import ProfileType from "../../enum/ProfileType.ts";
 
 const AdmissionReceiptModal = React.lazy(() => import('../admission/AdmissionReceiptModal.tsx'));
 
@@ -22,7 +23,7 @@ const ProfileNew: React.FC = () => {
     const [fullName, setFullName] = useState<string>('');
     const [telNo, setTelNo] = useState<string>('');
     const [email, setEmail] = useState<string>('');
-    const [type, setType] = useState<'LIBRARIAN' | 'MEMBER'>('MEMBER');
+    const [type, setType] = useState<ProfileType.Librarian | ProfileType.Member>(ProfileType.Member);
     const [address, setAddress] = useState<string>('');
     const [imagePreview, setImagePreview] = useState<string>('');
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -91,10 +92,10 @@ const ProfileNew: React.FC = () => {
 
         try {
             const response = await profileService.createProfile(newProfile);
-            if (response.data.profile.type === 'MEMBER') {
+            if (response.data.profile.type === ProfileType.Member) {
                 setProfile(response.data.profile);
                 setAdmission(response.data.admission as unknown as Admission);
-                setIsOpen(response.data.profile.type === 'MEMBER');
+                setIsOpen(response.data.profile.type === ProfileType.Member);
             }
 
             showAlert("Profile created successfully!", "success");
@@ -103,7 +104,7 @@ const ProfileNew: React.FC = () => {
             setFullName('');
             setTelNo('');
             setEmail('');
-            setType("MEMBER");
+            setType(ProfileType.Member);
             setAddress('');
             setImagePreview('');
             fileInputRef.current!.value = '';
@@ -111,7 +112,7 @@ const ProfileNew: React.FC = () => {
             await profileFirebaseService.deleteProfileImage(imageURL);
             showError(error);
         } finally {
-            setType("MEMBER");
+            setType(ProfileType.Member);
             setIsSubmitting(false);
         }
     };
@@ -228,28 +229,28 @@ const ProfileNew: React.FC = () => {
                                             className="peer hidden"
                                             id="member"
                                             type="radio"
-                                            value="MEMBER"
+                                            value={ProfileType.Member}
                                             name="type"
                                             onChange={() => {
-                                                setType("MEMBER");
+                                                setType(ProfileType.Member);
                                             }}
-                                            checked={type === "MEMBER"}/>
+                                            checked={type === ProfileType.Member}/>
                                         <label htmlFor="member"
-                                               className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-green-600 peer-checked:font-semibold peer-checked:text-white">MEMBER</label>
+                                               className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-green-600 peer-checked:font-semibold peer-checked:text-white">{ProfileType.Member}</label>
                                     </div>
                                     <div className="w-full">
                                         <input
                                             className="peer hidden"
                                             id="librarian"
                                             type="radio"
-                                            value="LIBRARIAN"
+                                            value={ProfileType.Librarian}
                                             name="type"
                                             onChange={() => {
-                                                setType("LIBRARIAN");
+                                                setType(ProfileType.Librarian);
                                             }}
-                                            checked={type === "LIBRARIAN"}/>
+                                            checked={type === ProfileType.Librarian}/>
                                         <label htmlFor="librarian"
-                                               className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-red-600 peer-checked:font-semibold peer-checked:text-white">LIBRARIAN</label>
+                                               className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-red-600 peer-checked:font-semibold peer-checked:text-white">{ProfileType.Librarian}</label>
                                     </div>
                                 </div>
                             </div>

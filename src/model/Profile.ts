@@ -1,5 +1,6 @@
 import Transaction from "./Transaction.ts";
 import Reservation from "./Reservation.ts";
+import ProfileType from "../enum/ProfileType.ts";
 
 interface Profile {
     _id: string;
@@ -8,7 +9,7 @@ interface Profile {
     email: string;
     telNo: string;
     address: string;
-    type: 'LIBRARIAN' | 'MEMBER';
+    type: ProfileType.Librarian | ProfileType.Member;
     paymentStatus: number;
     reservationCount: number;
     borrowCount: number;

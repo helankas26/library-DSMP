@@ -6,6 +6,7 @@ import CancelButton from "../shared/CancelButton.tsx";
 import Reservation from "../../model/Reservation.ts";
 import useSnackbar from "../../hooks/use-snackbar.ts";
 import reservationService from "../../services/api/reservation.ts";
+import ReservationStatus from "../../enum/ReservationStatus.ts";
 
 const ReservationUpdateForm: React.FC<{
     reservation: Reservation;
@@ -16,7 +17,7 @@ const ReservationUpdateForm: React.FC<{
     const {reservation, setUpdateReservation, setToggleUpdate, onRefreshReservations} = props;
     const {showError, showAlert} = useSnackbar();
 
-    const [status, setStatus] = useState<'RESERVED' | 'CANCELLED' | 'BORROWED' | 'EXPIRED'>(reservation.status);
+    const [status, setStatus] = useState<ReservationStatus.Reserved | ReservationStatus.Cancelled | ReservationStatus.Borrowed | ReservationStatus.Expired>(reservation.status);
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
     const updateReservationHandler = async (event: FormEvent) => {
@@ -87,42 +88,42 @@ const ReservationUpdateForm: React.FC<{
                                     className="peer hidden"
                                     id="reserved"
                                     type="radio"
-                                    value="RESERVED"
+                                    value={ReservationStatus.Reserved}
                                     name="status"
                                     onChange={() => {
-                                        setStatus("RESERVED");
+                                        setStatus(ReservationStatus.Reserved);
                                     }}
-                                    checked={status === "RESERVED"}/>
+                                    checked={status === ReservationStatus.Reserved}/>
                                 <label htmlFor="reserved"
-                                       className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-blue-600 peer-checked:font-semibold peer-checked:text-white">RESERVED</label>
+                                       className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-blue-600 peer-checked:font-semibold peer-checked:text-white">{ReservationStatus.Reserved}</label>
                             </div>
                             <div className="w-full">
                                 <input
                                     className="peer hidden"
                                     id="borrowed"
                                     type="radio"
-                                    value="BORROWED"
+                                    value={ReservationStatus.Borrowed}
                                     name="status"
                                     onChange={() => {
-                                        setStatus("BORROWED");
+                                        setStatus(ReservationStatus.Borrowed);
                                     }}
-                                    checked={status === "BORROWED"}/>
+                                    checked={status === ReservationStatus.Borrowed}/>
                                 <label htmlFor="borrowed"
-                                       className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-green-600 peer-checked:font-semibold peer-checked:text-white">BORROWED</label>
+                                       className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-green-600 peer-checked:font-semibold peer-checked:text-white">{ReservationStatus.Borrowed}</label>
                             </div>
                             <div className="w-full">
                                 <input
                                     className="peer hidden"
                                     id="cancelled"
                                     type="radio"
-                                    value="CANCELLED"
+                                    value={ReservationStatus.Cancelled}
                                     name="status"
                                     onChange={() => {
-                                        setStatus("CANCELLED");
+                                        setStatus(ReservationStatus.Cancelled);
                                     }}
-                                    checked={status === "CANCELLED"}/>
+                                    checked={status === ReservationStatus.Cancelled}/>
                                 <label htmlFor="cancelled"
-                                       className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-red-600 peer-checked:font-semibold peer-checked:text-white">CANCELLED</label>
+                                       className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-red-600 peer-checked:font-semibold peer-checked:text-white">{ReservationStatus.Cancelled}</label>
                             </div>
                         </div>
                     </div>

@@ -1,22 +1,25 @@
 import React from "react";
+import TransactionStatus from "../../enum/TransactionStatus.ts";
+import ReservationStatus from "../../enum/ReservationStatus.ts";
 
 const StatusLabel: React.FC<{ status: string }> = (props) => {
     const {status} = props;
     let labelColor: string = '';
 
     switch (status) {
-        case 'BORROWED':
+        case TransactionStatus.Borrowed:
+        case ReservationStatus.Borrowed:
             labelColor = 'text-green-500 bg-green-100';
             break;
-        case 'RESERVED':
-        case 'RETURNED':
+        case ReservationStatus.Reserved:
+        case TransactionStatus.Returned:
             labelColor = 'text-blue-500 bg-blue-100';
             break;
-        case 'CANCELLED':
-        case 'OVERDUE':
+        case ReservationStatus.Cancelled:
+        case TransactionStatus.Overdue:
             labelColor = 'text-red-500 bg-red-100';
             break;
-        case 'EXPIRED':
+        case ReservationStatus.Expired:
             labelColor = 'text-orange-500 bg-orange-100';
             break;
         default:

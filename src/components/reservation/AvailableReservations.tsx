@@ -5,6 +5,7 @@ import useSnackbar from "../../hooks/use-snackbar.ts";
 import reservationService from "../../services/api/reservation.ts";
 import Reservation from "../../model/Reservation.ts";
 import Book from "../../model/Book.ts";
+import ReservationStatus from "../../enum/ReservationStatus.ts";
 
 const AvailableReservations: React.FC<{
     reservations: Reservation[];
@@ -32,16 +33,16 @@ const AvailableReservations: React.FC<{
         }));
     };
 
-    const reservationHandler = async (reservation: Reservation, status: 'BORROWED' | 'CANCELLED') => {
+    const reservationHandler = async (reservation: Reservation, status: ReservationStatus.Borrowed | ReservationStatus.Cancelled) => {
         setLoadingStates((prevState) => ({
             ...prevState,
             [reservation._id]: {
-                isAdding: status === 'BORROWED',
-                isCancelling: status === 'CANCELLED'
+                isAdding: status === ReservationStatus.Borrowed,
+                isCancelling: status === ReservationStatus.Cancelled
             }
         }));
 
-        if (status === 'BORROWED') {
+        if (status === ReservationStatus.Borrowed) {
             if (bookIdSet.has(reservation.book._id)) {
                 showAlert("This book is already in the list.", "warning");
                 resetLoadingStates(reservation._id);
@@ -61,7 +62,7 @@ const AvailableReservations: React.FC<{
             const response = await reservationService.updateReservation(reservation._id, editedReservation);
             const {reservation: updateReservation} = response.data;
 
-            if (updateReservation.status === 'BORROWED') {
+            if (updateReservation.status === ReservationStatus.Borrowed) {
                 setBooks((prevBooks) => [...prevBooks, reservation.book]);
                 showAlert("Added into the list!", "success");
             } else {
@@ -125,7 +126,7 @@ const AvailableReservations: React.FC<{
                                                     className="px-4 py-2 font-semibold text-white transition duration-150 bg-blue-500 hover:bg-blue-700 active:bg-blue-500 leading-tight rounded shadow disabled:cursor-not-allowed disabled:bg-gray-500"
                                                     type="button"
                                                     onClick={async () => {
-                                                        await reservationHandler(reservation, "BORROWED");
+                                                        await reservationHandler(reservation, ReservationStatus.Borrowed);
                                                     }}
                                                     disabled={isAdding}
                                                     hidden={isCancelling}>
@@ -137,7 +138,7 @@ const AvailableReservations: React.FC<{
                                                     className="px-4 py-2 font-semibold text-white transition duration-150 bg-amber-600 hover:bg-amber-700 active:bg-amber-600 leading-tight rounded shadow disabled:cursor-not-allowed disabled:bg-gray-500"
                                                     type="button"
                                                     onClick={async () => {
-                                                        await reservationHandler(reservation, "CANCELLED");
+                                                        await reservationHandler(reservation, ReservationStatus.Cancelled);
                                                     }}
                                                     disabled={isCancelling}
                                                     hidden={isAdding}>

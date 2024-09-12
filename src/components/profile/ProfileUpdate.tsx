@@ -13,6 +13,7 @@ import profileService from "../../services/api/profile.ts";
 import profileFirebaseService from "../../services/firebase/profile.ts";
 import {resizeProfileImage} from "../../utils/image-optimizer.ts";
 import HttpResponse from "../../utils/http-response.ts";
+import ProfileType from "../../enum/ProfileType.ts";
 
 const ProfileUpdate: React.FC = () => {
     const {profile} = useLoaderData() as HttpResponse<Profile>;
@@ -25,7 +26,7 @@ const ProfileUpdate: React.FC = () => {
     const [fullName, setFullName] = useState<string>(profile.fullName);
     const [telNo, setTelNo] = useState<string>(profile.telNo);
     const [email, setEmail] = useState<string>(profile.email);
-    const [type, setType] = useState<'LIBRARIAN' | 'MEMBER'>(profile.type);
+    const [type, setType] = useState<ProfileType.Librarian | ProfileType.Member>(profile.type);
     const [address, setAddress] = useState<string>(profile.address);
     const [imagePreview, setImagePreview] = useState<string>(profile.avatar);
     const [currentAvatar, setCurrentAvatar] = useState<string>(profile.avatar);
@@ -108,7 +109,7 @@ const ProfileUpdate: React.FC = () => {
             await profileFirebaseService.deleteProfileImage(imageURL);
             showError(error);
         } finally {
-            setType("MEMBER");
+            setType(ProfileType.Member);
             setIsUpdating(false);
         }
     };
@@ -222,28 +223,28 @@ const ProfileUpdate: React.FC = () => {
                                         className="peer hidden"
                                         id="member"
                                         type="radio"
-                                        value="MEMBER"
+                                        value={ProfileType.Member}
                                         name="type"
                                         onChange={() => {
-                                            setType("MEMBER");
+                                            setType(ProfileType.Member);
                                         }}
-                                        checked={type === "MEMBER"}/>
+                                        checked={type === ProfileType.Member}/>
                                     <label htmlFor="member"
-                                           className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-green-600 peer-checked:font-semibold peer-checked:text-white">MEMBER</label>
+                                           className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-green-600 peer-checked:font-semibold peer-checked:text-white">{ProfileType.Member}</label>
                                 </div>
                                 <div className="w-full">
                                     <input
                                         className="peer hidden"
                                         id="librarian"
                                         type="radio"
-                                        value="LIBRARIAN"
+                                        value={ProfileType.Librarian}
                                         name="type"
                                         onChange={() => {
-                                            setType("LIBRARIAN");
+                                            setType(ProfileType.Librarian);
                                         }}
-                                        checked={type === "LIBRARIAN"}/>
+                                        checked={type === ProfileType.Librarian}/>
                                     <label htmlFor="librarian"
-                                           className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-red-600 peer-checked:font-semibold peer-checked:text-white">LIBRARIAN</label>
+                                           className="block cursor-pointer select-none rounded p-1 text-center peer-checked:bg-red-600 peer-checked:font-semibold peer-checked:text-white">{ProfileType.Librarian}</label>
                                 </div>
                             </div>
                         </div>

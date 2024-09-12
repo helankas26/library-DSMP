@@ -9,6 +9,7 @@ import useSnackbar from "../../hooks/use-snackbar.ts";
 import transactionService from "../../services/api/transaction.ts";
 import Transaction from "../../model/Transaction.ts";
 import Profile from "../../model/Profile.ts";
+import TransactionStatus from "../../enum/TransactionStatus.ts";
 
 const FinePayment = React.lazy(() => import('../fine/FinePayment.tsx'));
 
@@ -27,7 +28,7 @@ const CurrentLoans: React.FC<{
 
         setIsReturning(true);
 
-        const editedTransaction: Transaction = {status: "RETURNED"} as Transaction;
+        const editedTransaction: Transaction = {status: TransactionStatus.Returned} as Transaction;
 
         try {
             await transactionService.updateTransaction(id, editedTransaction);
@@ -100,7 +101,7 @@ const CurrentLoans: React.FC<{
                                             <OverdueDatesLabel lateDates={transaction.noOfDate}/>
                                         </td>
                                         <td className="px-5 py-2">
-                                            {transaction.status === 'OVERDUE' && transaction.noOfDate &&
+                                            {transaction.status === TransactionStatus.Overdue && transaction.noOfDate &&
                                                 <PaymentButton
                                                     id={transaction._id}
                                                     onPayment={transactionFineHandler}
@@ -112,7 +113,7 @@ const CurrentLoans: React.FC<{
                                                 />
                                             }
 
-                                            {transaction.status === 'BORROWED' && !transaction.noOfDate &&
+                                            {transaction.status === TransactionStatus.Borrowed && !transaction.noOfDate &&
                                                 <Form
                                                     onSubmit={(event: FormEvent) => returnTransactionHandler(event, transaction._id)}>
                                                     <ReturnButton isReturning={isReturning}/>
