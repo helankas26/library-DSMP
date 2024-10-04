@@ -36,15 +36,20 @@ const SelectBook: React.FC<{
     }, []);
 
     const booksSelectionHandler = (selectedBooks: Book[]) => {
-        if (limit) {
-            if (selectedBooks.length <= limit) {
-                setBooks(selectedBooks);
-            } else {
-                showAlert(`You can only select up to ${limit} books.`, "warning");
-            }
-        } else {
-            showAlert("First select a member to add books!", "info");
+        if (!profile) {
+            return showAlert("First select a member to add books!", "info");
         }
+
+        if (!limit) {
+            return showAlert("Your limit is 0.", "warning");
+        }
+
+
+        if (selectedBooks.length > limit) {
+            return showAlert(`You can only select up to ${limit} books.`, "warning");
+        }
+
+        setBooks(selectedBooks);
     };
 
     const bookRemoveHandler = (book: Book) => {
