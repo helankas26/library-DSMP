@@ -89,10 +89,17 @@ const AccountSettings: React.FC = () => {
                     </Box>
 
                     <CustomTabPanel value={value} index={1}>
-                        {profile ? <ProfileUpdateLoggedUser profile={profile}/> : loadingIndicator}
+                        {
+                            profile ? <ProfileUpdateLoggedUser profile={profile} setProfile={setProfile}/>
+                                : loadingIndicator
+                        }
                     </CustomTabPanel>
                     <CustomTabPanel value={value} index={2}>
-                        {profile && user ? <UsernameUpdateLoggedUser profile={profile} user={user}/> : loadingIndicator}
+                        {
+                            profile && user ?
+                                <UsernameUpdateLoggedUser profile={profile} user={user} setUser={setUser}/>
+                                : loadingIndicator
+                        }
                     </CustomTabPanel>
                     <CustomTabPanel value={value} index={3}>
                         {profile ? <ChangePasswordLoggedUser profile={profile}/> : loadingIndicator}

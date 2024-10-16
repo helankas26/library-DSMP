@@ -1,4 +1,4 @@
-import React, {FormEvent, useState} from "react";
+import React, {Dispatch, FormEvent, SetStateAction, useState} from "react";
 import {Form} from "react-router-dom";
 
 import UpdateRecordButton from "../shared/UpdateRecordButton.tsx";
@@ -7,8 +7,12 @@ import useSnackbar from "../../hooks/use-snackbar.ts";
 import userService from "../../services/api/user.ts";
 import Profile from "../../model/Profile.ts";
 
-const UsernameUpdateLoggedUser: React.FC<{ profile: Profile; user: User }> = (props) => {
-    const {profile, user} = props;
+const UsernameUpdateLoggedUser: React.FC<{
+    profile: Profile;
+    user: User;
+    setUser: Dispatch<SetStateAction<User | undefined>>
+}> = (props) => {
+    const {profile, user, setUser} = props;
     const {showError, showAlert} = useSnackbar();
 
     const [username, setUsername] = useState<string>(user.username);
@@ -24,7 +28,10 @@ const UsernameUpdateLoggedUser: React.FC<{ profile: Profile; user: User }> = (pr
         } as User;
 
         try {
-            await userService.updateUserByAuthUser(editedUser);
+            const response = await userService.updateUserByAuthUser(editedUser);
+            const {user} = response.data;
+            setUser(user);
+
             showAlert("Username updated successfully!", "success");
         } catch (error: any) {
             showError(error);

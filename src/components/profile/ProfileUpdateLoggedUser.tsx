@@ -1,4 +1,4 @@
-import React, {FormEvent, useEffect, useRef, useState} from "react";
+import React, {Dispatch, FormEvent, SetStateAction, useEffect, useRef, useState} from "react";
 import {Form} from "react-router-dom";
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
@@ -11,8 +11,11 @@ import profileService from "../../services/api/profile.ts";
 import profileFirebaseService from "../../services/firebase/profile.ts";
 import {resizeProfileImage} from "../../utils/image-optimizer.ts";
 
-const ProfileUpdateLoggedUser: React.FC<{ profile: Profile }> = (props) => {
-    const {profile} = props;
+const ProfileUpdateLoggedUser: React.FC<{
+    profile: Profile;
+    setProfile: Dispatch<SetStateAction<Profile | undefined>>
+}> = (props) => {
+    const {profile, setProfile} = props;
     const {showError, showAlert} = useSnackbar();
 
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -95,7 +98,10 @@ const ProfileUpdateLoggedUser: React.FC<{ profile: Profile }> = (props) => {
         } as Profile;
 
         try {
-            await profileService.updateProfileByAuthUser(editedProfile);
+            const response = await profileService.updateProfileByAuthUser(editedProfile);
+            const {profile} = response.data;
+            setProfile(profile);
+
             showAlert("Profile updated successfully!", "success");
         } catch (error: any) {
             await profileFirebaseService.deleteProfileImage(imageURL);
