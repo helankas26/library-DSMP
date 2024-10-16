@@ -10,18 +10,18 @@ import ReservationStatus from "../../enum/ReservationStatus.ts";
 const AvailableReservations: React.FC<{
     reservations: Reservation[];
     limit: number | undefined;
-    books: Book[];
-    setBooks: Dispatch<SetStateAction<Book[]>>;
+    selectedBooks: Book[];
+    setSelectedBooks: Dispatch<SetStateAction<Book[]>>;
     onRefreshReservations: () => Promise<void>
 }> = (props) => {
-    const {reservations, limit, books, setBooks, onRefreshReservations} = props;
+    const {reservations, limit, selectedBooks, setSelectedBooks, onRefreshReservations} = props;
     const {showError, showAlert} = useSnackbar();
 
     const [loadingStates, setLoadingStates] = useState<{
         [key: string]: { isAdding: boolean; isCancelling: boolean }
     }>({});
 
-    const bookIdSet = new Set(books.map(book => book._id));
+    const bookIdSet = new Set(selectedBooks.map(book => book._id));
 
     const resetLoadingStates = (id: string) => {
         setLoadingStates((prevState) => ({
@@ -49,7 +49,7 @@ const AvailableReservations: React.FC<{
                 return;
             }
 
-            if (books.length >= (limit || books.length + 1)) {
+            if (selectedBooks.length >= (limit ? limit : 0)) {
                 showAlert(`You can only select up to ${limit} books.`, "warning");
                 resetLoadingStates(reservation._id);
                 return;
@@ -63,7 +63,7 @@ const AvailableReservations: React.FC<{
             const {reservation: updateReservation} = response.data;
 
             if (updateReservation.status === ReservationStatus.Borrowed) {
-                setBooks((prevBooks) => [...prevBooks, reservation.book]);
+                setSelectedBooks((prevBooks) => [...prevBooks, reservation.book]);
                 showAlert("Added into the list!", "success");
             } else {
                 showAlert("Canceled successfully!", "success");

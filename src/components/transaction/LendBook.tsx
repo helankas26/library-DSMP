@@ -18,8 +18,8 @@ const LendBook: React.FC = () => {
 
     const [config, setConfig] = useState<Config>();
     const [limit, setLimit] = useState<number>();
-    const [profile, setProfile] = useState<Profile | null>(null);
-    const [books, setBooks] = useState<Book[]>([]);
+    const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+    const [selectedBooks, setSelectedBooks] = useState<Book[]>([]);
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [reservations, setReservations] = useState<Reservation[]>([]);
 
@@ -38,16 +38,16 @@ const LendBook: React.FC = () => {
         try {
             const response = await profileService.findProfileById(id);
             const {profile} = response.data;
-            setProfile(profile);
+            setSelectedProfile(profile);
         } catch (error: any) {
             showError(error);
         }
     }, []);
 
     const loadMemberCurrentLoans = useCallback(async () => {
-        if (profile) {
+        if (selectedProfile) {
             try {
-                const response = await profileService.getMemberCurrentLoansById(profile._id);
+                const response = await profileService.getMemberCurrentLoansById(selectedProfile._id);
                 const {transactions} = response.data.profile;
                 setTransactions(transactions);
             } catch (error: any) {
@@ -56,12 +56,12 @@ const LendBook: React.FC = () => {
         } else {
             setTransactions([]);
         }
-    }, [profile]);
+    }, [selectedProfile]);
 
     const loadMemberAvailableReservations = useCallback(async () => {
-        if (profile) {
+        if (selectedProfile) {
             try {
-                const response = await profileService.getMemberAvailableReservationsById(profile._id);
+                const response = await profileService.getMemberAvailableReservationsById(selectedProfile._id);
                 const {reservations} = response.data.profile;
                 setReservations(reservations);
             } catch (error: any) {
@@ -70,24 +70,24 @@ const LendBook: React.FC = () => {
         } else {
             setReservations([]);
         }
-    }, [profile]);
+    }, [selectedProfile]);
 
     useEffect(() => {
         loadConfig();
     }, [loadConfig]);
 
     useEffect(() => {
-        if (config && profile) {
+        if (config && selectedProfile) {
             const maxBorrow = config.noOfBorrow?.count || 0;
-            const borrowed = profile.borrowCount || 0;
+            const borrowed = selectedProfile.borrowCount || 0;
             const calculatedLimit = maxBorrow - borrowed;
             setLimit(calculatedLimit > 0 ? calculatedLimit : 0);
         } else {
             setLimit(undefined);
         }
 
-        setBooks([]);
-    }, [config, profile]);
+        setSelectedBooks([]);
+    }, [config, selectedProfile]);
 
     useEffect(() => {
         loadMemberCurrentLoans();
@@ -99,12 +99,16 @@ const LendBook: React.FC = () => {
 
     return (
         <>
-            <SelectProfile profile={profile} setProfile={setProfile} fetchProfile={fetchProfileHandler}/>
+            <SelectProfile
+                selectedProfile={selectedProfile}
+                setSelectedProfile={setSelectedProfile}
+                fetchProfile={fetchProfileHandler}
+            />
 
             {transactions.length > 0 && (
                 <CurrentLoans
                     transactions={transactions}
-                    profile={profile!}
+                    selectedProfile={selectedProfile!}
                     fetchProfile={fetchProfileHandler}
                 />
             )}
@@ -113,13 +117,19 @@ const LendBook: React.FC = () => {
                 <AvailableReservations
                     reservations={reservations}
                     limit={limit}
-                    books={books}
-                    setBooks={setBooks}
+                    selectedBooks={selectedBooks}
+                    setSelectedBooks={setSelectedBooks}
                     onRefreshReservations={loadMemberAvailableReservations}
                 />
             )}
 
-            <SelectBook limit={limit} profile={profile} setProfile={setProfile} books={books} setBooks={setBooks}/>
+            <SelectBook
+                limit={limit}
+                selectedProfile={selectedProfile}
+                setSelectedProfile={setSelectedProfile}
+                selectedBooks={selectedBooks}
+                setSelectedBooks={setSelectedBooks}
+            />
         </>
     );
 }

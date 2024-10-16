@@ -15,10 +15,10 @@ const FinePayment = React.lazy(() => import('../fine/FinePayment.tsx'));
 
 const CurrentLoans: React.FC<{
     transactions: Transaction[];
-    profile: Profile;
+    selectedProfile: Profile;
     fetchProfile: (id: string) => Promise<void>
 }> = (props) => {
-    const {transactions, profile, fetchProfile} = props;
+    const {transactions, selectedProfile, fetchProfile} = props;
     const {showError, showAlert} = useSnackbar();
 
     const [isReturning, setIsReturning] = useState<boolean>(false);
@@ -33,7 +33,7 @@ const CurrentLoans: React.FC<{
         try {
             await transactionService.updateTransaction(id, editedTransaction);
             showAlert("Return successfully!", "success");
-            await fetchProfile(profile._id);
+            await fetchProfile(selectedProfile._id);
         } catch (error: any) {
             showError(error);
         } finally {
@@ -108,7 +108,7 @@ const CurrentLoans: React.FC<{
                                                     type={"Fine"}
                                                     PaymentDetails={FinePayment}
                                                     onRefreshPayment={async () => {
-                                                        await fetchProfile(profile._id)
+                                                        await fetchProfile(selectedProfile._id)
                                                     }}
                                                 />
                                             }

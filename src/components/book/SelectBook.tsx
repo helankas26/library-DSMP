@@ -12,12 +12,12 @@ import Book from "../../model/Book.ts";
 
 const SelectBook: React.FC<{
     limit: number | undefined;
-    profile: Profile | null;
-    setProfile: Dispatch<SetStateAction<Profile | null>>;
-    books: Book[];
-    setBooks: Dispatch<SetStateAction<Book[]>>
+    selectedProfile: Profile | null;
+    setSelectedProfile: Dispatch<SetStateAction<Profile | null>>;
+    selectedBooks: Book[];
+    setSelectedBooks: Dispatch<SetStateAction<Book[]>>
 }> = (props) => {
-    const {limit, profile, setProfile, books, setBooks} = props;
+    const {limit, selectedProfile, setSelectedProfile, selectedBooks, setSelectedBooks} = props;
     const {showError, showAlert} = useSnackbar();
 
     const [booksList, setBooksList] = useState<Book[]>([]);
@@ -36,7 +36,7 @@ const SelectBook: React.FC<{
     }, []);
 
     const booksSelectionHandler = (selectedBooks: Book[]) => {
-        if (!profile) {
+        if (!selectedProfile) {
             return showAlert("First select a member to add books!", "info");
         }
 
@@ -49,30 +49,30 @@ const SelectBook: React.FC<{
             return showAlert(`You can only select up to ${limit} books.`, "warning");
         }
 
-        setBooks(selectedBooks);
+        setSelectedBooks(selectedBooks);
     };
 
     const bookRemoveHandler = (book: Book) => {
-        setBooks((prevState) => prevState.filter(prevBook => prevBook._id !== book._id));
+        setSelectedBooks((prevState) => prevState.filter(prevBook => prevBook._id !== book._id));
     };
 
     const lendBooksHandler = async (event: FormEvent) => {
         event.preventDefault();
 
-        if (!profile) {
+        if (!selectedProfile) {
             showAlert("First select a member to lend books!", "info");
             return;
         }
 
         setIsSubmitting(true);
 
-        const bookIds = books.map(book => book._id);
-        const transaction: Transaction = {books: bookIds, member: profile._id} as unknown as Transaction;
+        const bookIds = selectedBooks.map(book => book._id);
+        const transaction: Transaction = {books: bookIds, member: selectedProfile._id} as unknown as Transaction;
 
         try {
             await transactionService.createTransaction(transaction);
-            showAlert(`${!(books.length > 1) ? 'Book' : 'Books'} lent successfully!`, "success");
-            setProfile(null);
+            showAlert(`${!(selectedBooks.length > 1) ? 'Book' : 'Books'} lent successfully!`, "success");
+            setSelectedProfile(null);
         } catch (error: any) {
             showError(error);
         } finally {
@@ -107,15 +107,15 @@ const SelectBook: React.FC<{
                                 id={"books"}
                                 objects={booksList}
                                 displayField={"name"}
-                                selectedObjects={books}
+                                selectedObjects={selectedBooks}
                                 setSelectedObjects={booksSelectionHandler}
                             />
                         </div>
                     </div>
 
-                    {books &&
+                    {selectedBooks &&
                         <div className="flex flex-wrap items-center justify-center gap-2 lg:gap-5">
-                            {books.map((book) => (
+                            {selectedBooks.map((book) => (
                                 <div key={book?._id}
                                      className="w-full sm:w-2/3 lg:w-1/3 bg-white p-3 rounded-xl shadow-xl border flex flex-col sm:flex-row items-center justify-between mt-2 gap-4">
                                     <div className="flex space-x-6 items-center">
@@ -149,7 +149,7 @@ const SelectBook: React.FC<{
                             className="w-full py-2 px-4 font-semibold text-white rounded shadow transition duration-150 bg-blue-500 hover:bg-blue-700 active:bg-blue-500 disabled:cursor-not-allowed disabled:bg-gray-500"
                             type="submit"
                             disabled={isSubmitting}>
-                            {!isSubmitting && (`Lend ${!(books.length > 1) ? 'Book' : 'Books'}`)}
+                            {!isSubmitting && (`Lend ${!(selectedBooks.length > 1) ? 'Book' : 'Books'}`)}
                             {isSubmitting && 'Lending . . .'}
                         </button>
                     </div>

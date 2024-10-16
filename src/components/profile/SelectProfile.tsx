@@ -7,11 +7,11 @@ import profileService from "../../services/api/profile.ts";
 import Profile from "../../model/Profile.ts";
 
 const SelectProfile: React.FC<{
-    profile: Profile | null;
-    setProfile: Dispatch<SetStateAction<Profile | null>>;
+    selectedProfile: Profile | null;
+    setSelectedProfile: Dispatch<SetStateAction<Profile | null>>;
     fetchProfile: (id: string) => Promise<void>
 }> = (props) => {
-    const {profile, setProfile, fetchProfile} = props;
+    const {selectedProfile, setSelectedProfile, fetchProfile} = props;
     const {showError} = useSnackbar();
 
     const [registrationNo, setRegistrationNo] = useState<string>('');
@@ -50,7 +50,7 @@ const SelectProfile: React.FC<{
 
     useEffect(() => {
         if (!registrationNo || registrationNo.length !== 10) {
-            setProfile(null);
+            setSelectedProfile(null);
         }
     }, [registrationNo]);
 
@@ -78,23 +78,23 @@ const SelectProfile: React.FC<{
                             id={"profile"}
                             objects={profilesList}
                             displayField={"fullName"}
-                            selectedObject={profile}
+                            selectedObject={selectedProfile}
                             setSelectedObject={profileSelectionHandler}
                         />
                     </div>
                 </div>
 
-                {profile &&
+                {selectedProfile &&
                     <div className="flex items-center justify-center">
                         <div
                             className="w-full sm:w-2/3 lg:w-1/3 bg-white p-3 rounded-xl shadow-xl border flex flex-col sm:flex-row items-center justify-between mt-2 gap-4">
                             <div className="flex space-x-6 items-center">
                                 <img className="w-auto h-24 rounded-full"
-                                     src={profile?.avatar}
-                                     alt={profile?.fullName}/>
+                                     src={selectedProfile?.avatar}
+                                     alt={selectedProfile?.fullName}/>
                                 <div>
-                                    <p className="text-gray-900 font-semibold text-base">{profile?.fullName}</p>
-                                    <p className="bg-gray-200 px-2 text-center rounded font-semibold text-sm text-gray-900">#{profile?._id}</p>
+                                    <p className="text-gray-900 font-semibold text-base">{selectedProfile?.fullName}</p>
+                                    <p className="bg-gray-200 px-2 text-center rounded font-semibold text-sm text-gray-900">#{selectedProfile?._id}</p>
                                 </div>
                             </div>
                             <div className="flex space-x-2 items-center">
@@ -102,7 +102,7 @@ const SelectProfile: React.FC<{
                                     className="bg-gray-300 rounded-md py-2 px-1 flex items-center transition duration-150 hover:bg-gray-400 active:bg-gray-300 shadow focus:outline-none focus:shadow-outline"
                                     type="button"
                                     onClick={() => {
-                                        setProfile(null);
+                                        setSelectedProfile(null);
                                         setRegistrationNo('');
                                     }}>
                                     <CloseIcon fontSize="small" className="text-gray-900"/>
